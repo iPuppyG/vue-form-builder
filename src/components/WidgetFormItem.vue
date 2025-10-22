@@ -199,12 +199,12 @@
 		</template>
 
 		<div class="widget-view-action" v-if="selectWidget.key == element.key">
-			<i class="iconfont icon-icon_clone" @click.stop="handleWidgetClone(index)"></i>
-			<i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)"></i>
+			<i class="ri-file-copy-line" @click.stop="handleWidgetClone(index)"></i>
+			<i class="ri-delete-bin-6-line" @click.stop="handleWidgetDelete(index)"></i>
 		</div>
 
 		<div class="widget-view-drag" v-if="selectWidget.key == element.key">
-			<i class="iconfont icon-drag drag-widget"></i>
+			<i class="ri-drag-move-2-fill drag-widget"></i>
 		</div>
 	</el-form-item>
 </template>

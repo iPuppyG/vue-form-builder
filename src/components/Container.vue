@@ -13,9 +13,14 @@
 					:move="handleMove"
 				>
 					<template v-for="(item, index) in basicComponents">
-						<li v-if="basicFields.indexOf(item.type) >= 0" class="widget-item" :key="index">
+						<li
+							v-if="basicFields.indexOf(item.type) >= 0"
+							class="widget-item"
+							:class="{ 'no-put': item.type == 'divider' }"
+							:key="index"
+						>
 							<a class="widget-content">
-								<i class="icon iconfont" :class="item.icon"></i>
+								<i class="icon" :class="item.icon"></i>
 								<span>{{ item.name }}</span>
 							</a>
 						</li>
@@ -35,9 +40,14 @@
 					:move="handleMove"
 				>
 					<template v-for="(item, index) in advanceComponents">
-						<li v-if="advanceFields.indexOf(item.type) >= 0" class="widget-item" :key="index">
+						<li
+							v-if="advanceFields.indexOf(item.type) >= 0"
+							class="widget-item"
+							:class="{ 'no-put': item.type == 'table' }"
+							:key="index"
+						>
 							<a class="widget-content">
-								<i class="icon iconfont" :class="item.icon"></i>
+								<i class="icon" :class="item.icon"></i>
 								<span>{{ item.name }}</span>
 							</a>
 						</li>
@@ -57,9 +67,9 @@
 					:move="handleMove"
 				>
 					<template v-for="(item, index) in layoutComponents">
-						<li v-if="layoutFields.indexOf(item.type) >= 0" class="widget-item" :key="index">
+						<li v-if="layoutFields.indexOf(item.type) >= 0" class="widget-item no-put" :key="index">
 							<a class="widget-content">
-								<i class="icon iconfont" :class="item.icon"></i>
+								<i class="icon" :class="item.icon"></i>
 								<span>{{ item.name }}</span>
 							</a>
 						</li>

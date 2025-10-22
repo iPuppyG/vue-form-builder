@@ -116,17 +116,11 @@
 										<!-- <input v-model="item.value"/> -->
 									</el-radio>
 									<i class="drag-item" style="font-size: 16px; margin: 0 5px; cursor: move">
-										<i class="iconfont icon-icon_bars"></i>
+										<i class="ri-drag-move-2-fill"></i>
 									</i>
-									<el-button
-										@click="handleOptionsRemove(index)"
-										circle
-										plain
-										type="danger"
-										size="mini"
-										icon="el-icon-minus"
-										style="padding: 4px; margin-left: 5px"
-									></el-button>
+									<i style="font-size: 16px; margin: 0 5px; cursor: move" @click="handleOptionsRemove(index)">
+										<i class="ri-close-fill"></i>
+									</i>
 								</li>
 							</draggable>
 						</el-radio-group>
@@ -155,7 +149,7 @@
 										></el-input>
 									</el-checkbox>
 									<i class="drag-item" style="font-size: 16px; margin: 0 5px; cursor: move">
-										<i class="iconfont icon-icon_bars"></i>
+										<i class="ri-drag-move-2-fill"></i>
 									</i>
 									<el-button
 										@click="handleOptionsRemove(index)"
@@ -358,7 +352,7 @@
 					>
 						<li v-for="(item, index) in data.columns" :key="index">
 							<i class="drag-item" style="font-size: 16px; margin: 0 5px; cursor: move">
-								<i class="iconfont icon-icon_bars"></i>
+								<i class="ri-drag-move-2-fill"></i>
 							</i>
 							<el-input
 								:placeholder="$t('fm.config.widget.span')"

@@ -6,7 +6,7 @@ import GenerateForm from "./components/GenerateForm.vue"
 
 import enUS from "./lang/en-US"
 import zhCN from "./lang/zh-CN"
-import "./iconfont/iconfont.css"
+import "remixicon/fonts/remixicon.css"
 
 const loadLang = function (Vue, lang, locale, i18n) {
 	if (locale) {

@@ -1,7 +1,7 @@
 <template>
 	<div class="widget-form">
 		<div v-if="data.list.length == 0" class="form-empty">
-			<!-- TODO -->
+			<i class="ri-drag-drop-line drag-drop-icon"></i>
 			<div class="empty-text-container">
 				<span class="title">{{ $t("fm.description.containerEmptyTitle") }}</span>
 				<span class="desc">{{ $t("fm.description.containerEmpty") }}</span>
@@ -62,11 +62,11 @@
 									</draggable>
 								</el-col>
 								<div class="widget-view-action widget-col-action" v-if="selectWidget.key == element.key">
-									<i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)"></i>
+									<i class="ri-delete-bin-6-line" @click.stop="handleWidgetDelete(index)"></i>
 								</div>
 
 								<div class="widget-view-drag widget-col-drag" v-if="selectWidget.key == element.key">
-									<i class="iconfont icon-drag drag-widget"></i>
+									<i class="ri-drag-move-2-fill drag-widget"></i>
 								</div>
 							</el-row>
 						</template>
@@ -120,13 +120,10 @@ export default {
 			this.selectWidget = this.data.list[index]
 		},
 		handleWidgetAdd(evt) {
-			console.log("add", evt)
-			console.log("end", evt)
 			const newIndex = evt.newIndex
 			const to = evt.to
-			console.log(to)
 
-			//为拖拽到容器的元素添加唯一 key
+			// 为拖拽到容器的元素添加唯一key
 			const key = Date.parse(new Date()) + "_" + Math.ceil(Math.random() * 99999)
 			this.$set(this.data.list, newIndex, {
 				...this.data.list[newIndex],
@@ -167,17 +164,6 @@ export default {
 		},
 		handleWidgetColAdd($event, row, colIndex) {
 			const newIndex = $event.newIndex
-			const oldIndex = $event.oldIndex
-			const item = $event.item
-
-			// 检查是否尝试添加 grid 布局控件到 grid 内部
-			if (row.columns[colIndex].list[newIndex].type === "grid") {
-				this.$message.warning(this.$t("fm.message.gridNestingNotAllowed"))
-				// 移除刚添加的 grid 组件
-				row.columns[colIndex].list.splice(newIndex, 1)
-				return
-			}
-
 			const key = Date.parse(new Date()) + "_" + Math.ceil(Math.random() * 99999)
 
 			this.$set(row.columns[colIndex].list, newIndex, {
@@ -187,7 +173,6 @@ export default {
 					remoteFunc: "func_" + key,
 				},
 				key,
-				// 绑定键值
 				model: row.columns[colIndex].list[newIndex].type + "_" + key,
 				rules: [],
 			})
@@ -230,56 +215,7 @@ export default {
 			if (c.className.split(" ").indexOf("widget-col") >= 0 || c.className.split(" ").indexOf("no-put") >= 0) {
 				return false
 			}
-
-			// 检查是否在 grid 布局控件内，如果是则阻止 grid 类型组件被拖入
-			if (this.isInsideGridLayout(c)) {
-				// 获取被拖拽的组件类型
-				const draggedElement = a.querySelector(".widget-item")
-				if (draggedElement) {
-					const componentType = this.getComponentTypeFromElement(draggedElement)
-					if (componentType === "grid") {
-						this.$message.warning(this.$t("fm.message.gridNestingNotAllowed"))
-						return false
-					}
-				}
-			}
-
 			return true
-		},
-
-		// 检查目标位置是否在 grid 布局控件内
-		isInsideGridLayout(targetElement) {
-			let currentElement = targetElement
-			while (currentElement && currentElement !== document.body) {
-				if (currentElement.classList && currentElement.classList.contains("widget-col")) {
-					return true
-				}
-				currentElement = currentElement.parentElement
-			}
-			return false
-		},
-
-		// 从拖拽元素中获取组件类型
-		getComponentTypeFromElement(element) {
-			// 通过图标类名判断组件类型
-			const iconElement = element.querySelector(".icon")
-			if (iconElement) {
-				const iconClass = iconElement.className
-				if (iconClass.includes("icon-grid-")) {
-					return "grid"
-				}
-			}
-
-			// 也可以通过文本内容判断
-			const textElement = element.querySelector("span")
-			if (textElement) {
-				const text = textElement.textContent.trim()
-				if (text === this.$t("fm.components.fields.grid")) {
-					return "grid"
-				}
-			}
-
-			return null
 		},
 	},
 	watch: {
@@ -308,14 +244,19 @@ $hover-border-color: #9da3af;
 
 	.form-empty {
 		position: absolute;
-		top: 200px;
+		top: 120px;
 		left: 50%;
 		transform: translate(-50%);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		gap: 12px;
+		gap: 32px;
+		color: #6b7280;
+
+		.drag-drop-icon {
+			font-size: 36px;
+		}
 
 		.empty-text-container {
 			display: flex;
@@ -323,7 +264,6 @@ $hover-border-color: #9da3af;
 			justify-content: center;
 			flex-direction: column;
 			gap: 8px;
-			color: $text-color;
 
 			.title {
 				font-size: 18px;

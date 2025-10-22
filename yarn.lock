@@ -835,11 +835,6 @@
     "@parcel/watcher-win32-ia32" "2.5.1"
     "@parcel/watcher-win32-x64" "2.5.1"
 
-"@remixicon/vue@^4.7.0":
-  version "4.7.0"
-  resolved "https://nexus3.bilibili.co/repository/npm-public/@remixicon/vue/-/vue-4.7.0.tgz#044766944a39dc26eaf612088eff3f38a14681cf"
-  integrity sha512-kwl1BIEnNoZ5IZ4NJZPOQmA2PfxKlOmogWcJBStuDynoyYpsYSvU22ZkerpdofgjsLS/FiLKhJ/ddpP8U8znVw==
-
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.8.1"
   resolved "https://nexus3.bilibili.co/repository/npm-public/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.8.1.tgz#4d4fbb1108993aaa362116247c3d18188a2c6c85"
@@ -8619,6 +8614,11 @@ relateurl@0.2.x:
   version "0.2.7"
   resolved "https://nexus3.bilibili.co/repository/npm-public/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==
+
+remixicon@^4.7.0:
+  version "4.7.0"
+  resolved "https://nexus3.bilibili.co/repository/npm-public/remixicon/-/remixicon-4.7.0.tgz#8e982662fabd6432745c166f64e9328733c2cf10"
+  integrity sha512-g2pHOofQWARWpxdbrQu5+K3C8ZbqguQFzE54HIMWFCpFa63pumaAltIgZmFMRQpKKBScRWQASQfWxS9asNCcHQ==
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"

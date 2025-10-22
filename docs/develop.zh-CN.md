@@ -2,13 +2,13 @@
 
 二次开发用于商业用途需要购买商业授权，具体详情请查看 [商业授权说明](http://form.making.link/pricing)
 
-> 二次开发需要 vue 的基础，如果还不了解 vue 请查看 [https://cn.vuejs.org/v2/guide/](https://cn.vuejs.org/v2/guide/)
+> 二次开发需要 vue 的基础，如果还不了解 vue 请查看  [https://cn.vuejs.org/v2/guide/](https://cn.vuejs.org/v2/guide/)
 
 ## 获取代码
 
 ```bash
 git clone https://github.com/GavinZhuLei/vue-form-making.git
-``` 
+```
 
 ## 安装项目依赖包
 
@@ -18,7 +18,7 @@ npm install
 
 如果安装失败，需要使用淘宝镜像地址，设置方法如下：
 
-``` bash
+```bash
 npm config set registry https://registry.npmmirror.com
 ```
 
@@ -47,6 +47,7 @@ npm run build-bundle
 ### 1. 添加配置参数
 
 src/components/Container.vue
+
 ```javascript
 <script>
   export default {
@@ -82,7 +83,7 @@ src/components/Container.vue
 
 src/components/componentsConfig.js 下添加配置信息，目前包括 basicComponents advanceComponents layoutComponents 三个对象，分别对应设计器中基础字段、高级字段、布局字段，将配置信息添加到对应的字段下面:
 
-``` javascript
+```javascript
 {
   type: 'input', // 组件类型，保持唯一
   name: '单行文本', //组件展示名称
@@ -95,22 +96,22 @@ src/components/componentsConfig.js 下添加配置信息，目前包括 basicCom
 
 ### 2. 引用组件
 
-src/components/WidgetFormItem.vue 、 src/components/GenerateFormItem.vue 下分别引入自定义的组件:
+src/components/WidgetFormItem.vue 、 src/components/GenerateFormItem.vue  下分别引入自定义的组件:
 
-``` javascript
-import CustomComponent from '你的组件地址'
-  
+```javascript
+import CustomComponent from "你的组件地址"
+
 export default {
-  components: {
-    CustomComponent
-  }
+	components: {
+		CustomComponent,
+	},
 }
 ```
 
 ### 3. 添加组件配置信息
 
-src/components/WidgetConfig.vue 下根据自己要求添加配置信息, props.data 结构为上面的配置信息，至此，自定义扩展的组件就成功的引入到设计器中。
+src/components/WidgetConfig.vue  下根据自己要求添加配置信息, props.data 结构为上面的配置信息，至此，自定义扩展的组件就成功的引入到设计器中。
 
 ## 自定义图标
 
-项目使用的是阿里字体图标库 [iconfont](https://www.iconfont.cn/) , 如果需要自定义图标配置，请将图标加入到自己的项目中，然后选择Font class，将代码下载到本地替换 src/iconfont 文件夹下的文件。
+项目使用的是 REMIX ICON 图标库(https://remixicon.com/)
