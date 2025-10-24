@@ -1,15 +1,19 @@
 .fm-style {
 	.el-form-item__label {
 		line-height: 24px !important;
-		padding-bottom: 8px !important;
+		padding-bottom: 4px !important;
+	}
+
+	.el-form-item__content {
+		line-height: 0 !important;
 	}
 
 	.el-form-item--small {
 		.el-checkbox {
-			line-height: 24px !important;
+			line-height: 24px;
 		}
 		.el-radio {
-			line-height: 24px !important;
+			line-height: 24px;
 		}
 
 		.el-rate {
@@ -18,10 +22,10 @@
 	}
 	.el-form-item--mini {
 		.el-checkbox {
-			line-height: 20px !important;
+			line-height: 20px;
 		}
 		.el-radio {
-			line-height: 20px !important;
+			line-height: 20px;
 		}
 
 		.el-rate {
@@ -30,10 +34,10 @@
 	}
 	.el-form-item--medium {
 		.el-checkbox {
-			line-height: 32px !important;
+			line-height: 32px;
 		}
 		.el-radio {
-			line-height: 32px !important;
+			line-height: 32px;
 		}
 
 		.el-rate {

@@ -165,7 +165,7 @@ export default {
 		return {
 			fileList: this.value.map(item => {
 				return {
-					key: item.key ? item.key : new Date().getTime() + "_" + Math.ceil(Math.random() * 99999),
+					key: item.key ? item.key : new Date().getTime(),
 					url: item.url,
 					percent: item.percent ? item.percent : 100,
 					status: item.status ? item.status : "success",

@@ -3,7 +3,7 @@
 		ref="makingForm"
 		preview
 		save
-		:basic-fields="['input', 'textarea', 'radio', 'checkbox', 'date', 'select']"
+		:basic-fields="['input', 'textarea', 'number', 'radio', 'checkbox', 'date', 'select']"
 		:advance-fields="['editor']"
 	>
 		<template slot="action"></template>

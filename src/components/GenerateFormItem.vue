@@ -1,5 +1,6 @@
 <template>
-	<el-form-item :label="widget.name" :prop="widget.model">
+	<el-form-item class="generate-form" :label="widget.name" :prop="widget.model">
+		<div v-if="widget.options.description" class="field-description">{{ widget.options.description }}</div>
 		<template v-if="widget.type == 'input'">
 			<el-input
 				v-if="
@@ -41,7 +42,7 @@
 		<template v-if="widget.type == 'number'">
 			<el-input-number
 				v-model="dataModel"
-				:style="{ width: widget.options.width }"
+				:style="{ width: widget.options.width, textAlign: 'left' }"
 				:step="widget.options.step"
 				controls-position="right"
 				:disabled="elementDisabled"
@@ -274,3 +275,20 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss">
+.generate-form {
+	.field-description {
+		font-size: 12px;
+		line-height: 16px;
+		color: #6b7280;
+		margin-bottom: 8px;
+	}
+
+	.el-input {
+		input {
+			text-align: left;
+		}
+	}
+}
+</style>

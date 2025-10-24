@@ -6,6 +6,7 @@
 		:label="element.name"
 		@click.native.stop="handleSelectWidget(index)"
 	>
+		<div v-if="element.options.description" class="field-description">{{ element.options.description }}</div>
 		<template v-if="element.type == 'input'">
 			<el-input
 				v-model="element.options.defaultValue"
@@ -34,7 +35,7 @@
 			<el-input-number
 				v-model="element.options.defaultValue"
 				:disabled="element.options.disabled"
-				:controls-position="element.options.controlsPosition"
+				controls-position="right"
 				:style="{ width: element.options.width }"
 			></el-input-number>
 		</template>
@@ -243,7 +244,7 @@ export default {
 			})
 		},
 		handleWidgetClone(index) {
-			const key = Date.parse(new Date().toString()) + "_" + Math.ceil(Math.random() * 99999)
+			const key = Date.parse(new Date().toString())
 			let cloneData = {
 				...this.data.list[index],
 				options: {
@@ -295,6 +296,7 @@ $is_req_color: #f56c6c;
 $primary-color: #3b82f6;
 $default-border-color: #d1d5dc;
 $hover-border-color: #9da3af;
+$active-background-color: #eff6ff;
 
 .widget-view {
 	padding: 16px;
@@ -302,6 +304,19 @@ $hover-border-color: #9da3af;
 	border: 2px dashed $default-border-color;
 	border-radius: 8px;
 	margin-bottom: 16px;
+
+	.field-description {
+		font-size: 12px;
+		line-height: 16px;
+		color: #6b7280;
+		margin-bottom: 8px;
+	}
+
+	.el-input {
+		input {
+			text-align: left;
+		}
+	}
 
 	.el-form-item__label {
 		line-height: 24px;
@@ -326,6 +341,7 @@ $hover-border-color: #9da3af;
 
 	&.active {
 		border: 2px dashed $primary-color;
+		background-color: $active-background-color;
 	}
 
 	.widget-view-action {

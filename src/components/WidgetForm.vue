@@ -121,10 +121,8 @@ export default {
 		},
 		handleWidgetAdd(evt) {
 			const newIndex = evt.newIndex
-			const to = evt.to
-
 			// 为拖拽到容器的元素添加唯一key
-			const key = Date.parse(new Date()) + "_" + Math.ceil(Math.random() * 99999)
+			const key = Date.parse(new Date())
 			this.$set(this.data.list, newIndex, {
 				...this.data.list[newIndex],
 				options: {
@@ -132,7 +130,6 @@ export default {
 					remoteFunc: "func_" + key,
 				},
 				key,
-				// 绑定键值
 				model: this.data.list[newIndex].type + "_" + key,
 				rules: [],
 			})
@@ -164,7 +161,7 @@ export default {
 		},
 		handleWidgetColAdd($event, row, colIndex) {
 			const newIndex = $event.newIndex
-			const key = Date.parse(new Date()) + "_" + Math.ceil(Math.random() * 99999)
+			const key = Date.parse(new Date())
 
 			this.$set(row.columns[colIndex].list, newIndex, {
 				...row.columns[colIndex].list[newIndex],
@@ -237,6 +234,7 @@ $text-color: #374151;
 $primary-color: #3b82f6;
 $default-border-color: #d1d5dc;
 $hover-border-color: #9da3af;
+$active-background-color: #eff6ff;
 
 .widget-form {
 	position: relative;
@@ -285,13 +283,12 @@ $hover-border-color: #9da3af;
 
 			.widget-form-list {
 				height: 100%;
-				padding: 24px;
+				padding: 24px 24px 8px;
 				overflow-y: scroll;
 
 				.widget-col {
 					padding-bottom: 0;
 					padding: 16px;
-					background-color: rgba(236, 245, 255, 0.3);
 					border: 2px dashed $default-border-color;
 					border-radius: 8px;
 					margin-bottom: 16px;
@@ -306,6 +303,7 @@ $hover-border-color: #9da3af;
 
 					&.active {
 						border: 2px dashed $primary-color;
+						background-color: $active-background-color;
 					}
 
 					.el-col {

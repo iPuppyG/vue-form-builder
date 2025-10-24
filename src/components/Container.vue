@@ -1,104 +1,113 @@
 <template>
 	<el-container class="fm-style">
 		<el-aside class="aside-container" width="256px">
-			<!-- 基础控件 -->
-			<template v-if="basicFields.length">
-				<div class="widget-group-title">{{ $t("fm.components.basic.title") }}</div>
-				<draggable
-					class="widget-group"
-					:list="basicComponents"
-					v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
-					@end="handleMoveEnd"
-					@start="handleMoveStart"
-					:move="handleMove"
-				>
-					<template v-for="(item, index) in basicComponents">
-						<li
-							v-if="basicFields.indexOf(item.type) >= 0"
-							class="widget-item"
-							:class="{ 'no-put': item.type == 'divider' }"
-							:key="index"
-						>
-							<a class="widget-content">
-								<i class="icon" :class="item.icon"></i>
-								<span>{{ item.name }}</span>
-							</a>
-						</li>
-					</template>
-				</draggable>
-			</template>
+			<div class="widget-component-library-title">{{ $t("fm.description.componentLibrary") }}</div>
+			<div class="widget-groups">
+				<!-- 基础控件 -->
+				<template v-if="basicFields.length">
+					<div class="widget-group-title">{{ $t("fm.components.basic.title") }}</div>
+					<draggable
+						class="widget-group"
+						:list="basicComponents"
+						v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
+						@end="handleMoveEnd"
+						@start="handleMoveStart"
+						:move="handleMove"
+					>
+						<template v-for="(item, index) in basicComponents">
+							<li
+								v-if="basicFields.indexOf(item.type) >= 0"
+								class="widget-item"
+								:class="{ 'no-put': item.type == 'divider' }"
+								:key="index"
+							>
+								<a class="widget-content">
+									<i class="icon" :class="item.icon"></i>
+									<span>{{ item.name }}</span>
+								</a>
+							</li>
+						</template>
+					</draggable>
+				</template>
 
-			<!-- 高级控件 -->
-			<template v-if="advanceFields.length">
-				<div class="widget-group-title">{{ $t("fm.components.advance.title") }}</div>
-				<draggable
-					class="widget-group"
-					:list="advanceComponents"
-					v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
-					@end="handleMoveEnd"
-					@start="handleMoveStart"
-					:move="handleMove"
-				>
-					<template v-for="(item, index) in advanceComponents">
-						<li
-							v-if="advanceFields.indexOf(item.type) >= 0"
-							class="widget-item"
-							:class="{ 'no-put': item.type == 'table' }"
-							:key="index"
-						>
-							<a class="widget-content">
-								<i class="icon" :class="item.icon"></i>
-								<span>{{ item.name }}</span>
-							</a>
-						</li>
-					</template>
-				</draggable>
-			</template>
+				<!-- 高级控件 -->
+				<template v-if="advanceFields.length">
+					<div class="widget-group-title">{{ $t("fm.components.advance.title") }}</div>
+					<draggable
+						class="widget-group"
+						:list="advanceComponents"
+						v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
+						@end="handleMoveEnd"
+						@start="handleMoveStart"
+						:move="handleMove"
+					>
+						<template v-for="(item, index) in advanceComponents">
+							<li
+								v-if="advanceFields.indexOf(item.type) >= 0"
+								class="widget-item"
+								:class="{ 'no-put': item.type == 'table' }"
+								:key="index"
+							>
+								<a class="widget-content">
+									<i class="icon" :class="item.icon"></i>
+									<span>{{ item.name }}</span>
+								</a>
+							</li>
+						</template>
+					</draggable>
+				</template>
 
-			<!-- 布局控件 -->
-			<template v-if="layoutFields.length">
-				<div class="widget-group-title">{{ $t("fm.components.layout.title") }}</div>
-				<draggable
-					class="widget-group"
-					:list="layoutComponents"
-					v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
-					@end="handleMoveEnd"
-					@start="handleMoveStart"
-					:move="handleMove"
-				>
-					<template v-for="(item, index) in layoutComponents">
-						<li v-if="layoutFields.indexOf(item.type) >= 0" class="widget-item no-put" :key="index">
-							<a class="widget-content">
-								<i class="icon" :class="item.icon"></i>
-								<span>{{ item.name }}</span>
-							</a>
-						</li>
-					</template>
-				</draggable>
-			</template>
+				<!-- 布局控件 -->
+				<template v-if="layoutFields.length">
+					<div class="widget-group-title">{{ $t("fm.components.layout.title") }}</div>
+					<draggable
+						class="widget-group"
+						:list="layoutComponents"
+						v-bind="{ group: { name: 'people', pull: 'clone', put: false }, sort: false, ghostClass: 'ghost' }"
+						@end="handleMoveEnd"
+						@start="handleMoveStart"
+						:move="handleMove"
+					>
+						<template v-for="(item, index) in layoutComponents">
+							<li v-if="layoutFields.indexOf(item.type) >= 0" class="widget-item no-put" :key="index">
+								<a class="widget-content">
+									<i class="icon" :class="item.icon"></i>
+									<span>{{ item.name }}</span>
+								</a>
+							</li>
+						</template>
+					</draggable>
+				</template>
+			</div>
 		</el-aside>
 
 		<el-container class="center-container" direction="vertical">
-			<el-header class="btn-bar">
-				<slot name="action"></slot>
-				<el-button v-if="upload" size="small" @click="handleUpload">
-					{{ $t("fm.actions.import") }}
-				</el-button>
-				<el-button v-if="clearable" size="small" @click="handleClear">
-					{{ $t("fm.actions.clear") }}
-				</el-button>
-				<el-button v-if="preview" size="small" @click="handlePreview">
-					{{ $t("fm.actions.preview") }}
-				</el-button>
-				<el-button v-if="save" type="primary" size="small">
-					{{ $t("fm.actions.save") }}
-				</el-button>
-				<el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">
-					{{ $t("fm.actions.json") }}
-				</el-button>
-				<el-button v-if="generateCode" type="text" size="medium" icon="el-icon-document" @click="handleGenerateCode">
-					{{ $t("fm.actions.code") }}
-				</el-button>
+			<el-header class="header">
+				<div class="title-container">
+					<span class="title">{{ $t("fm.description.formDesigner") }}</span>
+					<span class="desc">{{ $t("fm.description.formDesignerDesc") }}</span>
+				</div>
+				<div>
+					<slot name="action"></slot>
+					<el-button v-if="upload" size="small" @click="handleUpload">
+						{{ $t("fm.actions.import") }}
+					</el-button>
+					<el-button v-if="clearable" size="small" @click="handleClear">
+						{{ $t("fm.actions.clear") }}
+					</el-button>
+					<el-button v-if="preview" size="small" icon="el-icon-view" @click="handlePreview">
+						{{ $t("fm.actions.preview") }}
+					</el-button>
+					<el-button v-if="save" type="primary" size="small" icon="el-icon-collection">
+						{{ $t("fm.actions.save") }}
+					</el-button>
+					<el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">
+						{{ $t("fm.actions.json") }}
+					</el-button>
+					<el-button v-if="generateCode" type="text" size="medium" icon="el-icon-document" @click="handleGenerateCode">
+						{{ $t("fm.actions.code") }}
+					</el-button>
+				</div>
 			</el-header>
 			<el-main>
 				<widget-form v-if="!resetJson" ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect" />
@@ -440,14 +449,32 @@ export default {
 $background-color: #f9fafb;
 $text-color: #374151;
 $border-color: #e5e7eb;
-$primary-color: #409eff;
+$primary-color: #3b82f6;
 
 .fm-style {
 	height: 100vh;
 
 	.aside-container {
-		padding: 16px;
+		display: flex;
+		flex-direction: column;
 		background-color: $background-color;
+		overflow-y: hidden;
+
+		.widget-component-library-title {
+			height: 60px;
+			display: flex;
+			align-items: center;
+			padding: 0 16px;
+			font-size: 14px;
+			font-weight: 500;
+			border-bottom: 1px solid #d1d5db;
+		}
+
+		.widget-groups {
+			flex: 1;
+			overflow-y: scroll;
+			padding: 16px;
+		}
 
 		.widget-group-title {
 			margin-bottom: 12px;
@@ -478,7 +505,8 @@ $primary-color: #409eff;
 			cursor: move;
 
 			&:hover {
-				border: 1px solid #93c5fd;
+				border: 1px solid $primary-color;
+				color: $primary-color;
 			}
 
 			.widget-content {
@@ -500,11 +528,52 @@ $primary-color: #409eff;
 		border-left: 1px solid $border-color;
 		border-right: 1px solid $border-color;
 
-		.btn-bar {
-			padding: 12px;
+		.header {
+			height: 100px !important;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			font-size: 18px;
 			border-bottom: solid 1px $border-color;
-			text-align: right;
+
+			.title-container {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				padding: 0 12px;
+
+				.title {
+					color: $text-color;
+					font-size: 18px;
+					font-weight: 500;
+				}
+
+				.desc {
+					color: #6b7280;
+					font-size: 14px;
+				}
+			}
+
+			.el-button--primary {
+				background-color: #2563eb;
+				border-color: #2563eb;
+
+				&:hover {
+					background-color: #1d4ed8;
+					border-color: #1d4ed8;
+				}
+			}
+
+			.el-button--default {
+				border-color: #d1d5db;
+				background-color: #fff;
+				color: $text-color;
+
+				&:hover {
+					border-color: #d1d5db;
+					background-color: #f9fafb;
+				}
+			}
 		}
 
 		.el-main {
@@ -516,6 +585,8 @@ $primary-color: #409eff;
 
 	.widget-config-container {
 		position: relative;
+		background-color: $background-color;
+		overflow-y: hidden;
 
 		.el-header {
 			border-bottom: solid 2px #e4e7ed;
@@ -573,18 +644,6 @@ $primary-color: #409eff;
 				right: 0;
 				bottom: 0;
 			}
-		}
-
-		ul {
-			margin: 0;
-			padding: 0;
-		}
-
-		li.ghost {
-			list-style: none;
-			font-size: 0;
-			display: block;
-			position: relative;
 		}
 	}
 }
