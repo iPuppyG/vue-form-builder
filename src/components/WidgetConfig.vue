@@ -437,8 +437,11 @@
 							v-if="Object.keys(data.options).indexOf('dataType') >= 0"
 							v-model="data.options.dataType"
 							size="mini"
+							placeholder=""
 						>
 							<el-option value="email" :label="$t('fm.config.widget.email')"></el-option>
+							<el-option value="idCardNumber" :label="$t('fm.config.widget.idCardNumber')"></el-option>
+							<el-option value="phone" :label="$t('fm.config.widget.phone')"></el-option>
 						</el-select>
 					</el-form-item>
 					<!-- <el-form-item :label="$t('fm.config.widget.regex')" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
@@ -641,7 +644,35 @@ export default {
 			}
 
 			if (val) {
-				this.validator.type = { type: val, message: this.data.name + this.$t("fm.config.widget.validatorType") }
+				let pattern = null
+				let message = this.data.name + this.$t("fm.config.widget.validatorType")
+
+				// 根据数据类型设置相应的正则表达式
+				if (val === "idCardNumber") {
+					// 身份证号正则表达式（18位）
+					pattern = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+					message = this.data.name + "身份证号格式不正确"
+				} else if (val === "phone") {
+					// 手机号正则表达式（11位，以1开头）
+					pattern = /^1[3-9]\d{9}$/
+					message = this.data.name + "手机号格式不正确"
+				} else if (val === "email") {
+					// 邮箱正则表达式
+					pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+					message = this.data.name + "邮箱格式不正确"
+				}
+
+				if (pattern) {
+					this.validator.type = {
+						pattern: pattern,
+						message: message,
+					}
+				} else {
+					this.validator.type = {
+						type: val,
+						message: message,
+					}
+				}
 			} else {
 				this.validator.type = null
 			}

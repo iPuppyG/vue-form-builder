@@ -15,6 +15,26 @@
 				:disabled="elementDisabled"
 			></el-input>
 			<el-input
+				v-else-if="widget.options.dataType == 'idCardNumber'"
+				type="text"
+				v-model="dataModel"
+				:disabled="elementDisabled"
+				:placeholder="widget.options.placeholder || '请输入身份证号'"
+				:style="{ width: widget.options.width }"
+				:maxlength="18"
+				:show-word-limit="widget.options.showWordLimit"
+			></el-input>
+			<el-input
+				v-else-if="widget.options.dataType == 'phone'"
+				type="text"
+				v-model="dataModel"
+				:disabled="elementDisabled"
+				:placeholder="widget.options.placeholder || '请输入手机号'"
+				:style="{ width: widget.options.width }"
+				:maxlength="11"
+				:show-word-limit="widget.options.showWordLimit"
+			></el-input>
+			<el-input
 				v-else
 				type="text"
 				v-model="dataModel"

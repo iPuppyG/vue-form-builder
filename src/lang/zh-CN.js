@@ -142,7 +142,7 @@ export default {
 				float: "浮点数",
 				url: "URL地址",
 				email: "邮箱地址",
-				IDNumber: "身份证号",
+				idCardNumber: "身份证号",
 				phone: "手机号",
 				hex: "十六进制",
 				gutter: "栅格间隔",

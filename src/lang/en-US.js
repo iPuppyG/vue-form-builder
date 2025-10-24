@@ -142,7 +142,7 @@ export default {
 				float: "Float",
 				url: "URL",
 				email: "E-mail",
-				IDNumber: "ID Card Number",
+				idCardNumber: "ID Card Number",
 				phone: "Phone Number",
 				hex: "Hexadecimal",
 				gutter: "Grid Spacing",

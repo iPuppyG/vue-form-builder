@@ -36,6 +36,7 @@
 				v-model="element.options.defaultValue"
 				:disabled="element.options.disabled"
 				controls-position="right"
+				:placeholder="element.options.placeholder"
 				:style="{ width: element.options.width }"
 			></el-input-number>
 		</template>
