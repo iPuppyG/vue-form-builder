@@ -203,4 +203,21 @@ export default {
 			delete: "删除",
 		},
 	},
+	permissionConfig: {
+		userPermissionConfig: "按用户权限配置",
+		resourcePermissionConfig: "按资源权限配置",
+		core_subject: {
+			permission_subject: "权限主体",
+			organization: "组织",
+			user: "用户",
+			search_organization: "搜索组织",
+			search_user: "搜索用户",
+		},
+		operation_config: {
+			select_left_subject: "选择左侧的权限主体",
+			permission_config: "权限配置",
+			select_organization: "选择组织",
+			please_select_organization: "请选择组织",
+		},
+	},
 }

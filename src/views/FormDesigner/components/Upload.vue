@@ -99,6 +99,7 @@ import Viewer from "viewerjs"
 import Draggable from "vuedraggable"
 import * as qiniu from "qiniu-js"
 require("viewerjs/dist/viewer.css")
+
 export default {
 	components: {
 		Draggable,

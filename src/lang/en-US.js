@@ -203,4 +203,21 @@ export default {
 			delete: "delete",
 		},
 	},
+	permissionConfig: {
+		userPermissionConfig: "User Permission Configuration",
+		resourcePermissionConfig: "Resource Permission Configuration",
+		core_subject: {
+			permission_subject: "Permission Subject",
+			organization: "Organization",
+			user: "User",
+			search_organization: "Search Organization",
+			search_user: "Search User",
+		},
+		operation_config: {
+			select_left_subject: "Select the permission subject on the left",
+			permission_config: "Permission Configuration",
+			select_organization: "Select Organization",
+			please_select_organization: "Please select organization",
+		},
+	},
 }

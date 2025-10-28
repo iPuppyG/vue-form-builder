@@ -1,7 +1,8 @@
 import Vue from "vue"
 import Router from "vue-router"
-import Home from "../demo/Home.vue"
+import FormDesigner from "../views/FormDesigner/index.vue"
 import LanguageView from "./LanguageView.vue"
+import PermissionManagement from "../views/PermissionManagement/index.vue"
 
 Vue.use(Router)
 
@@ -11,7 +12,7 @@ export default new Router({
 	routes: [
 		{
 			path: "/",
-			redirect: to => ({ name: "index", params: { lang: language } }),
+			redirect: to => ({ name: "form-designer", params: { lang: language } }),
 		},
 		{
 			path: "/:lang",
@@ -19,8 +20,13 @@ export default new Router({
 			children: [
 				{
 					path: "",
-					name: "index",
-					component: Home,
+					name: "form-designer",
+					component: FormDesigner,
+				},
+				{
+					path: "permission-management",
+					name: "permission-management",
+					component: PermissionManagement,
 				},
 			],
 		},

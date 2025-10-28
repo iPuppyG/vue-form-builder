@@ -184,9 +184,9 @@ import WidgetForm from "./WidgetForm"
 import CusDialog from "./CusDialog"
 import GenerateForm from "./GenerateForm"
 import Clipboard from "clipboard"
-import { basicComponents, layoutComponents, advanceComponents } from "./componentsConfig.js"
-import request from "../util/request.js"
-import generateCode from "./generateCode.js"
+import { basicComponents, layoutComponents, advanceComponents } from "./componentsConfig"
+import request from "../../../util/request"
+import generateCode from "./generateCode"
 
 export default {
 	name: "fm-making-form",
@@ -444,7 +444,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../styles/style.scss";
+@import "@/styles/style.scss";
 
 $background-color: #f9fafb;
 $text-color: #374151;

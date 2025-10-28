@@ -202,4 +202,21 @@ export default {
 			delete: "刪除",
 		},
 	},
+	permissionConfig: {
+		userPermissionConfig: "按用戶權限配置",
+		resourcePermissionConfig: "按資源權限配置",
+		core_subject: {
+			permission_subject: "權限主體",
+			organization: "組織",
+			user: "使用者",
+			search_organization: "搜尋組織",
+			search_user: "搜尋使用者",
+		},
+		operation_config: {
+			select_left_subject: "選擇左側的權限主體",
+			permission_config: "權限設定",
+			select_organization: "選擇組織",
+			please_select_organization: "請選擇組織",
+		},
+	},
 }

@@ -1,8 +1,8 @@
 import VueI18n from "vue-i18n"
 import "normalize.css/normalize.css"
 
-import MakingForm from "./components/Container.vue"
-import GenerateForm from "./components/GenerateForm.vue"
+import MakingForm from "./views/FormDesigner/components/Container.vue"
+import GenerateForm from "./views/FormDesigner/components/GenerateForm.vue"
 
 import enUS from "./lang/en-US"
 import zhCN from "./lang/zh-CN"
