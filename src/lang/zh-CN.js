@@ -1,3 +1,5 @@
+import { search } from "core-js/fn/symbol"
+
 export default {
 	fm: {
 		components: {
@@ -204,20 +206,47 @@ export default {
 		},
 	},
 	permissionConfig: {
-		userPermissionConfig: "按用户权限配置",
-		resourcePermissionConfig: "按资源权限配置",
-		core_subject: {
-			permission_subject: "权限主体",
+		tabs: {
+			userPermissionConfig: "按用户权限配置",
+			resourcePermissionConfig: "按资源权限配置",
+		},
+		userPermissionConfig: {
+			permissionSubject: "权限主体",
 			organization: "组织",
 			user: "用户",
-			search_organization: "搜索组织",
-			search_user: "搜索用户",
+			searchOrganization: "搜索组织",
+			searchUser: "搜索用户",
+			selectLeftSubject: "选择左侧的权限主体",
+			permissionConfig: "权限配置",
+			selectOrganization: "选择组织",
+			pleaseSelectOrganization: "请选择组织",
 		},
-		operation_config: {
-			select_left_subject: "选择左侧的权限主体",
-			permission_config: "权限配置",
-			select_organization: "选择组织",
-			please_select_organization: "请选择组织",
+		resourcePermissionConfig: {
+			resourceList: "资源列表",
+			searchResource: "搜索资源",
+			selectLeftResource: "请线先选择左侧的资源",
+		},
+	},
+	orgManagement: {
+		searchOrg: "搜索组织名称",
+		addOrg: "新增组织",
+		columns: {
+			orgName: "组织名称",
+			subOrgCount: "下属组织数",
+			totalMemberCount: "成员数量",
+			createBy: "创建人",
+			createTime: "创建时间",
+			actions: "操作",
+		},
+		actions: {
+			edit: "编辑",
+			addSubOrg: " 添加子组织",
+			viewMember: "查看成员",
+			delete: "删除",
+		},
+		units: {
+			org: "个",
+			people: "人",
 		},
 	},
 }

@@ -1,0 +1,106 @@
+export const mockTreeData = [
+	{
+		orgId: 1,
+		name: "总公司",
+		pid: null,
+		createBy: "system",
+		createTime: 1704073200000, // 2024-01-01 09:00:00
+		subOrganizations: [
+			{
+				orgId: 2,
+				name: "技术中心",
+				pid: 1,
+				createBy: "张三",
+				createTime: 1705368600000, // 2024-01-15 09:30:00
+				subOrganizations: [
+					{
+						orgId: 3,
+						name: "前端开发部",
+						pid: 2,
+						createBy: "李四",
+						createTime: 1705450500000, // 2024-01-16 10:15:00
+						subOrganizations: null,
+						totalMemberCount: 12,
+						subOrganizationCount: 0,
+					},
+					{
+						orgId: 4,
+						name: "后端开发部",
+						pid: 2,
+						createBy: "王五",
+						createTime: 1705532400000, // 2024-01-17 14:20:00
+						subOrganizations: null,
+						totalMemberCount: 13,
+						subOrganizationCount: 0,
+					},
+				],
+				totalMemberCount: 25,
+				subOrganizationCount: 2,
+			},
+			{
+				orgId: 5,
+				name: "业务部门",
+				pid: 1,
+				createBy: "赵六",
+				createTime: 1705614300000, // 2024-01-18 11:45:00
+				subOrganizations: [
+					{
+						orgId: 6,
+						name: "销售部",
+						pid: 5,
+						createBy: "钱七",
+						createTime: 1705698000000, // 2024-01-19 16:30:00
+						subOrganizations: null,
+						totalMemberCount: 15,
+						subOrganizationCount: 0,
+					},
+				],
+				totalMemberCount: 15,
+				subOrganizationCount: 1,
+			},
+			{
+				orgId: 8,
+				name: "分公司A",
+				pid: 1,
+				createBy: "system",
+				createTime: 1704160800000, // 2024-01-02 09:00:00
+				subOrganizations: [
+					{
+						orgId: 9,
+						name: "市场部",
+						pid: 8,
+						createBy: "分公司负责人",
+						createTime: 1705950000000, // 2024-01-21 10:00:00
+						subOrganizations: null,
+						totalMemberCount: 15,
+						subOrganizationCount: 0,
+					},
+					{
+						orgId: 10,
+						name: "客服部",
+						pid: 8,
+						createBy: "分公司负责人",
+						createTime: 1705953600000, // 2024-01-21 11:00:00
+						subOrganizations: null,
+						totalMemberCount: 15,
+						subOrganizationCount: 0,
+					},
+				],
+				totalMemberCount: 30,
+				subOrganizationCount: 2,
+			},
+		],
+		totalMemberCount: 50,
+		subOrganizationCount: 3,
+	},
+	{
+		orgId: 11,
+		name: "运营部门",
+		pid: null,
+		createBy: "孙八",
+		createTime: 1703374815000, // 2024-01-20 08:15:00
+		subOrganizations: null,
+		totalMemberCount: 10,
+		subOrganizationCount: 0,
+	},
+]

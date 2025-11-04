@@ -1,17 +1,17 @@
 <template>
 	<div class="permission-management">
-		<el-tabs class="tabs" v-model="activeTab" @tab-click="handleClick">
+		<el-tabs class="tabs" v-model="activeTab">
 			<el-tab-pane name="userConfig">
 				<template slot="label">
 					<i class="ri-user-settings-line"></i>
-					{{ $t("permissionConfig.userPermissionConfig") }}
+					{{ $t("permissionConfig.tabs.userPermissionConfig") }}
 				</template>
 				<UserConfig />
 			</el-tab-pane>
 			<el-tab-pane name="resourceConfig">
 				<template slot="label">
 					<i class="ri-database-2-line"></i>
-					{{ $t("permissionConfig.resourcePermissionConfig") }}
+					{{ $t("permissionConfig.tabs.resourcePermissionConfig") }}
 				</template>
 				<ResourceConfig />
 			</el-tab-pane>
@@ -34,11 +34,7 @@ export default {
 			activeTab: "userConfig",
 		}
 	},
-	methods: {
-		handleClick(tab, event) {
-			console.log(tab, event)
-		},
-	},
+	methods: {},
 }
 </script>
 
@@ -57,8 +53,29 @@ export default {
 		.el-tabs__header {
 			margin-bottom: 0;
 
-			.el-tabs__nav-wrap::after {
-				height: 1px;
+			.el-tabs__nav-wrap {
+				&::after {
+					height: 1px;
+				}
+
+				.el-tabs__active-bar {
+					background-color: #2563eb; // FIXME 根据 element-ui 主题颜色变量修改
+				}
+
+				.el-tabs__item {
+					font-size: 14px;
+					font-weight: 400;
+					color: #6b7280;
+
+					&:hover {
+						color: #374151;
+					}
+
+					&.is-active {
+						color: #2563eb; // FIXME 根据 element-ui 主题颜色变量修改
+						font-weight: 500;
+					}
+				}
 			}
 		}
 

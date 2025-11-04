@@ -203,20 +203,47 @@ export default {
 		},
 	},
 	permissionConfig: {
-		userPermissionConfig: "按用戶權限配置",
-		resourcePermissionConfig: "按資源權限配置",
-		core_subject: {
-			permission_subject: "權限主體",
+		tabs: {
+			userPermissionConfig: "按用戶權限配置",
+			resourcePermissionConfig: "按資源權限配置",
+		},
+		userPermissionConfig: {
+			permissionSubject: "權限主體",
 			organization: "組織",
 			user: "使用者",
-			search_organization: "搜尋組織",
-			search_user: "搜尋使用者",
+			searchOrganization: "搜尋組織",
+			searchUser: "搜尋使用者",
+			selectLeftSubject: "選擇左側的權限主體",
+			permissionConfig: "權限設定",
+			selectOrganization: "選擇組織",
+			pleaseSelectOrganization: "請選擇組織",
 		},
-		operation_config: {
-			select_left_subject: "選擇左側的權限主體",
-			permission_config: "權限設定",
-			select_organization: "選擇組織",
-			please_select_organization: "請選擇組織",
+		resourcePermissionConfig: {
+			resourceList: "資源列表",
+			searchResource: "搜尋資源",
+			selectLeftResource: "請先選擇左側的資源",
+		},
+	},
+	orgManagement: {
+		searchOrg: "搜尋組織名稱",
+		addOrg: "新增組織",
+		columns: {
+			orgName: "組織名稱",
+			subOrgCount: "下屬組織數",
+			totalMemberCount: "成員數量",
+			createBy: "建立人",
+			createTime: "建立時間",
+			actions: "操作",
+		},
+		actions: {
+			edit: "編輯",
+			addSubOrg: "新增子組織",
+			viewMember: "檢視成員",
+			delete: "刪除",
+		},
+		units: {
+			org: "個",
+			people: "人",
 		},
 	},
 }

@@ -204,20 +204,47 @@ export default {
 		},
 	},
 	permissionConfig: {
-		userPermissionConfig: "User Permission Configuration",
-		resourcePermissionConfig: "Resource Permission Configuration",
-		core_subject: {
-			permission_subject: "Permission Subject",
+		tabs: {
+			userPermissionConfig: "User Permission Configuration",
+			resourcePermissionConfig: "Resource Permission Configuration",
+		},
+		userPermissionConfig: {
+			permissionSubject: "Permission Subject",
 			organization: "Organization",
 			user: "User",
-			search_organization: "Search Organization",
-			search_user: "Search User",
+			searchOrganization: "Search Organization",
+			searchUser: "Search User",
+			selectLeftSubject: "Select the permission subject on the left",
+			permissionConfig: "Permission Configuration",
+			selectOrganization: "Select Organization",
+			pleaseSelectOrganization: "Please select organization",
 		},
-		operation_config: {
-			select_left_subject: "Select the permission subject on the left",
-			permission_config: "Permission Configuration",
-			select_organization: "Select Organization",
-			please_select_organization: "Please select organization",
+		resourcePermissionConfig: {
+			resourceList: "Resource List",
+			searchResource: "Search Resource",
+			selectLeftResource: "Please select the resource on the left",
+		},
+	},
+	orgManagement: {
+		searchOrg: "Search organization name",
+		addOrg: "Add organization",
+		columns: {
+			orgName: "Organization Name",
+			subOrgCount: "Sub-organization Count",
+			totalMemberCount: "Total Members",
+			createBy: "Created By",
+			createTime: "Creation Time",
+			actions: "Actions",
+		},
+		actions: {
+			edit: "Edit",
+			addSubOrg: "Add Sub-organization",
+			viewMember: "View Members",
+			delete: "Delete",
+		},
+		units: {
+			org: "sub-organization",
+			people: "people",
 		},
 	},
 }

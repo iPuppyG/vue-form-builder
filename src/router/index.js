@@ -3,6 +3,7 @@ import Router from "vue-router"
 import FormDesigner from "../views/FormDesigner/index.vue"
 import LanguageView from "./LanguageView.vue"
 import PermissionManagement from "../views/PermissionManagement/index.vue"
+import OrgManagement from "../views/OrgManagement/index.vue"
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
 					path: "permission-management",
 					name: "permission-management",
 					component: PermissionManagement,
+				},
+				{
+					path: "org-management",
+					name: "org-management",
+					component: OrgManagement,
 				},
 			],
 		},

@@ -1,25 +1,25 @@
 <template>
 	<el-container class="user-config">
 		<el-aside class="permission-subject">
-			<div class="title">{{ $t("permissionConfig.core_subject.permission_subject") }}</div>
-			<el-tabs v-model="activeTab">
+			<div class="title">{{ $t("permissionConfig.userPermissionConfig.permissionSubject") }}</div>
+			<el-tabs v-model="permissionSubject.activeTab">
 				<el-tab-pane name="organization">
-					<template slot="label">{{ $t("permissionConfig.core_subject.organization") }}</template>
+					<template slot="label">{{ $t("permissionConfig.userPermissionConfig.organization") }}</template>
 					<div class="search-panel">
 						<el-input
-							v-model="searchValue"
+							v-model="permissionSubject.orgSearchValue"
 							prefix-icon="el-icon-search"
-							:placeholder="$t('permissionConfig.core_subject.search_organization')"
+							:placeholder="$t('permissionConfig.userPermissionConfig.searchOrganization')"
 						/>
 						<div class="tree-container">
 							<el-tree
-								:data="treeData"
+								:data="orgTreeOptions"
 								:render-content="renderContent"
 								:check-strictly="false"
 								:expand-on-click-node="false"
 								highlight-current
 								default-expand-all
-								@node-click="handleOrganizationClick"
+								@node-click="handleOrgaClick"
 							/>
 						</div>
 					</div>
@@ -27,19 +27,21 @@
 
 				<el-tab-pane name="user">
 					<template slot="label">
-						{{ $t("permissionConfig.core_subject.user") }}
+						{{ $t("permissionConfig.userPermissionConfig.user") }}
 					</template>
 					<div class="search-panel">
 						<el-input
-							v-model="searchValue"
+							v-model="permissionSubject.userSearchValue"
 							prefix-icon="el-icon-search"
-							:placeholder="$t('permissionConfig.core_subject.user')"
+							:placeholder="$t('permissionConfig.userPermissionConfig.user')"
 						/>
 						<div class="user-list-container">
 							<div class="user-list">
 								<div
 									class="user-item"
-									:class="checkedUserId === user.id ? 'checked' : null"
+									:class="
+										permissionSubject.checkedUser && permissionSubject.checkedUser.id === user.id ? 'checked' : null
+									"
 									v-for="user in userList"
 									:key="user.id"
 									@click="handleUserClick(user)"
@@ -54,82 +56,63 @@
 		</el-aside>
 
 		<el-main class="permission-config">
-			<template v-if="checkedUserId || checkedOrganizationId">
+			<template v-if="permissionSubject.checkedOrg || permissionSubject.checkedUser">
 				<el-header class="header">
-					<span class="title">{{ $t("permissionConfig.operation_config.permission_config") }}</span>
+					<span class="title">{{ $t("permissionConfig.userPermissionConfig.permissionConfig") }}</span>
 					<div class="search-container">
-						<span class="search-desc">{{ $t("permissionConfig.operation_config.select_organization") }}</span>
-						<TreeSelect iconClass="ri-building-line" :width="256" :options="treeData" />
+						<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
+						<TreeSelect
+							v-model="permissionConfig.checkedOrgId"
+							iconClass="ri-building-line"
+							:width="256"
+							:options="orgTreeOptions"
+						/>
 					</div>
 				</el-header>
+				<el-main>
+					<el-tabs class="tabs" v-model="permissionConfig.activeTab">
+						<el-tab-pane v-for="item in tabsOptions" :name="item.name" :key="item.name" :label="item.label">
+							<div>{{ item.label }}</div>
+						</el-tab-pane>
+					</el-tabs>
+				</el-main>
 			</template>
 			<template v-else>
-				<span class="empty-desc">{{ $t("permissionConfig.operation_config.select_left_subject") }}</span>
+				<span class="empty-desc">{{ $t("permissionConfig.userPermissionConfig.selectLeftSubject") }}</span>
 			</template>
 		</el-main>
 	</el-container>
 </template>
 
 <script>
-import Avatar from "../../../components/Avatar.vue"
 import AvatarPanel from "../../../components/AvatarPanel.vue"
 import TreeSelect from "../../../components/TreeSelect.vue"
+import { orgTreeOptions, tabsOptions, userList } from "../constant"
 
 export default {
 	name: "UserConfig",
 	components: {
-		Avatar,
 		AvatarPanel,
 		TreeSelect,
 	},
 	data() {
 		return {
-			activeTab: "organization",
-			searchValue: "",
-			treeData: [
-				{
-					id: "company_001",
-					label: "总公司",
-					children: [
-						{
-							id: "dept_001",
-							label: "技术部",
-						},
-						{
-							id: "dept_002",
-							label: "产品部",
-						},
-						{
-							id: "dept_003",
-							label: "运营部",
-						},
-					],
-				},
-				{
-					id: "company_002",
-					label: "分公司A",
-					children: [
-						{
-							id: "dept_004",
-							label: "销售部",
-						},
-						{
-							id: "dept_005",
-							label: "市场部",
-						},
-					],
-				},
-			],
-			userList: [
-				{ id: 1, name: "张三", email: "zhangsan@company.com" },
-				{ id: 2, name: "李四", email: "lisi@company.com" },
-				{ id: 3, name: "王五", email: "wangwu@company.com" },
-				{ id: 4, name: "赵六", email: "zhaoliu@company.com" },
-				{ id: 5, name: "钱七", email: "qianqi@company.com" },
-				{ id: 6, name: "孙八", email: "sunba@company.com" },
-			],
-			checkedOrganizationId: null,
-			checkedUserId: null,
+			userList,
+			tabsOptions,
+			orgTreeOptions,
+			// 权限主体
+			permissionSubject: {
+				activeTab: "organization",
+				orgSearchValue: null,
+				userSearchValue: null,
+				checkedOrg: null,
+				checkedUser: null,
+			},
+			// 权限配置
+			permissionConfig: {
+				activeTab: "dashboard",
+				checkedOrgId: orgTreeOptions[0].id || null,
+			},
 		}
 	},
 	methods: {
@@ -137,13 +120,12 @@ export default {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},
 
-		handleOrganizationClick(organization) {
-			this.checkedOrganizationId = organization.id
+		handleOrgaClick(organization) {
+			this.permissionSubject.checkedOrg = organization
 		},
 
 		handleUserClick(user) {
-			console.log("Clicked user:", user)
-			this.checkedUserId = user.id
+			this.permissionSubject.checkedUser = user
 		},
 	},
 }
@@ -295,32 +277,6 @@ export default {
 
 						&:hover {
 							background-color: #f9fafb;
-						}
-
-						.content {
-							display: flex;
-							flex-direction: column;
-							justify-content: center;
-
-							.name,
-							.email {
-								text-overflow: hidden;
-								white-space: nowrap;
-								overflow: hidden;
-							}
-
-							.name {
-								color: #111827;
-								font-size: 14px;
-								font-weight: 500;
-								line-height: 20px;
-							}
-
-							.email {
-								color: #6b7280;
-								font-size: 12px;
-								line-height: 16px;
-							}
 						}
 					}
 				}
