@@ -248,5 +248,23 @@ export default {
 			org: "个",
 			people: "人",
 		},
+		model: {
+			viewMember: {
+				searchAccount: "搜索登录账号",
+				total: "共",
+				totalSuffix: "个成员",
+				columns: {
+					name: "姓名",
+					loginAccount: "登录账号",
+					email: "邮箱",
+					orgName: "组织",
+					userType: "用户类型",
+					userTypeMap: {
+						0: "普通用户",
+						1: "组织管理员",
+					},
+				},
+			},
+		},
 	},
 }

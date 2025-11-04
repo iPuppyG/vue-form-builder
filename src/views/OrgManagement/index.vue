@@ -1,10 +1,15 @@
 <template>
 	<main class="org-management">
 		<div class="header">
-			<el-input class="search" prefix-icon="el-icon-search" :placeholder="$t('orgManagement.searchOrg')" />
+			<el-input
+				class="search-input"
+				v-model="searchValue"
+				prefix-icon="el-icon-search"
+				:placeholder="$t('orgManagement.searchOrg')"
+			/>
 			<el-button class="add-btn" type="primary" icon="el-icon-plus">{{ $t("orgManagement.addOrg") }}</el-button>
 		</div>
-		<el-table class="table" :data="mockTreeData" :tree-props="{ children: 'subOrganizations' }" row-key="orgId">
+		<el-table class="table" :data="mockOrgTreeData" :tree-props="{ children: 'subOrganizations' }" row-key="orgId">
 			<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')">
 				<template slot-scope="scope">
 					<i class="icon ri-building-line"></i>
@@ -34,33 +39,49 @@
 			<el-table-column :label="$t('orgManagement.columns.actions')" width="340px">
 				<template slot-scope="scope">
 					<div class="actions-wrap">
-						<div class="btn edit-btn" plain>{{ $t("orgManagement.actions.edit") }}</div>
-						<div class="btn add-btn" plain>{{ $t("orgManagement.actions.addSubOrg") }}</div>
-						<div class="btn view-btn" plain>{{ $t("orgManagement.actions.viewMember") }}</div>
-						<div class="btn delete-btn" plain>{{ $t("orgManagement.actions.delete") }}</div>
+						<div class="btn edit-btn">{{ $t("orgManagement.actions.edit") }}</div>
+						<div class="btn add-btn">{{ $t("orgManagement.actions.addSubOrg") }}</div>
+						<div class="btn view-btn" @click="handleViewMember(scope.row)">
+							{{ $t("orgManagement.actions.viewMember") }}
+						</div>
+						<div class="btn delete-btn">{{ $t("orgManagement.actions.delete") }}</div>
 					</div>
 				</template>
 			</el-table-column>
 		</el-table>
+
+		<ViewMemberDialog :open="viewModalVisible" :edit-row="editRow" />
 	</main>
 </template>
 
 <script>
-import Tag from "@/components/Tag"
-import { transformTreeKey } from "./utils"
-import { mockTreeData } from "./mock"
 import dayjs from "dayjs"
+import Tag from "@/components/Tag"
+import ViewMemberDialog from "./ViewMemberDialog"
+import { transformTreeKey } from "./utils"
+import { mockOrgTreeData } from "./mock"
 
 export default {
-	components: { Tag },
+	components: { Tag, ViewMemberDialog },
 	data() {
 		return {
-			mockTreeData,
+			searchValue: null,
+			editRow: undefined,
+			editModalVisible: false,
+			viewModalVisible: false,
+			mockOrgTreeData,
 		}
 	},
 	methods: {
-		transformTreeKey,
 		dayjs,
+		transformTreeKey,
+		toggleViewMemberModal() {
+			this.viewModalVisible = !this.viewModalVisible
+		},
+		handleViewMember(row) {
+			this.editRow = row
+			this.toggleViewMemberModal()
+		},
 	},
 }
 </script>
@@ -77,7 +98,7 @@ export default {
 		justify-content: space-between;
 		margin-bottom: 24px;
 
-		.search {
+		.search-input {
 			width: 320px;
 
 			input {

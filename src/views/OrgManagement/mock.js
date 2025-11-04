@@ -1,4 +1,4 @@
-export const mockTreeData = [
+export const mockOrgTreeData = [
 	{
 		orgId: 1,
 		name: "总公司",
@@ -102,5 +102,88 @@ export const mockTreeData = [
 		subOrganizations: null,
 		totalMemberCount: 10,
 		subOrganizationCount: 0,
+	},
+]
+
+export const mockMemberData = [
+	{
+		userId: 1,
+		orgName: "总公司",
+		username: "zhangsan",
+		nickName: "张三",
+		email: "zhangsan@company.com",
+		userType: 1,
+	},
+	{
+		userId: 2,
+		orgName: "总公司",
+		username: "lisi",
+		nickName: "李四",
+		email: "lisi@company.com",
+		userType: 0,
+	},
+	{
+		userId: 3,
+		orgName: "技术中心",
+		username: "wangwu",
+		nickName: "王五",
+		email: "wangwu@company.com",
+		userType: 1,
+	},
+	{
+		userId: 4,
+		orgName: "技术中心",
+		username: "zhaoliu",
+		nickName: "赵六",
+		email: "zhaoliu@company.com",
+		userType: 0,
+	},
+	{
+		userId: 5,
+		orgName: "前端开发部",
+		username: "qianqi",
+		nickName: "钱七",
+		email: "qianqi@company.com",
+		userType: 1,
+	},
+	{
+		userId: 6,
+		orgName: "前端开发部",
+		username: "sunba",
+		nickName: "孙八",
+		email: "sunba@company.com",
+		userType: 0,
+	},
+	{
+		userId: 7,
+		orgName: "前端开发部",
+		username: "zhoujiu",
+		nickName: "周九",
+		email: "zhoujiu@company.com",
+		userType: 0,
+	},
+	{
+		userId: 8,
+		orgName: "前端开发部",
+		username: "wushi",
+		nickName: "吴十",
+		email: "wushi@company.com",
+		userType: 0,
+	},
+	{
+		userId: 9,
+		orgName: "后端开发部",
+		username: "zhengyi",
+		nickName: "郑一",
+		email: "zhengyi@company.com",
+		userType: 1,
+	},
+	{
+		userId: 10,
+		orgName: "后端开发部",
+		username: "wanger",
+		nickName: "王二",
+		email: "wanger@company.com",
+		userType: 0,
 	},
 ]

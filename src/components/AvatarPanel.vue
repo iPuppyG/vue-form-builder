@@ -1,5 +1,5 @@
 <template>
-	<div class="avatar-panel">
+	<div class="avatar-panel" v-bind="$attrs">
 		<Avatar :icon="iconClass" />
 		<div class="content">
 			<span class="label">{{ label }}</span>
