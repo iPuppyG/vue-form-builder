@@ -1,36 +1,34 @@
 <template>
-	<el-dialog class="view-member-dialog" :visible.sync="open" width="900px">
+	<el-dialog class="view-member-dialog" :visible.sync="open" width="900px" center>
 		<div class="search-panel">
-			<el-input
-				class="search-input"
-				v-model="searchValue"
-				prefix-icon="el-icon-search"
-				:placeholder="$t('orgManagement.model.viewMember.searchAccount')"
-			></el-input>
+			<el-input class="search-input" v-model="searchValue" prefix-icon="el-icon-search"
+				:placeholder="$t('orgManagement.dialog.viewMember.searchAccount')"></el-input>
 			<span class="member-account">
 				{{
-					`${$t("orgManagement.model.viewMember.total")} ${memberCount} ${$t(
-						"orgManagement.model.viewMember.totalSuffix"
+					`${$t("orgManagement.dialog.viewMember.total")} ${memberCount} ${$t(
+						"orgManagement.dialog.viewMember.totalSuffix"
 					)}`
 				}}
 			</span>
 		</div>
 		<el-table class="view-member-table" :data="mockMemberData" row-key="userId">
-			<el-table-column prop="nickName" :label="$t('orgManagement.model.viewMember.columns.name')">
-				<template slot-scope="scope"><AvatarPanel class="name-column" :label="scope.row.nickName" /></template>
-			</el-table-column>
-			<el-table-column
-				prop="username"
-				:label="$t('orgManagement.model.viewMember.columns.loginAccount')"
-			></el-table-column>
-			<el-table-column prop="email" :label="$t('orgManagement.model.viewMember.columns.email')"></el-table-column>
-			<el-table-column prop="orgName" :label="$t('orgManagement.model.viewMember.columns.orgName')"></el-table-column>
-			<el-table-column prop="userType" :label="$t('orgManagement.model.viewMember.columns.userType')">
+			<el-table-column prop="nickName" :label="$t('orgManagement.dialog.viewMember.columns.name')">
 				<template slot-scope="scope">
-					<Tag>{{ $t(`orgManagement.model.viewMember.columns.userTypeMap.${scope.row.userType}`) }}</Tag>
+					<AvatarPanel class="name-column" :label="scope.row.nickName" />
+				</template>
+			</el-table-column>
+			<el-table-column prop="username"
+				:label="$t('orgManagement.dialog.viewMember.columns.loginAccount')"></el-table-column>
+			<el-table-column prop="email" :label="$t('orgManagement.dialog.viewMember.columns.email')"></el-table-column>
+			<el-table-column prop="orgName" :label="$t('orgManagement.dialog.viewMember.columns.orgName')"></el-table-column>
+			<el-table-column prop="userType" :label="$t('orgManagement.dialog.viewMember.columns.userType')">
+				<template slot-scope="scope">
+					<Tag>{{ $t(`orgManagement.dialog.viewMember.columns.userTypeMap.${scope.row.userType}`) }}</Tag>
 				</template>
 			</el-table-column>
 		</el-table>
+		<el-pagination class="pagination" :page-size="100" layout="total, prev, pager, next" :total="1000" background>
+		</el-pagination>
 	</el-dialog>
 </template>
 
@@ -103,11 +101,22 @@ export default {
 		.el-table__row {
 			height: 65px;
 		}
+
+		.name-column {
+			font-size: 14px;
+			font-weight: 500;
+		}
 	}
 
-	.name-column {
-		font-size: 14px;
-		font-weight: 500;
+	.pagination {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		padding: 16px 0;
+
+		.el-pagination__total {
+			margin-right: auto;
+		}
 	}
 }
 </style>

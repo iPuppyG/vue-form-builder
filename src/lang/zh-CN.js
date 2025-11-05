@@ -248,7 +248,7 @@ export default {
 			org: "个",
 			people: "人",
 		},
-		model: {
+		dialog: {
 			viewMember: {
 				searchAccount: "搜索登录账号",
 				total: "共",
@@ -264,6 +264,11 @@ export default {
 						1: "组织管理员",
 					},
 				},
+			},
+			edit: {
+				orgName: "组织名称",
+				parentOrg: "上级组织",
+				nameInputPlaceholder: "请输入组织名称",
 			},
 		},
 	},

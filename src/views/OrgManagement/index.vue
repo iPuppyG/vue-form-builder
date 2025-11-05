@@ -1,56 +1,58 @@
 <template>
 	<main class="org-management">
 		<div class="header">
-			<el-input
-				class="search-input"
-				v-model="searchValue"
-				prefix-icon="el-icon-search"
-				:placeholder="$t('orgManagement.searchOrg')"
-			/>
-			<el-button class="add-btn" type="primary" icon="el-icon-plus">{{ $t("orgManagement.addOrg") }}</el-button>
+			<el-input class="search-input" v-model="searchValue" prefix-icon="el-icon-search"
+				:placeholder="$t('orgManagement.searchOrg')" />
+			<el-button class="add-btn" type="primary" icon="el-icon-plus" @click="handleAddOrg">{{ $t("orgManagement.addOrg")
+			}}</el-button>
 		</div>
-		<el-table class="table" :data="mockOrgTreeData" :tree-props="{ children: 'subOrganizations' }" row-key="orgId">
-			<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')">
-				<template slot-scope="scope">
-					<i class="icon ri-building-line"></i>
-					<span class="orgName">{{ scope.row.name }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column prop="subOrganizationCount" :label="$t('orgManagement.columns.subOrgCount')">
-				<template slot-scope="scope">
-					<Tag color="blue">{{ `${scope.row.subOrganizationCount} ${$t("orgManagement.units.org")}` }}</Tag>
-				</template>
-			</el-table-column>
-			<el-table-column prop="totalMemberCount" :label="$t('orgManagement.columns.totalMemberCount')">
-				<template slot-scope="scope">
-					<Tag color="green">{{ `${scope.row.totalMemberCount} ${$t("orgManagement.units.people")}` }}</Tag>
-				</template>
-			</el-table-column>
-			<el-table-column prop="createBy" :label="$t('orgManagement.columns.createBy')">
-				<template slot-scope="scope">
-					<span class="createBy">{{ scope.row.createBy }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column prop="createTime" :label="$t('orgManagement.columns.createTime')">
-				<template slot-scope="scope">
-					<span class="createTime">{{ dayjs(scope.row.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column :label="$t('orgManagement.columns.actions')" width="340px">
-				<template slot-scope="scope">
-					<div class="actions-wrap">
-						<div class="btn edit-btn">{{ $t("orgManagement.actions.edit") }}</div>
-						<div class="btn add-btn">{{ $t("orgManagement.actions.addSubOrg") }}</div>
-						<div class="btn view-btn" @click="handleViewMember(scope.row)">
-							{{ $t("orgManagement.actions.viewMember") }}
+		<div class="table-container">
+			<el-table class="table" :data="mockOrgTreeData" :tree-props="{ children: 'subOrganizations' }" row-key="orgId">
+				<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')">
+					<template slot-scope="scope">
+						<i class="icon ri-building-line"></i>
+						<span class="orgName">{{ scope.row.name }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="subOrganizationCount" :label="$t('orgManagement.columns.subOrgCount')">
+					<template slot-scope="scope">
+						<Tag color="blue">{{ `${scope.row.subOrganizationCount} ${$t("orgManagement.units.org")}` }}</Tag>
+					</template>
+				</el-table-column>
+				<el-table-column prop="totalMemberCount" :label="$t('orgManagement.columns.totalMemberCount')">
+					<template slot-scope="scope">
+						<Tag color="green">{{ `${scope.row.totalMemberCount} ${$t("orgManagement.units.people")}` }}</Tag>
+					</template>
+				</el-table-column>
+				<el-table-column prop="createBy" :label="$t('orgManagement.columns.createBy')">
+					<template slot-scope="scope">
+						<span class="createBy">{{ scope.row.createBy }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="createTime" :label="$t('orgManagement.columns.createTime')">
+					<template slot-scope="scope">
+						<span class="createTime">{{ dayjs(scope.row.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column :label="$t('orgManagement.columns.actions')" width="340px">
+					<template slot-scope="scope">
+						<div class="actions-wrap">
+							<div class="btn edit-btn">{{ $t("orgManagement.actions.edit") }}</div>
+							<div class="btn add-btn">{{ $t("orgManagement.actions.addSubOrg") }}</div>
+							<div class="btn view-btn" @click="handleViewMember(scope.row)">
+								{{ $t("orgManagement.actions.viewMember") }}
+							</div>
+							<div class="btn delete-btn">{{ $t("orgManagement.actions.delete") }}</div>
 						</div>
-						<div class="btn delete-btn">{{ $t("orgManagement.actions.delete") }}</div>
-					</div>
-				</template>
-			</el-table-column>
-		</el-table>
+					</template>
+				</el-table-column>
+			</el-table>
+			<el-pagination class="pagination" :page-size="100" layout="total, prev, pager, next" :total="1000"
+				background></el-pagination>
+		</div>
 
 		<ViewMemberDialog :open="viewModalVisible" :edit-row="editRow" />
+		<EditDialog :open="editModalVisible" :edit-row="editRow" :type="editModalType" />
 	</main>
 </template>
 
@@ -58,17 +60,19 @@
 import dayjs from "dayjs"
 import Tag from "@/components/Tag"
 import ViewMemberDialog from "./ViewMemberDialog"
+import EditDialog from "./EditDialog"
 import { transformTreeKey } from "./utils"
 import { mockOrgTreeData } from "./mock"
 
 export default {
-	components: { Tag, ViewMemberDialog },
+	components: { Tag, ViewMemberDialog, EditDialog },
 	data() {
 		return {
 			searchValue: null,
 			editRow: undefined,
 			editModalVisible: false,
 			viewModalVisible: false,
+			editModalType: 'add',
 			mockOrgTreeData,
 		}
 	},
@@ -78,9 +82,24 @@ export default {
 		toggleViewMemberModal() {
 			this.viewModalVisible = !this.viewModalVisible
 		},
+		toggleEditOrgModal() {
+			this.editModalVisible = !this.editModalVisible
+		},
 		handleViewMember(row) {
 			this.editRow = row
 			this.toggleViewMemberModal()
+		},
+		handleAddOrg() {
+			this.editRow = null
+			this.toggleEditOrgModal()
+		},
+		handleAddSubOrg(row) {
+			this.editRow = row
+			this.toggleEditOrgModal()
+		},
+		handleEditOrg(row) {
+			this.editRow = row
+			this.toggleEditOrgModal()
 		},
 	},
 }
@@ -111,84 +130,98 @@ export default {
 		}
 	}
 
-	.table {
+	.table-container {
 		box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 		border-radius: 8px;
-		border: none;
 
-		.el-table__header-wrapper {
-			.el-table__cell {
-				background-color: #f9fafb;
+		.table {
+			border: none;
 
-				.cell {
-					color: #6b7280;
-					font-size: 12px;
-					font-weight: 400;
+			.el-table__header-wrapper {
+				.el-table__cell {
+					background-color: #f9fafb;
+
+					.cell {
+						color: #6b7280;
+						font-size: 12px;
+						font-weight: 400;
+					}
 				}
 			}
-		}
 
-		.el-table__row {
-			height: 65px;
-		}
+			.el-table__row {
+				height: 65px;
+			}
 
-		.icon {
-			color: #3b82f6;
-		}
+			.icon {
+				color: #3b82f6;
+			}
 
-		.orgName {
-			margin-left: 8px;
-			color: #111827;
-			font-size: 14px;
-			font-weight: 500;
-		}
-
-		.createBy,
-		.createTime {
-			color: #111827;
-			font-size: 14px;
-			font-weight: 400;
-		}
-
-		.actions-wrap {
-			display: flex;
-			align-items: center;
-			gap: 8px;
-
-			.btn {
+			.orgName {
+				margin-left: 8px;
+				color: #111827;
 				font-size: 14px;
-				border-radius: 8px;
-				padding: 6px 12px;
-				line-height: 20px;
-				cursor: pointer;
+				font-weight: 500;
 			}
 
-			.edit-btn {
-				color: #374151;
-				border: 1px solid #d1d5db;
+			.createBy,
+			.createTime {
+				color: #111827;
+				font-size: 14px;
+				font-weight: 400;
 			}
 
-			.add-btn {
-				color: #fff;
-				background-color: #454f5d;
+			.actions-wrap {
+				display: flex;
+				align-items: center;
+				gap: 8px;
 
-				&:hover {
-					background-color: #374151;
+				.btn {
+					font-size: 14px;
+					border-radius: 8px;
+					padding: 6px 12px;
+					line-height: 20px;
+					cursor: pointer;
+				}
+
+				.edit-btn {
+					color: #374151;
+					border: 1px solid #d1d5db;
+				}
+
+				.add-btn {
+					color: #fff;
+					background-color: #454f5d;
+
+					&:hover {
+						background-color: #374151;
+					}
+				}
+
+				.view-btn {
+					color: #374151;
+					border: 1px solid #d1d5db;
+				}
+
+				.delete-btn {
+					color: #fff;
+					background-color: #dc2626;
+
+					&:hover {
+						background-color: #b91c1c;
+					}
 				}
 			}
+		}
 
-			.view-btn {
-				color: #374151;
-				border: 1px solid #d1d5db;
-			}
+		.pagination {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			padding: 16px 24px;
 
-			.delete-btn {
-				color: #fff;
-				background-color: #dc2626;
-
-				&:hover {
-					background-color: #b91c1c;
-				}
+			.el-pagination__total {
+				margin-right: auto;
 			}
 		}
 	}

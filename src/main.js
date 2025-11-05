@@ -13,11 +13,10 @@ Vue.use(VueI18n)
 Vue.use(VueEditor)
 
 const i18n = new VueI18n({
+	locale: "zh-CN",
 	messages: {
 		"en-US": enLocale,
-	},
-	"zh-CN": {
-		zhLocale,
+		"zh-CN": zhLocale,
 	},
 })
 
