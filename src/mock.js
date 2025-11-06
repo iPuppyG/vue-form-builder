@@ -1,3 +1,5 @@
+import { ROOT_ORG_ID } from "./views/OrgManagement/constant"
+
 export const mockOrgTreeData = [
 	{
 		orgId: 1,
@@ -104,6 +106,17 @@ export const mockOrgTreeData = [
 		subOrganizationCount: 0,
 	},
 ]
+
+export const ORG_ROOT_NODE = {
+	orgId: ROOT_ORG_ID,
+	name: "根组织",
+	pid: null,
+	createBy: null,
+	createTime: null,
+	subOrganizations: null,
+	totalMemberCount: 0,
+	subOrganizationCount: 0,
+}
 
 export const mockMemberData = [
 	{

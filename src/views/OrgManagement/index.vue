@@ -1,13 +1,26 @@
 <template>
 	<main class="org-management">
 		<div class="header">
-			<el-input class="search-input" v-model="searchValue" prefix-icon="el-icon-search"
-				:placeholder="$t('orgManagement.searchOrg')" />
-			<el-button class="add-btn" type="primary" icon="el-icon-plus" @click="handleAddOrg">{{ $t("orgManagement.addOrg")
-			}}</el-button>
+			<el-input
+				class="search-input"
+				v-model="searchValue"
+				prefix-icon="el-icon-search"
+				:placeholder="$t('orgManagement.searchOrg')"
+			/>
+			<el-button class="add-btn" type="primary" icon="el-icon-plus" @click="handleAddOrg">
+				{{ $t("orgManagement.addOrg") }}
+			</el-button>
 		</div>
 		<div class="table-container">
-			<el-table class="table" :data="mockOrgTreeData" :tree-props="{ children: 'subOrganizations' }" row-key="orgId">
+			<el-table
+				class="table"
+				:data="mockOrgTreeData"
+				:tree-props="{ children: 'subOrganizations' }"
+				row-key="orgId"
+				:style="{
+					width: '100%',
+				}"
+			>
 				<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')">
 					<template slot-scope="scope">
 						<i class="icon ri-building-line"></i>
@@ -16,12 +29,16 @@
 				</el-table-column>
 				<el-table-column prop="subOrganizationCount" :label="$t('orgManagement.columns.subOrgCount')">
 					<template slot-scope="scope">
-						<Tag color="blue">{{ `${scope.row.subOrganizationCount} ${$t("orgManagement.units.org")}` }}</Tag>
+						<Tag color="blue">
+							{{ `${scope.row.subOrganizationCount} ${$t("orgManagement.units.org")}` }}
+						</Tag>
 					</template>
 				</el-table-column>
 				<el-table-column prop="totalMemberCount" :label="$t('orgManagement.columns.totalMemberCount')">
 					<template slot-scope="scope">
-						<Tag color="green">{{ `${scope.row.totalMemberCount} ${$t("orgManagement.units.people")}` }}</Tag>
+						<Tag color="green">
+							{{ `${scope.row.totalMemberCount} ${$t("orgManagement.units.people")}` }}
+						</Tag>
 					</template>
 				</el-table-column>
 				<el-table-column prop="createBy" :label="$t('orgManagement.columns.createBy')">
@@ -34,25 +51,36 @@
 						<span class="createTime">{{ dayjs(scope.row.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('orgManagement.columns.actions')" width="340px">
+				<el-table-column :label="$t('orgManagement.columns.actions')">
 					<template slot-scope="scope">
 						<div class="actions-wrap">
-							<div class="btn edit-btn">{{ $t("orgManagement.actions.edit") }}</div>
-							<div class="btn add-btn">{{ $t("orgManagement.actions.addSubOrg") }}</div>
+							<div class="btn edit-btn" @click="handleEditOrg(scope.row)">
+								{{ $t("orgManagement.actions.edit") }}
+							</div>
+							<div class="btn add-btn" @click="handleAddSubOrg(scope.row)">
+								{{ $t("orgManagement.actions.addSubOrg") }}
+							</div>
 							<div class="btn view-btn" @click="handleViewMember(scope.row)">
 								{{ $t("orgManagement.actions.viewMember") }}
 							</div>
-							<div class="btn delete-btn">{{ $t("orgManagement.actions.delete") }}</div>
+							<div class="btn delete-btn">
+								{{ $t("orgManagement.actions.delete") }}
+							</div>
 						</div>
 					</template>
 				</el-table-column>
 			</el-table>
-			<el-pagination class="pagination" :page-size="100" layout="total, prev, pager, next" :total="1000"
-				background></el-pagination>
+			<el-pagination
+				class="pagination"
+				:page-size="100"
+				layout="total, prev, pager, next"
+				:total="1000"
+				background
+			></el-pagination>
 		</div>
 
-		<ViewMemberDialog :open="viewModalVisible" :edit-row="editRow" />
-		<EditDialog :open="editModalVisible" :edit-row="editRow" :type="editModalType" />
+		<ViewMemberDialog :visible.sync="viewModalVisible" :edit-row="editRow" />
+		<EditDialog :visible.sync="editModalVisible" :edit-row="editRow" :type="editModalType" />
 	</main>
 </template>
 
@@ -61,8 +89,7 @@ import dayjs from "dayjs"
 import Tag from "@/components/Tag"
 import ViewMemberDialog from "./ViewMemberDialog"
 import EditDialog from "./EditDialog"
-import { transformTreeKey } from "./utils"
-import { mockOrgTreeData } from "./mock"
+import { mockOrgTreeData } from "../../mock"
 
 export default {
 	components: { Tag, ViewMemberDialog, EditDialog },
@@ -72,13 +99,12 @@ export default {
 			editRow: undefined,
 			editModalVisible: false,
 			viewModalVisible: false,
-			editModalType: 'add',
+			editModalType: "add",
 			mockOrgTreeData,
 		}
 	},
 	methods: {
 		dayjs,
-		transformTreeKey,
 		toggleViewMemberModal() {
 			this.viewModalVisible = !this.viewModalVisible
 		},
@@ -91,14 +117,17 @@ export default {
 		},
 		handleAddOrg() {
 			this.editRow = null
+			this.editModalType = "add"
 			this.toggleEditOrgModal()
 		},
 		handleAddSubOrg(row) {
 			this.editRow = row
+			this.editModalType = "add-sub"
 			this.toggleEditOrgModal()
 		},
 		handleEditOrg(row) {
 			this.editRow = row
+			this.editModalType = "edit"
 			this.toggleEditOrgModal()
 		},
 	},
@@ -126,11 +155,15 @@ export default {
 		}
 
 		.add-btn {
+			font-size: 14px;
+			font-weight: 400;
 			border-radius: 8px;
 		}
 	}
 
 	.table-container {
+		width: 100%;
+		overflow: hidden;
 		box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 		border-radius: 8px;
 
@@ -177,6 +210,7 @@ export default {
 				gap: 8px;
 
 				.btn {
+					white-space: nowrap;
 					font-size: 14px;
 					border-radius: 8px;
 					padding: 6px 12px;

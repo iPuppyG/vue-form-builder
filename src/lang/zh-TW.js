@@ -202,6 +202,12 @@ export default {
 			delete: "刪除",
 		},
 	},
+	actions: {
+		dialog: {
+			cancel: "取消",
+			confirm: "確認",
+		},
+	},
 	permissionConfig: {
 		tabs: {
 			userPermissionConfig: "按用戶權限配置",
@@ -244,6 +250,35 @@ export default {
 		units: {
 			org: "個",
 			people: "人",
+		},
+		dialog: {
+			viewMember: {
+				searchAccount: "搜尋登入帳號",
+				total: "共",
+				totalSuffix: "個成員",
+				columns: {
+					name: "姓名",
+					loginAccount: "登入帳號",
+					email: "郵箱",
+					orgName: "組織",
+					userType: "用戶類型",
+					userTypeMap: {
+						0: "普通用戶",
+						1: "組織管理員",
+					},
+				},
+			},
+			edit: {
+				orgName: "組織名稱",
+				parentOrg: "上級組織",
+				nameInputPlaceholder: "請輸入組織名稱",
+				nameInputRequireMessage: "組織名稱不能為空",
+				as: "將作為",
+				subOrg: "的子組織",
+				noParentOrg: "無上級組織（根組織）",
+				currentSelect: "當前選擇",
+				rootOrg: "根組織",
+			},
 		},
 	},
 }

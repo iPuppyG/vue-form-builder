@@ -36,7 +36,9 @@
 import Avatar from "../../../components/Avatar.vue"
 import AvatarPanel from "../../../components/AvatarPanel.vue"
 import TreeSelect from "../../../components/TreeSelect.vue"
-import { orgTreeOptions, tabsOptions, userList } from "../constant"
+import { mockOrgTreeData } from "../../../mock"
+import { transformOrgTreeForElement } from "../../OrgManagement/utils"
+import { tabsOptions, userList } from "../constant"
 
 export default {
 	name: "ResourceConfig",
@@ -48,10 +50,10 @@ export default {
 	data() {
 		return {
 			tabsOptions,
-			orgTreeOptions,
+			orgTreeOptions: transformOrgTreeForElement(mockOrgTreeData),
 			userList,
 			resourceList: {
-				checkedOrgId: orgTreeOptions[0].id || null,
+				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
 				activeTab: "dashboard",
 				searchValue: null,
 			},

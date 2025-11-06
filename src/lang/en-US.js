@@ -203,6 +203,12 @@ export default {
 			delete: "delete",
 		},
 	},
+	actions: {
+		dialog: {
+			cancel: "Cancel",
+			confirm: "Confirm",
+		},
+	},
 	permissionConfig: {
 		tabs: {
 			userPermissionConfig: "User Permission Configuration",
@@ -245,6 +251,35 @@ export default {
 		units: {
 			org: "sub-organization",
 			people: "people",
+		},
+		dialog: {
+			viewMember: {
+				searchAccount: "Search login account",
+				total: "Total",
+				totalSuffix: "members",
+				columns: {
+					name: "Name",
+					loginAccount: "Login Account",
+					email: "Email",
+					orgName: "Organization",
+					userType: "User Type",
+					userTypeMap: {
+						0: "Regular User",
+						1: "Organization Admin",
+					},
+				},
+			},
+			edit: {
+				orgName: "Organization Name",
+				parentOrg: "Parent Organization",
+				nameInputPlaceholder: "Please enter organization name",
+				nameInputRequireMessage: "Organization name cannot be empty",
+				as: "as a sub-organization of",
+				subOrg: "",
+				noParentOrg: "No parent organization (root organization)",
+				currentSelect: "Current Selection",
+				rootOrg: "Root Organization",
+			},
 		},
 	},
 }

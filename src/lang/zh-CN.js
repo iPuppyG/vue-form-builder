@@ -205,6 +205,12 @@ export default {
 			delete: "删除",
 		},
 	},
+	actions: {
+		dialog: {
+			cancel: "取消",
+			confirm: "确认",
+		},
+	},
 	permissionConfig: {
 		tabs: {
 			userPermissionConfig: "按用户权限配置",
@@ -269,6 +275,12 @@ export default {
 				orgName: "组织名称",
 				parentOrg: "上级组织",
 				nameInputPlaceholder: "请输入组织名称",
+				nameInputRequireMessage: "组织名称不能为空",
+				as: "将作为",
+				subOrg: "的子组织",
+				noParentOrg: "无上级组织（根组织）",
+				currentSelect: "当前选择",
+				rootOrg: "根组织",
 			},
 		},
 	},

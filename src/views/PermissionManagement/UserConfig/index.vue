@@ -19,7 +19,7 @@
 								:expand-on-click-node="false"
 								highlight-current
 								default-expand-all
-								@node-click="handleOrgaClick"
+								@node-click="handleOrgClick"
 							/>
 						</div>
 					</div>
@@ -87,7 +87,9 @@
 <script>
 import AvatarPanel from "../../../components/AvatarPanel.vue"
 import TreeSelect from "../../../components/TreeSelect.vue"
-import { orgTreeOptions, tabsOptions, userList } from "../constant"
+import { mockOrgTreeData } from "../../../mock"
+import { transformOrgTreeForElement } from "../../OrgManagement/utils"
+import { tabsOptions, userList } from "../constant"
 
 export default {
 	name: "UserConfig",
@@ -99,7 +101,7 @@ export default {
 		return {
 			userList,
 			tabsOptions,
-			orgTreeOptions,
+			orgTreeOptions: transformOrgTreeForElement(mockOrgTreeData),
 			// 权限主体
 			permissionSubject: {
 				activeTab: "organization",
@@ -111,7 +113,7 @@ export default {
 			// 权限配置
 			permissionConfig: {
 				activeTab: "dashboard",
-				checkedOrgId: orgTreeOptions[0].id || null,
+				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
 			},
 		}
 	},
@@ -120,10 +122,10 @@ export default {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},
 
-		handleOrgaClick(organization) {
+		handleOrgClick(organization) {
+			console.log(organization)
 			this.permissionSubject.checkedOrg = organization
 		},
-
 		handleUserClick(user) {
 			this.permissionSubject.checkedUser = user
 		},

@@ -1,44 +1,58 @@
 /**
- * 通用树形结构key转换函数：将指定的子节点字段转换为"children"
- * @param {Array|Object} data - 输入的树形数据（数组或单个对象）
- * @param {string} originalKey - 需要被替换的子节点字段名（如"subOrganizations"）
- * @returns {Array|Object} 转换后的树形数据（子节点字段替换为"children"）
+ * 将组织树数据转换为 orgId -> name 的平级 map
+ * @param {Array} treeData 组织树数据
+ * @returns {Object} 平级 map（key: orgId, value: name）
  */
-export const transformTreeKey = (data, originalKey) => {
-	// 边界处理：如果数据为null/undefined，直接返回
-	if (data === null || data === undefined) {
-		return data
+export const convertOrgTreeToMap = treeData => {
+	const orgMap = {}
+
+	// 递归处理单个节点及其子节点
+	function traverse(node) {
+		// 提取当前节点的 orgId 和 name
+		orgMap[node.orgId] = node.name
+
+		// 若有子节点，递归处理
+		if (node.subOrganizations && node.subOrganizations.length) {
+			node.subOrganizations.forEach(child => traverse(child))
+		}
 	}
 
-	// 处理数组类型（顶层可能是数组）
-	if (Array.isArray(data)) {
-		return data.map(item => transformTreeKey(item, originalKey))
-	}
+	// 遍历顶层节点
+	treeData.forEach(rootNode => traverse(rootNode))
 
-	// 处理对象类型
-	if (typeof data === "object") {
-		// 创建新对象，避免修改原数据（浅拷贝基础上处理）
-		const newObj = { ...data }
+	return orgMap
+}
 
-		// 如果当前对象包含需要替换的key
-		if (originalKey in newObj) {
-			// 递归处理子节点（子节点可能是数组/对象/null）
-			newObj.children = transformTreeKey(newObj[originalKey], originalKey)
-			// 删除原key
-			delete newObj[originalKey]
+/**
+ * 转换组织树数据字段，适配 Element Tree 组件
+ * @param {Array} treeData 原始组织树数据
+ * @returns {Array} 转换后的树数据（orgId→id，subOrganizations→children，name→label）
+ */
+export function transformOrgTreeForElement(treeData) {
+	// 递归处理单个节点
+	function transformNode(node) {
+		// 复制原始节点并替换字段名
+		const transformedNode = {
+			id: node.orgId, // orgId → id
+			label: node.name, // name → label
+			pid: node.pid,
+			createBy: node.createBy,
+			createTime: node.createTime,
+			totalMemberCount: node.totalMemberCount,
+			subOrganizationCount: node.subOrganizationCount,
 		}
 
-		// 遍历其他字段，确保嵌套对象也被处理（如存在多层嵌套的非子节点对象）
-		Object.keys(newObj).forEach(key => {
-			// 跳过已处理的children，递归处理其他可能的嵌套对象/数组
-			if (key !== "children" && typeof newObj[key] === "object" && newObj[key] !== null) {
-				newObj[key] = transformTreeKey(newObj[key], originalKey)
-			}
-		})
+		// 处理子节点（subOrganizations → children）
+		if (node.subOrganizations && node.subOrganizations.length) {
+			transformedNode.children = node.subOrganizations.map(child => transformNode(child))
+		} else {
+			// 无子节点时设为 null
+			transformedNode.children = null
+		}
 
-		return newObj
+		return transformedNode
 	}
 
-	// 非对象/数组类型（如基本类型）直接返回
-	return data
+	// 处理顶层节点数组
+	return treeData.map(rootNode => transformNode(rootNode))
 }

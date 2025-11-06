@@ -7,3 +7,5 @@ export const USER_TYPE_MAP = {
 	[USER_TYPE.NORMAL_USER]: "普通用户",
 	[USER_TYPE.ADMIN]: "组织管理员",
 }
+
+export const ROOT_ORG_ID = 0
