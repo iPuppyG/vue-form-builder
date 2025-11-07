@@ -51,7 +51,7 @@
 						<span class="createTime">{{ dayjs(scope.row.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('orgManagement.columns.actions')">
+				<el-table-column :label="$t('orgManagement.columns.actions')" min-width="340px">
 					<template slot-scope="scope">
 						<div class="actions-wrap">
 							<div class="btn edit-btn" @click="handleEditOrg(scope.row)">
