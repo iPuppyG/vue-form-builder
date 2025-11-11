@@ -24,7 +24,6 @@
 						</div>
 					</div>
 				</el-tab-pane>
-
 				<el-tab-pane name="user">
 					<template slot="label">
 						{{ $t("permissionConfig.userPermissionConfig.user") }}
@@ -71,9 +70,12 @@
 				</el-header>
 				<el-main>
 					<el-tabs class="tabs" v-model="permissionConfig.activeTab">
-						<el-tab-pane v-for="item in tabsOptions" :name="item.name" :key="item.name" :label="item.label">
-							<div>{{ item.label }}</div>
-						</el-tab-pane>
+						<el-tab-pane
+							v-for="item in tabsOptions"
+							:name="item.value"
+							:key="item.value"
+							:label="$t(`orgManagement.tabMap.${item.value}`)"
+						></el-tab-pane>
 					</el-tabs>
 				</el-main>
 			</template>
@@ -112,7 +114,7 @@ export default {
 			},
 			// 权限配置
 			permissionConfig: {
-				activeTab: "dashboard",
+				activeTab: "panel",
 				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
 			},
 		}

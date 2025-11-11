@@ -252,6 +252,20 @@ export default {
 			org: "sub-organization",
 			people: "people",
 		},
+		tabMap: {
+			panel: "Panel",
+			download_task: "Download Task",
+			data_fill: "Data Fill",
+			dataset: "Dataset",
+			link: "Link",
+		},
+		configAction: {
+			edit: "Edit",
+			view: "View",
+			manage: "Table Management",
+			submit: "Submit Data",
+			export: "Export",
+		},
 		dialog: {
 			viewMember: {
 				searchAccount: "Search login account",

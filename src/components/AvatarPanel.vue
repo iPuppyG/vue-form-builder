@@ -1,6 +1,6 @@
 <template>
 	<div class="avatar-panel" v-bind="$attrs">
-		<Avatar :icon="iconClass" />
+		<Avatar :icon="iconClass" :color="iconColor" />
 		<div class="content">
 			<span class="label">{{ label }}</span>
 			<span class="desc">{{ desc }}</span>
@@ -30,7 +30,7 @@ export default {
 			default: "ri-user-line",
 			required: false,
 		},
-		color: {
+		iconColor: {
 			type: String,
 			default: "#3b82f6",
 		},

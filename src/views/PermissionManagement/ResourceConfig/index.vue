@@ -11,7 +11,12 @@
 				/>
 			</el-header>
 			<el-tabs class="tabs" v-model="resourceList.activeTab">
-				<el-tab-pane v-for="item in tabsOptions" :name="item.name" :key="item.name" :label="item.label">
+				<el-tab-pane
+					v-for="item in tabsOptions"
+					:name="item.value"
+					:key="item.value"
+					:label="$t(`orgManagement.tabMap.${item.value}`)"
+				>
 					<el-input
 						class="search-input"
 						v-model="resourceList.searchValue"
@@ -54,7 +59,7 @@ export default {
 			userList,
 			resourceList: {
 				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
-				activeTab: "dashboard",
+				activeTab: "panel",
 				searchValue: null,
 			},
 		}

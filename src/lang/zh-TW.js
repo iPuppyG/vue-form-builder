@@ -251,6 +251,20 @@ export default {
 			org: "個",
 			people: "人",
 		},
+		tabMap: {
+			panel: "儀表盤",
+			download_task: "自助取數",
+			data_fill: "數據填報",
+			dataset: "數據集",
+			link: "數據源",
+		},
+		configAction: {
+			edit: "編輯",
+			view: "查看",
+			manage: "表格管理",
+			submit: "提交數據",
+			export: "匯出",
+		},
 		dialog: {
 			viewMember: {
 				searchAccount: "搜尋登入帳號",

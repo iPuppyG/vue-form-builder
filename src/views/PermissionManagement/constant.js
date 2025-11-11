@@ -1,32 +1,32 @@
 export const tabsOptions = [
 	{
 		label: "仪表盘",
-		name: "dashboard",
+		value: "panel",
 	},
 	{
 		label: "自助取数",
-		name: "selfServiceData",
+		value: "download_task",
 	},
 	{
 		label: "数据填报",
-		name: "dataReporting",
+		value: "data_fill",
 	},
 	{
 		label: "数据集",
-		name: "dataSet",
+		value: "dataset",
 	},
 	{
 		label: "数据源",
-		name: "dataSource",
+		value: "link",
 	},
 ]
 
 export const permissionConfigIcons = new Map([
-	["dashboard", "ri-dashboard-line"],
-	["selfServiceData", "ri-search-line"],
-	["dataReporting", "ri-file-text-line"],
-	["dataSet", "ri-database-line"],
-	["dataSource", "ri-server-line"],
+	["panel", "ri-dashboard-line"],
+	["download_task", "ri-search-line"],
+	["data_fill", "ri-file-text-line"],
+	["dataset", "ri-database-line"],
+	["link", "ri-server-line"],
 ])
 
 export const orgTreeOptions = [
