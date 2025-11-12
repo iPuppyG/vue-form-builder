@@ -22,37 +22,3 @@ export const convertOrgTreeToMap = treeData => {
 
 	return orgMap
 }
-
-/**
- * 转换组织树数据字段，适配 Element Tree 组件
- * @param {Array} treeData 原始组织树数据
- * @returns {Array} 转换后的树数据（orgId→id，subOrganizations→children，name→label）
- */
-export function transformOrgTreeForElement(treeData) {
-	// 递归处理单个节点
-	function transformNode(node) {
-		// 复制原始节点并替换字段名
-		const transformedNode = {
-			id: node.orgId, // orgId → id
-			label: node.name, // name → label
-			pid: node.pid,
-			createBy: node.createBy,
-			createTime: node.createTime,
-			totalMemberCount: node.totalMemberCount,
-			subOrganizationCount: node.subOrganizationCount,
-		}
-
-		// 处理子节点（subOrganizations → children）
-		if (node.subOrganizations && node.subOrganizations.length) {
-			transformedNode.children = node.subOrganizations.map(child => transformNode(child))
-		} else {
-			// 无子节点时设为 null
-			transformedNode.children = null
-		}
-
-		return transformedNode
-	}
-
-	// 处理顶层节点数组
-	return treeData.map(rootNode => transformNode(rootNode))
-}

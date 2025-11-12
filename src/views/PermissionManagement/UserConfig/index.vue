@@ -2,50 +2,42 @@
 	<el-container class="user-config">
 		<el-aside class="permission-subject">
 			<div class="title">{{ $t("permissionConfig.userPermissionConfig.permissionSubject") }}</div>
-			<el-tabs v-model="permissionSubject.activeTab">
-				<el-tab-pane name="organization">
-					<template slot="label">{{ $t("permissionConfig.userPermissionConfig.organization") }}</template>
+			<el-tabs v-model="permissionSubject">
+				<el-tab-pane v-for="subject in PERMISSION_SUBJECT_LIST" :key="subject" :name="subject">
+					<template slot="label">
+						{{ $t(`permissionConfig.userPermissionConfig.permissionSubjectMap.${subject}`) }}
+					</template>
 					<div class="search-panel">
 						<el-input
-							v-model="permissionSubject.orgSearchValue"
+							v-model="searchValue"
 							prefix-icon="el-icon-search"
-							:placeholder="$t('permissionConfig.userPermissionConfig.searchOrganization')"
+							:placeholder="$t(`permissionConfig.userPermissionConfig.searchPlaceholder.${subject}`)"
 						/>
-						<div class="tree-container">
+						<!-- 权限主体-组织 -->
+						<div v-show="permissionSubject === PERMISSION_SUBJECT.ORG" class="tree-container">
 							<el-tree
-								:data="orgTreeOptions"
+								node-key="orgId"
+								:data="mockOrgTreeData"
 								:render-content="renderContent"
 								:check-strictly="false"
 								:expand-on-click-node="false"
+								:props="{ label: 'name', children: 'subOrganizations' }"
 								highlight-current
 								default-expand-all
 								@node-click="handleOrgClick"
 							/>
 						</div>
-					</div>
-				</el-tab-pane>
-				<el-tab-pane name="user">
-					<template slot="label">
-						{{ $t("permissionConfig.userPermissionConfig.user") }}
-					</template>
-					<div class="search-panel">
-						<el-input
-							v-model="permissionSubject.userSearchValue"
-							prefix-icon="el-icon-search"
-							:placeholder="$t('permissionConfig.userPermissionConfig.user')"
-						/>
-						<div class="user-list-container">
+						<!-- 权限主体-用户 -->
+						<div v-show="permissionSubject === PERMISSION_SUBJECT.USER" class="user-list-container">
 							<div class="user-list">
 								<div
+									v-for="user in mockMemberData"
 									class="user-item"
-									:class="
-										permissionSubject.checkedUser && permissionSubject.checkedUser.id === user.id ? 'checked' : null
-									"
-									v-for="user in userList"
-									:key="user.id"
+									:class="targetUserId === user.userId ? 'checked' : null"
+									:key="user.userId"
 									@click="handleUserClick(user)"
 								>
-									<AvatarPanel iconClass="ri-user-line" :label="user.name" :desc="user.email" />
+									<AvatarPanel iconClass="ri-user-line" :label="user.username" :desc="user.email" />
 								</div>
 							</div>
 						</div>
@@ -54,82 +46,52 @@
 			</el-tabs>
 		</el-aside>
 
-		<el-main class="permission-config">
-			<template v-if="permissionSubject.checkedOrg || permissionSubject.checkedUser">
-				<el-header class="header">
-					<span class="title">{{ $t("permissionConfig.userPermissionConfig.permissionConfig") }}</span>
-					<div class="search-container">
-						<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
-						<TreeSelect
-							v-model="permissionConfig.checkedOrgId"
-							iconClass="ri-building-line"
-							:width="256"
-							:options="orgTreeOptions"
-						/>
-					</div>
-				</el-header>
-				<el-main>
-					<el-tabs class="tabs" v-model="permissionConfig.activeTab">
-						<el-tab-pane
-							v-for="item in tabsOptions"
-							:name="item.value"
-							:key="item.value"
-							:label="$t(`orgManagement.tabMap.${item.value}`)"
-						></el-tab-pane>
-					</el-tabs>
-				</el-main>
-			</template>
-			<template v-else>
-				<span class="empty-desc">{{ $t("permissionConfig.userPermissionConfig.selectLeftSubject") }}</span>
-			</template>
-		</el-main>
+		<PermissionConfig :permission-subject="permissionSubject" :target-id="targetId" />
 	</el-container>
 </template>
 
 <script>
-import AvatarPanel from "../../../components/AvatarPanel.vue"
-import TreeSelect from "../../../components/TreeSelect.vue"
-import { mockOrgTreeData } from "../../../mock"
-import { transformOrgTreeForElement } from "../../OrgManagement/utils"
-import { tabsOptions, userList } from "../constant"
+import AvatarPanel from "@/components/AvatarPanel"
+import TreeSelect from "@/components/TreeSelect.vue"
+import PermissionConfig from "./PermissionConfig"
+import { PERMISSION_SUBJECT, PERMISSION_SUBJECT_LIST } from "../constant"
+import { mockOrgTreeData, mockMemberData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../../mock"
 
 export default {
 	name: "UserConfig",
 	components: {
 		AvatarPanel,
 		TreeSelect,
+		PermissionConfig,
 	},
 	data() {
 		return {
-			userList,
-			tabsOptions,
-			orgTreeOptions: transformOrgTreeForElement(mockOrgTreeData),
-			// 权限主体
-			permissionSubject: {
-				activeTab: "organization",
-				orgSearchValue: null,
-				userSearchValue: null,
-				checkedOrg: null,
-				checkedUser: null,
-			},
-			// 权限配置
-			permissionConfig: {
-				activeTab: "panel",
-				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
-			},
+			PERMISSION_SUBJECT,
+			PERMISSION_SUBJECT_LIST,
+			permissionSubject: PERMISSION_SUBJECT.ORG,
+			searchValue: null,
+			targetOrgId: null,
+			targetUserId: null,
+			mockOrgTreeData,
+			mockMemberData,
+			mockOrgResourcePermissions,
+			mockUserResourcePermissions,
 		}
+	},
+	computed: {
+		targetId() {
+			return this.permissionSubject === PERMISSION_SUBJECT.ORG ? this.targetOrgId : this.targetUserId
+		},
 	},
 	methods: {
 		renderContent(_, { node }) {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},
-
-		handleOrgClick(organization) {
-			console.log(organization)
-			this.permissionSubject.checkedOrg = organization
+		handleOrgClick(org) {
+			this.targetOrgId = org.orgId
 		},
 		handleUserClick(user) {
-			this.permissionSubject.checkedUser = user
+			this.targetUserId = user.userId
 		},
 	},
 }
@@ -285,47 +247,6 @@ export default {
 					}
 				}
 			}
-		}
-	}
-
-	.permission-config {
-		position: relative;
-		padding: 0 24px;
-
-		.header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-
-			.title {
-				color: #111827;
-				font-size: 18px;
-				font-weight: 500;
-				line-height: 28px;
-			}
-
-			.search-container {
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-
-				.search-desc {
-					color: #374151;
-					font-size: 14px;
-					font-weight: 500;
-					line-height: 20px;
-				}
-			}
-		}
-
-		.empty-desc {
-			position: absolute;
-			top: 48px;
-			left: 50%;
-			transform: translateX(-50%);
-			text-align: center;
-			font-size: 16px;
-			color: #6b7280;
 		}
 	}
 }

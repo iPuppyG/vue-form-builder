@@ -25,10 +25,12 @@
 			<div v-if="type === 'add'" class="org-tree-container">
 				<el-tree
 					class="org-tree"
+					node-key="orgId"
 					:data="orgTreeOptions"
 					:render-content="renderContent"
 					:check-strictly="false"
 					:expand-on-click-node="false"
+					:props="{ label: 'name', children: 'subOrganizations' }"
 					highlight-current
 					default-expand-all
 					@node-click="handleNodeClick"
@@ -45,7 +47,7 @@
 </template>
 
 <script>
-import { convertOrgTreeToMap, transformOrgTreeForElement } from "./utils"
+import { convertOrgTreeToMap } from "./utils"
 import { mockOrgTreeData, ORG_ROOT_NODE } from "../../mock"
 import { ROOT_ORG_ID } from "./constant"
 
@@ -74,7 +76,7 @@ export default {
 	data() {
 		return {
 			innerVisible: this.visible,
-			orgTreeOptions: transformOrgTreeForElement([ORG_ROOT_NODE, ...mockOrgTreeData]),
+			orgTreeOptions: [ORG_ROOT_NODE, ...mockOrgTreeData],
 			formData: {
 				name: null,
 				pid: null,
@@ -127,7 +129,7 @@ export default {
 			this.formData.pid = ROOT_ORG_ID
 		},
 		handleNodeClick(node) {
-			this.formData.pid = node.id
+			this.formData.pid = node.orgId
 		},
 		close() {
 			this.innerVisible = false

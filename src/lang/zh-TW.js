@@ -210,15 +210,33 @@ export default {
 	},
 	permissionConfig: {
 		tabs: {
-			userPermissionConfig: "按用戶權限配置",
-			resourcePermissionConfig: "按資源權限配置",
+			userPermissionConfig: "按使用者權限設定",
+			resourcePermissionConfig: "按資源權限設定",
+		},
+		permissionTypeMap: {
+			panel: "儀表板",
+			download_task: "自助取數",
+			data_fill: "資料填報",
+			dataset: "資料集",
+			link: "資料來源",
+		},
+		actionMap: {
+			edit: "編輯",
+			view: "檢視",
+			manage: "表格管理",
+			submit: "提交資料",
+			export: "匯出",
 		},
 		userPermissionConfig: {
 			permissionSubject: "權限主體",
-			organization: "組織",
-			user: "使用者",
-			searchOrganization: "搜尋組織",
-			searchUser: "搜尋使用者",
+			permissionSubjectMap: {
+				ORG: "組織",
+				USER: "使用者",
+			},
+			searchPlaceholder: {
+				ORG: "搜尋組織",
+				USER: "搜尋使用者",
+			},
 			selectLeftSubject: "選擇左側的權限主體",
 			permissionConfig: "權限設定",
 			selectOrganization: "選擇組織",
@@ -227,7 +245,7 @@ export default {
 		resourcePermissionConfig: {
 			resourceList: "資源列表",
 			searchResource: "搜尋資源",
-			selectLeftResource: "請先選擇左側的資源",
+			selectLeftResource: "請先選擇左側的資源", // 修正了原文的笔误 "線先" -> "先"
 		},
 	},
 	orgManagement: {

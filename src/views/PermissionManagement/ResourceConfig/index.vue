@@ -6,16 +6,17 @@
 				<TreeSelect
 					v-model="resourceList.checkedOrgId"
 					:width="256"
-					:options="orgTreeOptions"
+					:options="mockOrgTreeData"
+					:normalizer="normalizer"
 					iconClass="ri-building-line"
 				/>
 			</el-header>
 			<el-tabs class="tabs" v-model="resourceList.activeTab">
 				<el-tab-pane
-					v-for="item in tabsOptions"
-					:name="item.value"
-					:key="item.value"
-					:label="$t(`orgManagement.tabMap.${item.value}`)"
+					v-for="permissionType in PERMISSION_TYPE_LIST"
+					:name="permissionType"
+					:key="permissionType"
+					:label="$t(`orgManagement.tabMap.${permissionType}`)"
 				>
 					<el-input
 						class="search-input"
@@ -25,8 +26,13 @@
 					/>
 					<div class="resource-list-container">
 						<div class="resource-list">
-							<div class="resource-item" v-for="user in userList" :key="user.id" @click="handleUserClick(user)">
-								<AvatarPanel iconClass="ri-user-line" :label="user.name" :desc="user.email" />
+							<div
+								class="resource-item"
+								v-for="user in mockMemberData"
+								:key="user.userId"
+								@click="handleUserClick(user)"
+							>
+								<AvatarPanel iconClass="ri-user-line" :label="user.username" :desc="user.email" />
 							</div>
 						</div>
 					</div>
@@ -41,9 +47,8 @@
 import Avatar from "../../../components/Avatar.vue"
 import AvatarPanel from "../../../components/AvatarPanel.vue"
 import TreeSelect from "../../../components/TreeSelect.vue"
-import { mockOrgTreeData } from "../../../mock"
-import { transformOrgTreeForElement } from "../../OrgManagement/utils"
-import { tabsOptions, userList } from "../constant"
+import { mockMemberData, mockOrgTreeData } from "../../../mock"
+import { PERMISSION_TYPE_LIST } from "../constant"
 
 export default {
 	name: "ResourceConfig",
@@ -54,17 +59,24 @@ export default {
 	},
 	data() {
 		return {
-			tabsOptions,
-			orgTreeOptions: transformOrgTreeForElement(mockOrgTreeData),
-			userList,
+			PERMISSION_TYPE_LIST,
+			mockMemberData,
+			mockOrgTreeData,
 			resourceList: {
-				checkedOrgId: transformOrgTreeForElement(mockOrgTreeData)[0].id || null,
+				checkedOrgId: mockOrgTreeData[0].orgId || null,
 				activeTab: "panel",
 				searchValue: null,
 			},
 		}
 	},
 	methods: {
+		normalizer(node) {
+			return {
+				id: node.subOrganizations,
+				label: node.name,
+				children: node.subOptions,
+			}
+		},
 		renderContent(_, { node }) {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},

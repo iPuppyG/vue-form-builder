@@ -211,24 +211,42 @@ export default {
 	},
 	permissionConfig: {
 		tabs: {
-			userPermissionConfig: "User Permission Configuration",
-			resourcePermissionConfig: "Resource Permission Configuration",
+			userPermissionConfig: "Configure by User Permission",
+			resourcePermissionConfig: "Configure by Resource Permission",
+		},
+		permissionTypeMap: {
+			panel: "Panel",
+			download_task: "Download Task",
+			data_fill: "Data Fill",
+			dataset: "Dataset",
+			link: "Link",
+		},
+		actionMap: {
+			edit: "Edit",
+			view: "View",
+			manage: "Table Management",
+			submit: "Submit Data",
+			export: "Export",
 		},
 		userPermissionConfig: {
 			permissionSubject: "Permission Subject",
-			organization: "Organization",
-			user: "User",
-			searchOrganization: "Search Organization",
-			searchUser: "Search User",
-			selectLeftSubject: "Select the permission subject on the left",
+			permissionSubjectMap: {
+				ORG: "Organization",
+				USER: "User",
+			},
+			searchPlaceholder: {
+				ORG: "Search Organization",
+				USER: "Search User",
+			},
+			selectLeftSubject: "Select a permission subject on the left",
 			permissionConfig: "Permission Configuration",
 			selectOrganization: "Select Organization",
-			pleaseSelectOrganization: "Please select organization",
+			pleaseSelectOrganization: "Please select an organization",
 		},
 		resourcePermissionConfig: {
 			resourceList: "Resource List",
 			searchResource: "Search Resource",
-			selectLeftResource: "Please select the resource on the left",
+			selectLeftResource: "Please select a resource on the left first", // 修正了原文的笔误 "線先" -> "先"
 		},
 	},
 	orgManagement: {

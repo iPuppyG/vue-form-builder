@@ -216,12 +216,30 @@ export default {
 			userPermissionConfig: "按用户权限配置",
 			resourcePermissionConfig: "按资源权限配置",
 		},
+		permissionTypeMap: {
+			panel: "仪表盘",
+			download_task: "自助取数",
+			data_fill: "数据填报",
+			dataset: "数据集",
+			link: "数据源",
+		},
+		actionMap: {
+			edit: "编辑",
+			view: "查看",
+			manage: "表格管理",
+			submit: "提交数据",
+			export: "导出",
+		},
 		userPermissionConfig: {
 			permissionSubject: "权限主体",
-			organization: "组织",
-			user: "用户",
-			searchOrganization: "搜索组织",
-			searchUser: "搜索用户",
+			permissionSubjectMap: {
+				ORG: "组织",
+				USER: "用户",
+			},
+			searchPlaceholder: {
+				ORG: "搜索组织",
+				USER: "搜索用户",
+			},
 			selectLeftSubject: "选择左侧的权限主体",
 			permissionConfig: "权限配置",
 			selectOrganization: "选择组织",
@@ -253,20 +271,6 @@ export default {
 		units: {
 			org: "个",
 			people: "人",
-		},
-		tabMap: {
-			panel: "仪表盘",
-			download_task: "自助取数",
-			data_fill: "数据填报",
-			dataset: "数据集",
-			link: "数据源",
-		},
-		configAction: {
-			edit: "编辑",
-			view: "查看",
-			manage: "表格管理",
-			submit: "提交数据",
-			export: "导出",
 		},
 		dialog: {
 			viewMember: {
