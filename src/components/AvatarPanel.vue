@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Avatar from "./Avatar.vue"
+import Avatar from "./avatar"
 
 export default {
 	name: "AvatarPanel",

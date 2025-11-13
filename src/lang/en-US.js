@@ -210,6 +210,7 @@ export default {
 		},
 	},
 	permissionConfig: {
+		moduleName: "Permission Management",
 		tabs: {
 			userPermissionConfig: "Configure by User Permission",
 			resourcePermissionConfig: "Configure by Resource Permission",
@@ -228,6 +229,7 @@ export default {
 			submit: "Submit Data",
 			export: "Export",
 		},
+		savePermissionConfig: "Save Permission Configuration",
 		userPermissionConfig: {
 			permissionSubject: "Permission Subject",
 			permissionSubjectMap: {

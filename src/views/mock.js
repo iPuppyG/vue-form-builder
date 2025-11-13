@@ -1,4 +1,4 @@
-import { ROOT_ORG_ID } from "./views/OrgManagement/constant"
+import { ROOT_ORG_ID } from "./OrgManagement/constant"
 
 export const mockOrgTreeData = [
 	{

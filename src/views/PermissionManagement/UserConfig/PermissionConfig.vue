@@ -2,37 +2,39 @@
 	<el-main class="permission-config">
 		<template v-if="targetId">
 			<el-header class="header">
-				<span class="title">{{ $t("permissionConfig.userPermissionConfig.permissionConfig") }}</span>
-				<div class="search-container">
-					<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
-					<TreeSelect
-						v-model="orgId"
-						iconClass="ri-building-line"
-						:width="256"
-						:options="mockOrgTreeData"
-						:normalizer="normalizer"
-					/>
+				<span class="permission-config-title">{{ $t("permissionConfig.userPermissionConfig.permissionConfig") }}</span>
+				<div class="action-wrap">
+					<el-button type="primary" class="btn">{{ $t("permissionConfig.savePermissionConfig") }}</el-button>
+					<div class="search-container">
+						<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
+						<TreeSelect
+							v-model="orgId"
+							icon-class="ri-building-line"
+							:width="256"
+							:options="mockOrgTreeData"
+							:normalizer="orgTreeDataNormalizer"
+						/>
+					</div>
 				</div>
 			</el-header>
-			<el-main>
-				<el-tabs class="tabs" v-model="permissionType">
-					<el-tab-pane
-						v-for="type in PERMISSION_TYPE_LIST"
-						:name="type"
-						:key="type"
-						:label="$t(`permissionConfig.permissionTypeMap.${type}`)"
-					>
-						<div class="config-list">
-							<PermissionConfigItem
-								v-for="item in actionList[type]"
-								:key="item.id"
-								:permission-type="type"
-								:data="item"
-							/>
-						</div>
-					</el-tab-pane>
-				</el-tabs>
-			</el-main>
+
+			<el-tabs v-model="permissionType" class="tabs">
+				<el-tab-pane
+					v-for="type in PERMISSION_TYPE_LIST"
+					:key="type"
+					:name="type"
+					:label="$t(`permissionConfig.permissionTypeMap.${type}`)"
+				>
+					<div class="config-list">
+						<PermissionConfigItem
+							v-for="item in actionList[type]"
+							:key="item.id"
+							:permission-type="type"
+							:data="item"
+						/>
+					</div>
+				</el-tab-pane>
+			</el-tabs>
 		</template>
 
 		<template v-else>
@@ -42,13 +44,14 @@
 </template>
 
 <script>
-import TreeSelect from "@/components/TreeSelect"
+import TreeSelect from "@/components/treeSelect"
 import PermissionConfigItem from "./PermissionConfigItem"
 import { PERMISSION_SUBJECT_LIST, PERMISSION_TYPE_LIST, PERMISSION_TYPE, PERMISSION_SUBJECT } from "../constant"
-import { mockOrgTreeData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../../mock"
+import { mockOrgTreeData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../mock"
+import { orgTreeDataNormalizer } from "../../OrgManagement/utils"
 
 export default {
-	name: "PermissionCOnfig",
+	name: "PermissionConfig",
 	components: {
 		TreeSelect,
 		PermissionConfigItem,
@@ -85,13 +88,7 @@ export default {
 		},
 	},
 	methods: {
-		normalizer(node) {
-			return {
-				id: node.orgId,
-				label: node.name,
-				children: node.subOrganizations,
-			}
-		},
+		orgTreeDataNormalizer,
 	},
 }
 </script>
@@ -99,40 +96,62 @@ export default {
 <style lang="scss">
 .permission-config {
 	position: relative;
-	padding: 0 24px;
+	padding: 0 24px 0 !important;
 
 	.header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
-		.title {
+		.permission-config-title {
 			color: #111827;
 			font-size: 18px;
 			font-weight: 500;
 			line-height: 28px;
 		}
 
-		.search-container {
+		.action-wrap {
 			display: flex;
-			flex-direction: column;
-			gap: 8px;
+			align-items: flex-end;
+			gap: 24px;
 
-			.search-desc {
-				color: #374151;
-				font-size: 14px;
-				font-weight: 500;
-				line-height: 20px;
+			.btn {
+				border-radius: 8px;
+			}
+
+			.search-container {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+
+				.search-desc {
+					color: #374151;
+					font-size: 14px;
+					font-weight: 500;
+					line-height: 20px;
+				}
 			}
 		}
 	}
 
 	.tabs {
+		padding-left: 24px;
+		height: calc(100% - 60px) !important;
+
+		.el-tabs__content {
+			.el-tab-pane {
+				height: calc(100% - 16px) !important;
+			}
+		}
+
 		.config-list {
 			display: flex;
 			flex-direction: column;
 			gap: 12px;
 			margin-top: 16px;
+			height: 100%;
+			overflow-y: auto;
+			padding-bottom: 12px;
 		}
 	}
 

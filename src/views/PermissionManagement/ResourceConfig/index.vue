@@ -1,82 +1,77 @@
 <template>
 	<el-container class="resource-config">
-		<el-aside class="resource-list" width="460px">
-			<el-header class="header" height="38px">
-				<div class="title">{{ $t("permissionConfig.resourcePermissionConfig.resourceList") }}</div>
+		<el-aside class="aside" width="460px">
+			<el-header class="resource-config-header" height="38px">
+				<div class="resource-config-title">
+					{{ $t("permissionConfig.resourcePermissionConfig.resourceList") }}
+				</div>
 				<TreeSelect
 					v-model="resourceList.checkedOrgId"
+					icon-class="ri-building-line"
 					:width="256"
 					:options="mockOrgTreeData"
-					:normalizer="normalizer"
-					iconClass="ri-building-line"
+					:normalizer="orgTreeDataNormalizer"
 				/>
 			</el-header>
-			<el-tabs class="tabs" v-model="resourceList.activeTab">
+			<el-tabs v-model="resourceList.activeTab" class="resource-tabs">
 				<el-tab-pane
 					v-for="permissionType in PERMISSION_TYPE_LIST"
-					:name="permissionType"
 					:key="permissionType"
-					:label="$t(`orgManagement.tabMap.${permissionType}`)"
+					:name="permissionType"
+					:label="$t(`permissionConfig.permissionTypeMap.${permissionType}`)"
 				>
 					<el-input
-						class="search-input"
 						v-model="resourceList.searchValue"
+						class="search-input"
 						prefix-icon="el-icon-search"
 						:placeholder="$t('permissionConfig.resourcePermissionConfig.searchResource')"
 					/>
 					<div class="resource-list-container">
 						<div class="resource-list">
 							<div
-								class="resource-item"
 								v-for="user in mockMemberData"
 								:key="user.userId"
+								class="resource-item"
 								@click="handleUserClick(user)"
 							>
-								<AvatarPanel iconClass="ri-user-line" :label="user.username" :desc="user.email" />
+								<AvatarPanel icon-class="ri-user-line" :label="user.nickName" :desc="user.email" />
 							</div>
 						</div>
 					</div>
 				</el-tab-pane>
 			</el-tabs>
 		</el-aside>
-		<el-main class="resource-config"></el-main>
+		<el-main class="resource-config" />
 	</el-container>
 </template>
 
 <script>
-import Avatar from "../../../components/Avatar.vue"
-import AvatarPanel from "../../../components/AvatarPanel.vue"
-import TreeSelect from "../../../components/TreeSelect.vue"
-import { mockMemberData, mockOrgTreeData } from "../../../mock"
-import { PERMISSION_TYPE_LIST } from "../constant"
+import AvatarPanel from "@/components/avatarPanel"
+import TreeSelect from "@/components/treeSelect"
+import { mockMemberData, mockOrgTreeData } from "../../mock"
+import { PERMISSION_TYPE, PERMISSION_TYPE_LIST } from "../constant"
+import { orgTreeDataNormalizer } from "../../OrgManagement/utils"
 
 export default {
 	name: "ResourceConfig",
 	components: {
-		Avatar,
 		AvatarPanel,
 		TreeSelect,
 	},
 	data() {
 		return {
 			PERMISSION_TYPE_LIST,
-			mockMemberData,
-			mockOrgTreeData,
 			resourceList: {
 				checkedOrgId: mockOrgTreeData[0].orgId || null,
-				activeTab: "panel",
+				activeTab: PERMISSION_TYPE.PANEL,
 				searchValue: null,
 			},
+			mockOrgTreeData,
+			mockMemberData,
 		}
 	},
 	methods: {
-		normalizer(node) {
-			return {
-				id: node.subOrganizations,
-				label: node.name,
-				children: node.subOptions,
-			}
-		},
+		orgTreeDataNormalizer,
 		renderContent(_, { node }) {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},
@@ -95,30 +90,34 @@ export default {
 
 <style lang="scss">
 .resource-config {
-	height: 100%;
-	padding-top: 24px;
+	height: calc(100% - 24px);
+	margin-top: 24px;
 
-	.resource-list {
-		display: flex;
-		flex-direction: column;
+	.aside {
+		height: 100%;
 		padding-right: 24px;
 		border-right: 1px solid #e5e7eb;
+		overflow: hidden;
 
-		.header {
+		.resource-config-header {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			padding: 0;
 			margin-bottom: 16px;
 
-			.title {
+			.resource-config-title {
 				color: #111827;
 				font-size: 18px;
 				font-weight: 500;
 			}
 		}
 
-		.tabs {
+		.resource-tabs {
+			display: flex;
+			flex-direction: column;
+			height: calc(100% - 54px);
+
 			.el-tab-pane {
 				display: flex;
 				flex-direction: column;
@@ -134,9 +133,14 @@ export default {
 					border-radius: 8px;
 					overflow: hidden;
 
+					.el-tabs__content {
+						flex: 1;
+						overflow: hidden;
+					}
+
 					.resource-list {
 						height: 100%;
-						overflow-y: scroll;
+						overflow-y: auto;
 
 						.resource-item {
 							position: relative;

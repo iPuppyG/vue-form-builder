@@ -1,25 +1,25 @@
 <template>
 	<div class="config-item">
 		<AvatarPanel
-			iconClass="ri-dashboard-line"
-			iconColor="#22c55e"
+			icon-class="ri-dashboard-line"
+			icon-color="#22c55e"
 			:label="data.name"
 			:desc="$t(`permissionConfig.permissionTypeMap.${permissionType}`)"
 		/>
 		<el-checkbox-group v-model="privilege" :disabled="!data.editable">
 			<el-checkbox
+				class="checkbox"
 				v-for="action in ACTION_TYPE_LIST[permissionType]"
-				v-model="checkData[action]"
 				:key="action"
-				:label="$t(`permissionTypeMap.actionMap.${action}`)"
+				:label="$t(`${I18N_KEYS.action}.${action}`)"
 			/>
 		</el-checkbox-group>
 	</div>
 </template>
 
 <script>
-import AvatarPanel from "@/components/AvatarPanel"
-import { ACTION_TYPE_LIST, PERMISSION_TYPE, PERMISSION_TYPE_LIST } from "../constant"
+import AvatarPanel from "@/components/avatarPanel"
+import { ACTION_TYPE_LIST, I18N_KEYS, PERMISSION_TYPE, PERMISSION_TYPE_LIST } from "../constant"
 
 export default {
 	name: "PermissionConfigItem",
@@ -43,13 +43,14 @@ export default {
 		return {
 			PERMISSION_TYPE,
 			ACTION_TYPE_LIST,
+			I18N_KEYS,
 			privilege: [],
 		}
 	},
 }
 </script>
 
-<style>
+<style lang="scss">
 .config-item {
 	width: 100%;
 	height: 100px;
@@ -60,5 +61,12 @@ export default {
 	border-radius: 8px;
 	background-color: #f9fafb;
 	gap: 12px;
+
+	.checkbox {
+		.el-checkbox__label {
+			color: #374151;
+			font-weight: 400;
+		}
+	}
 }
 </style>

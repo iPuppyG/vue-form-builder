@@ -86,10 +86,10 @@
 
 <script>
 import dayjs from "dayjs"
-import Tag from "@/components/Tag"
+import Tag from "@/components/tag"
 import ViewMemberDialog from "./ViewMemberDialog"
 import EditDialog from "./EditDialog"
-import { mockOrgTreeData } from "../../mock"
+import { mockOrgTreeData } from "../mock"
 
 export default {
 	components: { Tag, ViewMemberDialog, EditDialog },

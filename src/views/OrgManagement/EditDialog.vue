@@ -48,7 +48,7 @@
 
 <script>
 import { convertOrgTreeToMap } from "./utils"
-import { mockOrgTreeData, ORG_ROOT_NODE } from "../../mock"
+import { mockOrgTreeData, ORG_ROOT_NODE } from "../mock"
 import { ROOT_ORG_ID } from "./constant"
 
 export default {

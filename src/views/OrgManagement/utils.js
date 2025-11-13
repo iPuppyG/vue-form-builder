@@ -22,3 +22,11 @@ export const convertOrgTreeToMap = treeData => {
 
 	return orgMap
 }
+
+export const orgTreeDataNormalizer = node => {
+	return {
+		id: node.orgId,
+		label: node.name,
+		children: node.subOrganizations,
+	}
+}

@@ -62,9 +62,9 @@
 
 <script>
 import dayjs from "dayjs"
-import Tag from "@/components/Tag"
+import Tag from "@/components/tag"
 import { tabOptions } from "./options"
-import { mockMySubmitData } from "../../mock"
+import { mockMySubmitData } from "../mock"
 
 export default {
 	name: "MuSubmit",

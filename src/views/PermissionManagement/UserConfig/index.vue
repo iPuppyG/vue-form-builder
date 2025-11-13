@@ -32,12 +32,12 @@
 							<div class="user-list">
 								<div
 									v-for="user in mockMemberData"
+									:key="user.userId"
 									class="user-item"
 									:class="targetUserId === user.userId ? 'checked' : null"
-									:key="user.userId"
 									@click="handleUserClick(user)"
 								>
-									<AvatarPanel iconClass="ri-user-line" :label="user.username" :desc="user.email" />
+									<AvatarPanel icon-class="ri-user-line" :label="user.username" :desc="user.email" />
 								</div>
 							</div>
 						</div>
@@ -46,22 +46,30 @@
 			</el-tabs>
 		</el-aside>
 
-		<PermissionConfig :permission-subject="permissionSubject" :target-id="targetId" />
+		<PermissionConfig
+			v-show="permissionSubject === PERMISSION_SUBJECT.ORG"
+			:permission-subject="PERMISSION_SUBJECT.ORG"
+			:target-id="targetOrgId"
+		/>
+
+		<PermissionConfig
+			v-show="permissionSubject === PERMISSION_SUBJECT.USER"
+			:permission-subject="PERMISSION_SUBJECT.USER"
+			:target-id="targetUserId"
+		/>
 	</el-container>
 </template>
 
 <script>
-import AvatarPanel from "@/components/AvatarPanel"
-import TreeSelect from "@/components/TreeSelect.vue"
+import AvatarPanel from "@/components/avatarPanel"
 import PermissionConfig from "./PermissionConfig"
 import { PERMISSION_SUBJECT, PERMISSION_SUBJECT_LIST } from "../constant"
-import { mockOrgTreeData, mockMemberData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../../mock"
+import { mockOrgTreeData, mockMemberData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../mock"
 
 export default {
 	name: "UserConfig",
 	components: {
 		AvatarPanel,
-		TreeSelect,
 		PermissionConfig,
 	},
 	data() {

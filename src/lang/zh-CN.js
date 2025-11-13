@@ -212,6 +212,7 @@ export default {
 		},
 	},
 	permissionConfig: {
+		moduleName: "权限管理",
 		tabs: {
 			userPermissionConfig: "按用户权限配置",
 			resourcePermissionConfig: "按资源权限配置",
@@ -230,6 +231,7 @@ export default {
 			submit: "提交数据",
 			export: "导出",
 		},
+		savePermissionConfig: "保存权限配置",
 		userPermissionConfig: {
 			permissionSubject: "权限主体",
 			permissionSubjectMap: {
