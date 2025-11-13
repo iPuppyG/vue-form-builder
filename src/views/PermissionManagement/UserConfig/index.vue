@@ -17,7 +17,7 @@
 						<div v-show="permissionSubject === PERMISSION_SUBJECT.ORG" class="tree-container">
 							<el-tree
 								node-key="orgId"
-								:data="mockOrgTreeData"
+								:data="filteredOrgTreeData"
 								:render-content="renderContent"
 								:check-strictly="false"
 								:expand-on-click-node="false"
@@ -31,13 +31,13 @@
 						<div v-show="permissionSubject === PERMISSION_SUBJECT.USER" class="user-list-container">
 							<div class="user-list">
 								<div
-									v-for="user in mockMemberData"
+									v-for="user in filteredMemberData"
 									:key="user.userId"
 									class="user-item"
 									:class="targetUserId === user.userId ? 'checked' : null"
 									@click="handleUserClick(user)"
 								>
-									<AvatarPanel icon-class="ri-user-line" :label="user.username" :desc="user.email" />
+									<AvatarPanel icon-class="ri-user-line" :label="user.nickName" :desc="user.email" />
 								</div>
 							</div>
 						</div>
@@ -47,15 +47,9 @@
 		</el-aside>
 
 		<PermissionConfig
-			v-show="permissionSubject === PERMISSION_SUBJECT.ORG"
-			:permission-subject="PERMISSION_SUBJECT.ORG"
-			:target-id="targetOrgId"
-		/>
-
-		<PermissionConfig
-			v-show="permissionSubject === PERMISSION_SUBJECT.USER"
-			:permission-subject="PERMISSION_SUBJECT.USER"
-			:target-id="targetUserId"
+			:key="`${permissionSubject}-${targetId || 'empty'}`"
+			:permission-subject="permissionSubject"
+			:target-id="targetId"
 		/>
 	</el-container>
 </template>
@@ -77,7 +71,7 @@ export default {
 			PERMISSION_SUBJECT,
 			PERMISSION_SUBJECT_LIST,
 			permissionSubject: PERMISSION_SUBJECT.ORG,
-			searchValue: null,
+			searchValue: "",
 			targetOrgId: null,
 			targetUserId: null,
 			mockOrgTreeData,
@@ -90,8 +84,50 @@ export default {
 		targetId() {
 			return this.permissionSubject === PERMISSION_SUBJECT.ORG ? this.targetOrgId : this.targetUserId
 		},
+		// 组织搜索结果
+		filteredOrgTreeData() {
+			if (!this.searchValue) {
+				return this.mockOrgTreeData
+			}
+			const keyword = this.searchValue.toLowerCase()
+			return this.filterOrgTree(this.mockOrgTreeData, keyword)
+		},
+		// 用户搜索结果
+		filteredMemberData() {
+			if (!this.searchValue) {
+				return this.mockMemberData
+			}
+			const keyword = this.searchValue.toLowerCase()
+			return this.mockMemberData.filter(user => {
+				return user.nickName.toLowerCase().includes(keyword) || user.email.toLowerCase().includes(keyword)
+			})
+		},
+	},
+	watch: {
+		permissionSubject() {
+			// 切换Tab时清空搜索词
+			this.searchValue = ""
+		},
 	},
 	methods: {
+		// 组织搜索
+		filterOrgTree(treeData, keyword) {
+			return treeData
+				.map(node => {
+					const matches = node.name.toLowerCase().includes(keyword)
+					const filteredChildren = node.subOrganizations ? this.filterOrgTree(node.subOrganizations, keyword) : null
+
+					// 如果当前节点匹配或有匹配的子节点，则保留该节点
+					if (matches || (filteredChildren && filteredChildren.length > 0)) {
+						return {
+							...node,
+							subOrganizations: filteredChildren,
+						}
+					}
+					return null
+				})
+				.filter(Boolean)
+		},
 		renderContent(_, { node }) {
 			return <AvatarPanel iconClass="ri-building-line" label={node.label} />
 		},

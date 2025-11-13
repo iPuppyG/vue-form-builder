@@ -4,7 +4,9 @@
 			<el-header class="header">
 				<span class="permission-config-title">{{ $t("permissionConfig.userPermissionConfig.permissionConfig") }}</span>
 				<div class="action-wrap">
-					<el-button type="primary" class="btn">{{ $t("permissionConfig.savePermissionConfig") }}</el-button>
+					<el-button v-if="showSubmitBtn" class="btn" type="primary" @click="handleSubmit">
+						{{ $t("permissionConfig.savePermissionConfig") }}
+					</el-button>
 					<div class="search-container">
 						<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
 						<TreeSelect
@@ -31,6 +33,7 @@
 							:key="item.id"
 							:permission-type="type"
 							:data="item"
+							@privilege-change="handlePrivilegeChange"
 						/>
 					</div>
 				</el-tab-pane>
@@ -46,7 +49,13 @@
 <script>
 import TreeSelect from "@/components/treeSelect"
 import PermissionConfigItem from "./PermissionConfigItem"
-import { PERMISSION_SUBJECT_LIST, PERMISSION_TYPE_LIST, PERMISSION_TYPE, PERMISSION_SUBJECT } from "../constant"
+import {
+	PERMISSION_SUBJECT_LIST,
+	PERMISSION_TYPE_LIST,
+	PERMISSION_TYPE,
+	PERMISSION_SUBJECT,
+	ACTION_TYPE_LIST,
+} from "../constant"
 import { mockOrgTreeData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../mock"
 import { orgTreeDataNormalizer } from "../../OrgManagement/utils"
 
@@ -78,6 +87,7 @@ export default {
 			orgId: mockOrgTreeData[0].orgId || null,
 			mockOrgTreeData,
 			permissionType: PERMISSION_TYPE.PANEL,
+			permissionChanges: {},
 		}
 	},
 	computed: {
@@ -86,9 +96,66 @@ export default {
 				? mockOrgResourcePermissions
 				: mockUserResourcePermissions
 		},
+		showSubmitBtn() {
+			// 当权限变更数据不为空时，显示提交按钮
+			return Object.keys(this.permissionChanges).length > 0
+		},
+		originalData() {
+			// 获取原始数据，用于比较
+			return this.actionList
+		},
+	},
+	watch: {
+		targetId() {
+			// 切换targetId时，清空权限变更数据
+			this.permissionChanges = {}
+		},
 	},
 	methods: {
 		orgTreeDataNormalizer,
+		handlePrivilegeChange(changeData) {
+			// 更新权限变更数据
+			const key = `${changeData.permissionType}-${changeData.id}`
+			const originalItem = this.originalData[changeData.permissionType].find(item => item.id === changeData.id)
+
+			if (!originalItem) return
+
+			// 获取原始权限数组
+			const actionList = ACTION_TYPE_LIST[changeData.permissionType]
+			const originalPrivilege = actionList.map(action => originalItem[action] || false)
+
+			// 比较是否与原始数据相同
+			const isChanged = !this.arraysEqual(originalPrivilege, changeData.privilege)
+
+			if (isChanged) {
+				this.$set(this.permissionChanges, key, changeData)
+			} else {
+				// 如果恢复原状，则移除变更记录
+				this.$delete(this.permissionChanges, key)
+			}
+		},
+		arraysEqual(arr1, arr2) {
+			if (arr1.length !== arr2.length) return false
+			return arr1.every((val, index) => val === arr2[index])
+		},
+		handleSubmit() {
+			// 收集所有权限变更数据
+			const permissions = Object.values(this.permissionChanges).map(change => ({
+				id: change.id,
+				permissionType: change.permissionType,
+				privilege: change.privilege,
+			}))
+
+			const requestData = {
+				permissionTarget: this.targetId,
+				permissions,
+			}
+
+			console.log("提交权限配置数据:", JSON.stringify(requestData, null, 2))
+
+			// 提交后清空变更记录
+			this.permissionChanges = {}
+		},
 	},
 }
 </script>
