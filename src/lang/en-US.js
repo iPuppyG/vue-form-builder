@@ -252,6 +252,7 @@ export default {
 		},
 	},
 	orgManagement: {
+		moduleName: "Organization Management",
 		searchOrg: "Search organization name",
 		addOrg: "Add organization",
 		columns: {
@@ -267,6 +268,7 @@ export default {
 			addSubOrg: "Add Sub-organization",
 			viewMember: "View Members",
 			delete: "Delete",
+			deleteDesc: 'Are you sure you want to delete the organization "{orgName}"?',
 		},
 		units: {
 			org: "sub-organization",

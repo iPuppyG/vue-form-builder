@@ -1,107 +1,117 @@
 <template>
-	<main class="org-management">
-		<div class="header">
-			<el-input
-				class="search-input"
-				v-model="searchValue"
-				prefix-icon="el-icon-search"
-				:placeholder="$t('orgManagement.searchOrg')"
-			/>
-			<el-button class="add-btn" type="primary" icon="el-icon-plus" @click="handleAddOrg">
-				{{ $t("orgManagement.addOrg") }}
-			</el-button>
-		</div>
-		<div class="table-container">
-			<el-table
+	<div class="wrapper">
+		<div class="module-name">{{ $t("orgManagement.moduleName") }}</div>
+		<main class="org-management">
+			<div class="header">
+				<el-input
+					v-model="searchValue"
+					class="search-input"
+					prefix-icon="el-icon-search"
+					:placeholder="$t('orgManagement.searchOrg')"
+				/>
+				<el-button class="add-btn" type="primary" icon="el-icon-plus" @click="handleAddOrg">
+					{{ $t("orgManagement.addOrg") }}
+				</el-button>
+			</div>
+			<PaginationTable
 				class="table"
+				:highlight-current-row="false"
 				:data="mockOrgTreeData"
 				:tree-props="{ children: 'subOrganizations' }"
 				row-key="orgId"
-				:style="{
-					width: '100%',
-				}"
 			>
-				<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')">
+				<el-table-column prop="name" :label="$t('orgManagement.columns.orgName')" min-width="250px">
 					<template slot-scope="scope">
-						<i class="icon ri-building-line"></i>
+						<i class="icon ri-building-line" />
 						<span class="orgName">{{ scope.row.name }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="subOrganizationCount" :label="$t('orgManagement.columns.subOrgCount')">
+				<el-table-column prop="subOrganizationCount" :label="$t('orgManagement.columns.subOrgCount')" min-width="120px">
 					<template slot-scope="scope">
 						<Tag color="blue">
 							{{ `${scope.row.subOrganizationCount} ${$t("orgManagement.units.org")}` }}
 						</Tag>
 					</template>
 				</el-table-column>
-				<el-table-column prop="totalMemberCount" :label="$t('orgManagement.columns.totalMemberCount')">
+				<el-table-column
+					prop="totalMemberCount"
+					:label="$t('orgManagement.columns.totalMemberCount')"
+					min-width="120px"
+				>
 					<template slot-scope="scope">
 						<Tag color="green">
 							{{ `${scope.row.totalMemberCount} ${$t("orgManagement.units.people")}` }}
 						</Tag>
 					</template>
 				</el-table-column>
-				<el-table-column prop="createBy" :label="$t('orgManagement.columns.createBy')">
+				<el-table-column prop="createBy" :label="$t('orgManagement.columns.createBy')" min-width="200px">
 					<template slot-scope="scope">
 						<span class="createBy">{{ scope.row.createBy }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="createTime" :label="$t('orgManagement.columns.createTime')">
+				<el-table-column prop="createTime" :label="$t('orgManagement.columns.createTime')" width="200px">
 					<template slot-scope="scope">
 						<span class="createTime">{{ dayjs(scope.row.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('orgManagement.columns.actions')" min-width="340px">
+				<el-table-column :label="$t('orgManagement.columns.actions')" min-width="350px">
 					<template slot-scope="scope">
 						<div class="actions-wrap">
 							<div class="btn edit-btn" @click="handleEditOrg(scope.row)">
 								{{ $t("orgManagement.actions.edit") }}
 							</div>
+
 							<div class="btn add-btn" @click="handleAddSubOrg(scope.row)">
 								{{ $t("orgManagement.actions.addSubOrg") }}
 							</div>
 							<div class="btn view-btn" @click="handleViewMember(scope.row)">
 								{{ $t("orgManagement.actions.viewMember") }}
 							</div>
-							<div class="btn delete-btn">
-								{{ $t("orgManagement.actions.delete") }}
-							</div>
+							<el-popconfirm
+								:title="$t('orgManagement.actions.deleteDesc', { orgName: orgMap[scope.row.orgId] })"
+								@confirm="handleDeleteOrg(scope.row)"
+							>
+								<div class="btn delete-btn" slot="reference">
+									{{ $t("orgManagement.actions.delete") }}
+								</div>
+							</el-popconfirm>
 						</div>
 					</template>
 				</el-table-column>
-			</el-table>
-			<el-pagination
-				class="pagination"
-				:page-size="100"
-				layout="total, prev, pager, next"
-				:total="1000"
-				background
-			></el-pagination>
-		</div>
+			</PaginationTable>
 
-		<ViewMemberDialog :visible.sync="viewModalVisible" :edit-row="editRow" />
-		<EditDialog :visible.sync="editModalVisible" :edit-row="editRow" :type="editModalType" />
-	</main>
+			<ViewMemberDialog :visible.sync="viewModalVisible" :edit-row="editRow" />
+			<EditDialog :visible.sync="editModalVisible" :edit-row="editRow" :type="editModalType" />
+		</main>
+	</div>
 </template>
 
 <script>
 import dayjs from "dayjs"
+import PaginationTable from "@/components/paginationTable"
 import Tag from "@/components/tag"
+import { convertOrgTreeToMap } from "./utils"
 import ViewMemberDialog from "./ViewMemberDialog"
 import EditDialog from "./EditDialog"
 import { mockOrgTreeData } from "../mock"
+import { ACTION_TYPE } from "./constant"
 
 export default {
-	components: { Tag, ViewMemberDialog, EditDialog },
+	components: { PaginationTable, Tag, ViewMemberDialog, EditDialog },
 	data() {
 		return {
 			searchValue: null,
 			editRow: undefined,
 			editModalVisible: false,
 			viewModalVisible: false,
-			editModalType: "add",
+			editModalType: ACTION_TYPE.ADD,
 			mockOrgTreeData,
 		}
+	},
+	computed: {
+		orgMap() {
+			return convertOrgTreeToMap(mockOrgTreeData)
+		},
 	},
 	methods: {
 		dayjs,
@@ -117,74 +127,75 @@ export default {
 		},
 		handleAddOrg() {
 			this.editRow = null
-			this.editModalType = "add"
+			this.editModalType = ACTION_TYPE.ADD
 			this.toggleEditOrgModal()
 		},
 		handleAddSubOrg(row) {
 			this.editRow = row
-			this.editModalType = "add-sub"
+			this.editModalType = ACTION_TYPE.ADD_SUB
 			this.toggleEditOrgModal()
 		},
 		handleEditOrg(row) {
 			this.editRow = row
-			this.editModalType = "edit"
+			this.editModalType = ACTION_TYPE.EDIT
 			this.toggleEditOrgModal()
+		},
+		handleDeleteOrg(row) {
+			console.log("orgId", row.orgId)
 		},
 	},
 }
 </script>
 
 <style lang="scss">
-.org-management {
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 	width: 100%;
+	height: 100%;
 	padding: 24px;
-	box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+	background-color: #f5f6f7;
 
-	.header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+	.module-name {
+		color: #1f2329;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 28px;
 		margin-bottom: 24px;
+	}
 
-		.search-input {
-			width: 320px;
+	.org-management {
+		width: 100%;
+		overflow: hidden;
+		padding: 24px;
+		background-color: #fff;
+		border-radius: 8px;
+		box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 
-			input {
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 24px;
+
+			.search-input {
+				width: 320px;
+
+				input {
+					border-radius: 8px;
+				}
+			}
+
+			.add-btn {
+				font-size: 14px;
+				font-weight: 400;
 				border-radius: 8px;
 			}
 		}
 
-		.add-btn {
-			font-size: 14px;
-			font-weight: 400;
-			border-radius: 8px;
-		}
-	}
-
-	.table-container {
-		width: 100%;
-		overflow: hidden;
-		box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-		border-radius: 8px;
-
 		.table {
-			border: none;
-
-			.el-table__header-wrapper {
-				.el-table__cell {
-					background-color: #f9fafb;
-
-					.cell {
-						color: #6b7280;
-						font-size: 12px;
-						font-weight: 400;
-					}
-				}
-			}
-
-			.el-table__row {
-				height: 65px;
-			}
+			max-height: calc(100% - 36px - 24px);
 
 			.icon {
 				color: #3b82f6;
@@ -245,17 +256,6 @@ export default {
 						background-color: #b91c1c;
 					}
 				}
-			}
-		}
-
-		.pagination {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			padding: 16px 24px;
-
-			.el-pagination__total {
-				margin-right: auto;
 			}
 		}
 	}

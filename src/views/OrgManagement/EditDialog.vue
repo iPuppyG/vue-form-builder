@@ -4,7 +4,6 @@
 		:visible="innerVisible"
 		:show-close="false"
 		width="900px"
-		center
 		destroy-on-close
 		@close="close"
 	>
@@ -22,7 +21,7 @@
 			<el-form-item :label="$t('orgManagement.dialog.edit.parentOrg')" prop="pid">
 				<el-input class="pid-input-name" v-model="pidName" disabled></el-input>
 			</el-form-item>
-			<div v-if="type === 'add'" class="org-tree-container">
+			<div v-if="type === ACTION_TYPE.ADD" class="org-tree-container">
 				<el-tree
 					class="org-tree"
 					node-key="orgId"
@@ -40,7 +39,9 @@
 		<template slot="footer">
 			<footer class="footer-wrapper">
 				<el-button class="btn" @click="close">{{ $t("actions.dialog.cancel") }}</el-button>
-				<el-button class="btn" type="primary">{{ $t("actions.dialog.confirm") }}</el-button>
+				<el-button class="btn" type="primary" @click="type === ACTION_TYPE.EDIT ? handleEditSubmit : handleAddSubmit">
+					{{ $t("actions.dialog.confirm") }}
+				</el-button>
 			</footer>
 		</template>
 	</el-dialog>
@@ -49,7 +50,7 @@
 <script>
 import { convertOrgTreeToMap } from "./utils"
 import { mockOrgTreeData, ORG_ROOT_NODE } from "../mock"
-import { ROOT_ORG_ID } from "./constant"
+import { ROOT_ORG_ID, ACTION_TYPE_LIST, ACTION_TYPE } from "./constant"
 
 export default {
 	name: "EditDialog",
@@ -57,11 +58,8 @@ export default {
 		type: {
 			type: String,
 			required: true,
-			default: "add",
-			validator: value => {
-				const allowedTypes = ["add", "edit", "add-sub"]
-				return allowedTypes.includes(value)
-			},
+			default: ACTION_TYPE.ADD,
+			validator: value => ACTION_TYPE_LIST.includes(value),
 		},
 		visible: {
 			type: Boolean,
@@ -75,13 +73,14 @@ export default {
 	},
 	data() {
 		return {
+			ACTION_TYPE,
 			innerVisible: this.visible,
 			orgTreeOptions: [ORG_ROOT_NODE, ...mockOrgTreeData],
 			formData: {
 				name: null,
 				pid: null,
 			},
-			pidName: "",
+			pidName: null,
 		}
 	},
 	watch: {
@@ -133,22 +132,23 @@ export default {
 		},
 		close() {
 			this.innerVisible = false
+			this.pidName = null
 		},
 		getPidInputContent() {
 			const orgMap = convertOrgTreeToMap([ORG_ROOT_NODE, ...mockOrgTreeData])
 			switch (this.type) {
-				case "add":
+				case ACTION_TYPE.ADD:
 					// 新增组织：显示“当前选择 + 父组织名称”（如果未选择则显示空）
 					return this.formData.pid !== null
 						? `${this.$t("orgManagement.dialog.edit.currentSelect")}: ${orgMap[this.formData.pid] || ""}`
 						: ""
-				case "edit":
+				case ACTION_TYPE.EDIT:
 					// 编辑子组织：显示父组织名称（即当前选中的组织）
 					if (!this.editRow) return ""
 					return this.editRow.pid === null // 无父组织
 						? this.$t("orgManagement.dialog.edit.rootOrg")
 						: orgMap[this.editRow.pid] || ""
-				case "add-sub":
+				case ACTION_TYPE.ADD_SUB:
 					// 新增子组织：显示“作为 + 父组织名称 + 的子组织”
 					if (!this.editRow) return ""
 					return this.editRow.orgId === null
@@ -156,10 +156,26 @@ export default {
 						: `${this.$t("orgManagement.dialog.edit.as")} "${orgMap[this.editRow.orgId] || ""}" ${this.$t(
 								"orgManagement.dialog.edit.subOrg"
 						  )}`
-
 				default:
 					return ""
 			}
+		},
+		handleEditSubmit() {
+			// TODO: 补齐方法, 只需console.log请求参数即可
+			// 请求参数格式
+			// {
+			// 	"name": "子公司d",
+			// 	"orgId": 11,
+			// 	"pid": 7
+			// }
+		},
+		handleAddSubmit() {
+			// TODO: 补齐方法, 只需console.log请求参数即可
+			// 请求参数格式
+			// {
+			// 	"name": "子公司C",
+			// 	"pid": 7
+			// }
 		},
 	},
 }

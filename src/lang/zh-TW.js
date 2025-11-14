@@ -251,6 +251,7 @@ export default {
 		},
 	},
 	orgManagement: {
+		moduleName: "組織管理",
 		searchOrg: "搜尋組織名稱",
 		addOrg: "新增組織",
 		columns: {
@@ -266,6 +267,7 @@ export default {
 			addSubOrg: "新增子組織",
 			viewMember: "檢視成員",
 			delete: "刪除",
+			deleteDesc: '確定要刪除組織"{orgName}"嗎？',
 		},
 		units: {
 			org: "個",

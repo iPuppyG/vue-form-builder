@@ -9,3 +9,11 @@ export const USER_TYPE_MAP = {
 }
 
 export const ROOT_ORG_ID = 0
+
+export const ACTION_TYPE = {
+	ADD: "ADD", // 创建组织
+	ADD_SUB: "ADD_SUB", // 添加子组织
+	EDIT: "EDIT", // 编辑组织
+}
+
+export const ACTION_TYPE_LIST = [ACTION_TYPE.ADD, ACTION_TYPE.ADD_SUB, ACTION_TYPE.EDIT]
