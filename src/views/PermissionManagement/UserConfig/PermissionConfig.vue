@@ -9,13 +9,7 @@
 					</el-button>
 					<div class="search-container">
 						<span class="search-desc">{{ $t("permissionConfig.userPermissionConfig.selectOrganization") }}</span>
-						<TreeSelect
-							v-model="orgId"
-							icon-class="ri-building-line"
-							:width="256"
-							:options="mockOrgTreeData"
-							:normalizer="orgTreeDataNormalizer"
-						/>
+						<TreeSelect v-model="orgId" icon-class="ri-building-line" :width="256" :options="orgTreeOptions" />
 					</div>
 				</div>
 			</el-header>
@@ -30,10 +24,15 @@
 					<div class="config-list">
 						<PermissionConfigItem
 							v-for="item in actionList[type]"
-							:key="item.id"
-							:permission-type="type"
+							:key="`${item.id}-${renderKeys[type]}`"
+							:label="item.name"
 							:data="item"
-							@privilege-change="handlePrivilegeChange"
+							:action-list="ACTION_TYPE_LIST[type]"
+							:disabled="!item.canEdit"
+							:desc="$t(`permissionConfig.permissionTypeMap.${permissionType}`)"
+							icon-class="ri-dashboard-line"
+							icon-color="#22c55e"
+							@privilege-change="handlePrivilegeChange(type, $event)"
 						/>
 					</div>
 				</el-tab-pane>
@@ -48,7 +47,7 @@
 
 <script>
 import TreeSelect from "@/components/treeSelect"
-import PermissionConfigItem from "./PermissionConfigItem"
+import PermissionConfigItem from "../PermissionConfigItem"
 import {
 	PERMISSION_SUBJECT_LIST,
 	PERMISSION_TYPE_LIST,
@@ -57,7 +56,7 @@ import {
 	ACTION_TYPE_LIST,
 } from "../constant"
 import { mockOrgTreeData, mockOrgResourcePermissions, mockUserResourcePermissions } from "../../mock"
-import { orgTreeDataNormalizer } from "../../OrgManagement/utils"
+import { formatOrgTreeData } from "../utils"
 
 export default {
 	name: "PermissionConfig",
@@ -81,80 +80,120 @@ export default {
 		},
 	},
 	data() {
+		const permissionChanges = {}
+		const renderKeys = {}
+		PERMISSION_TYPE_LIST.forEach(type => {
+			permissionChanges[type] = {}
+			renderKeys[type] = 0
+		})
 		return {
 			PERMISSION_TYPE_LIST,
 			PERMISSION_TYPE,
+			ACTION_TYPE_LIST,
 			orgId: mockOrgTreeData[0].orgId || null,
 			mockOrgTreeData,
 			permissionType: PERMISSION_TYPE.PANEL,
-			permissionChanges: {},
+			permissionChanges,
+			renderKeys,
 		}
 	},
 	computed: {
+		orgTreeOptions() {
+			return formatOrgTreeData(this.mockOrgTreeData)
+		},
 		actionList() {
 			return this.permissionSubject === PERMISSION_SUBJECT.ORG
 				? mockOrgResourcePermissions
 				: mockUserResourcePermissions
 		},
 		showSubmitBtn() {
-			// 当权限变更数据不为空时，显示提交按钮
-			return Object.keys(this.permissionChanges).length > 0
-		},
-		originalData() {
-			// 获取原始数据，用于比较
-			return this.actionList
+			if (!this.targetId) {
+				return false
+			}
+			const changes = this.permissionChanges[this.permissionType]
+			return changes && Object.keys(changes).length > 0
 		},
 	},
 	watch: {
+		permissionType(newType, oldType) {
+			if (oldType) {
+				this.resetTabState(oldType)
+			}
+		},
 		targetId() {
-			// 切换targetId时，清空权限变更数据
-			this.permissionChanges = {}
+			this.resetAllChanges()
+			this.resetAllRenderKeys()
 		},
 	},
 	methods: {
-		orgTreeDataNormalizer,
-		handlePrivilegeChange(changeData) {
-			// 更新权限变更数据
-			const key = `${changeData.permissionType}-${changeData.id}`
-			const originalItem = this.originalData[changeData.permissionType].find(item => item.id === changeData.id)
-
-			if (!originalItem) return
-
-			// 获取原始权限数组
-			const actionList = ACTION_TYPE_LIST[changeData.permissionType]
-			const originalPrivilege = actionList.map(action => originalItem[action] || false)
-
-			// 比较是否与原始数据相同
-			const isChanged = !this.arraysEqual(originalPrivilege, changeData.privilege)
-
-			if (isChanged) {
-				this.$set(this.permissionChanges, key, changeData)
-			} else {
-				// 如果恢复原状，则移除变更记录
-				this.$delete(this.permissionChanges, key)
+		handlePrivilegeChange(permissionType, payload) {
+			const targetPrivilege = this.getOriginalPrivilege(permissionType, payload.id)
+			if (!targetPrivilege) {
+				return
 			}
+			if (this.isPrivilegeEqual(targetPrivilege, payload.privilege)) {
+				this.$delete(this.permissionChanges[permissionType], payload.id)
+				return
+			}
+			this.$set(this.permissionChanges[permissionType], payload.id, payload.privilege)
 		},
-		arraysEqual(arr1, arr2) {
-			if (arr1.length !== arr2.length) return false
-			return arr1.every((val, index) => val === arr2[index])
+		getOriginalPrivilege(permissionType, id) {
+			const items = this.actionList[permissionType] || []
+			const actionList = this.ACTION_TYPE_LIST[permissionType] || []
+			const targetItem = items.find(item => item.id === id)
+			return this.getPrivilegeArrayFromItem(targetItem, actionList)
+		},
+		isPrivilegeEqual(origin, current) {
+			if (!origin || !current || origin.length !== current.length) {
+				return false
+			}
+			return origin.every((value, index) => value === current[index])
+		},
+		getPrivilegeArrayFromItem(item, actionList) {
+			if (!item) {
+				return actionList.map(() => false)
+			}
+			return actionList.map(action => Boolean(item[action]))
 		},
 		handleSubmit() {
-			// 收集所有权限变更数据
-			const permissions = Object.values(this.permissionChanges).map(change => ({
-				id: change.id,
-				permissionType: change.permissionType,
-				privilege: change.privilege,
-			}))
-
-			const requestData = {
-				permissionTarget: this.targetId,
-				permissions,
+			if (!this.showSubmitBtn) {
+				this.$message && this.$message.info("当前权限未发生变更")
+				return
 			}
-
-			console.log("提交权限配置数据:", JSON.stringify(requestData, null, 2))
-
-			// 提交后清空变更记录
-			this.permissionChanges = {}
+			const payload = {
+				permissionTarget: this.targetId,
+				permissions: this.buildPermissionsPayload(),
+			}
+			console.log("[UserConfig] Permission payload:", payload)
+			this.$message && this.$message.success("权限配置已提交，详情见控制台")
+			this.resetTabState(this.permissionType)
+		},
+		buildPermissionsPayload() {
+			const currentType = this.permissionType
+			const overrides = this.permissionChanges[currentType] || {}
+			const actionList = this.ACTION_TYPE_LIST[currentType] || []
+			return (this.actionList[currentType] || []).map(item => ({
+				id: item.id,
+				permissionType: currentType,
+				privilege: overrides[item.id] || this.getPrivilegeArrayFromItem(item, actionList),
+			}))
+		},
+		resetTabState(permissionType) {
+			this.$set(this.permissionChanges, permissionType, {})
+			this.bumpRenderKey(permissionType)
+		},
+		resetAllChanges() {
+			Object.keys(this.permissionChanges).forEach(type => {
+				this.$set(this.permissionChanges, type, {})
+			})
+		},
+		resetAllRenderKeys() {
+			Object.keys(this.renderKeys).forEach(type => {
+				this.bumpRenderKey(type)
+			})
+		},
+		bumpRenderKey(permissionType) {
+			this.$set(this.renderKeys, permissionType, (this.renderKeys[permissionType] || 0) + 1)
 		},
 	},
 }

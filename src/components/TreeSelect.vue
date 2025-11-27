@@ -3,16 +3,17 @@
 		class="tree-select"
 		:style="{ width: `${width}px` }"
 		:options="options"
+		:value="value"
 		:clearable="clearable"
 		:max-height="maxHeight"
 		:placeholder="placeholder"
-		:defaultExpandLevel="defaultExpandLevel"
-		@change="handleChange"
+		:default-expand-level="defaultExpandLevel"
 		v-bind="$attrs"
+		@input="handleInput"
+		@change="handleChange"
 	>
-		>
-		<label class="tree-node-label" slot="option-label" slot-scope="{ node }">
-			<i class="icon" :class="iconClass"></i>
+		<label slot="option-label" slot-scope="{ node }" class="tree-node-label">
+			<i class="icon" :class="iconClass" />
 			<span class="label">{{ node.label }}</span>
 		</label>
 	</TreeSelect>
@@ -26,6 +27,10 @@ export default {
 	name: "CustomTreeSelect",
 	components: { TreeSelect },
 	props: {
+		value: {
+			type: [String, Number, Array],
+			default: null,
+		},
 		iconClass: {
 			type: String,
 			default: "ri-building-line",
@@ -57,6 +62,9 @@ export default {
 		},
 	},
 	methods: {
+		handleInput(val) {
+			this.$emit("input", val)
+		},
 		handleChange(val) {
 			this.$emit("change", val)
 		},

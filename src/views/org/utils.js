@@ -1,3 +1,11 @@
+export const orgTreeDataNormalizer = node => {
+	return {
+		id: node.orgId,
+		label: node.name,
+		children: node.subOrganizations,
+	}
+}
+
 /**
  * 将组织树数据转换为 orgId -> name 的平级 map
  * @param {Array} treeData 组织树数据
@@ -21,12 +29,4 @@ export const convertOrgTreeToMap = treeData => {
 	treeData.forEach(rootNode => traverse(rootNode))
 
 	return orgMap
-}
-
-export const orgTreeDataNormalizer = node => {
-	return {
-		id: node.orgId,
-		label: node.name,
-		children: node.subOrganizations,
-	}
 }

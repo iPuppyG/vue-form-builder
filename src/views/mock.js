@@ -1,4 +1,4 @@
-import { ROOT_ORG_ID } from "./OrgManagement/constant"
+import { ROOT_ORG_ID } from "./org/constant"
 
 export const mockOrgTreeData = [
 	{
@@ -330,7 +330,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "1dba00d8e64c4d92bc8a87b33ad9ce41",
@@ -338,7 +338,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "808ee107-3ff8-11ed-931c-e5a04ec6ae50",
@@ -346,7 +346,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "7468d525-3ff8-11ed-931c-e5a04ec6ae50",
@@ -354,7 +354,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "1f849a24-3ff3-11ed-8043-054a126d5939",
@@ -362,7 +362,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "117f679e-8355-4645-a692-47e2009cbc0d",
@@ -370,7 +370,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 	],
 	download_task: [
@@ -380,7 +380,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "7b9c6922fe7c4b1e853ffb46e234a7f5",
@@ -388,7 +388,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "6adaf6ecc73841fda4c44644352892ce",
@@ -396,7 +396,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 	],
 	data_fill: [
@@ -406,7 +406,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "0a6e2c9548fe4d5c84a92d5d81f1939f",
@@ -414,7 +414,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "4aa7be106b2f47569331df9c84e74822",
@@ -422,7 +422,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "95534e0451ad44dc8e9fd514b92db630",
@@ -430,7 +430,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "bda57710813d451c8206295d9b7afe38",
@@ -438,7 +438,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "f1490f7bb6a64240a3ab0137ff1171b6",
@@ -446,7 +446,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "42e28cbb54904cce883bcb1c2ccad90b",
@@ -454,7 +454,7 @@ export const mockUserResourcePermissions = {
 			edit: false,
 			manage: false,
 			submit: false,
-			editable: true,
+			canEdit: true,
 		},
 	],
 	dataset: [
@@ -464,7 +464,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "0a6e2c9548fe4d5c84a92d5d81f1939f",
@@ -472,7 +472,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "4aa7be106b2f47569331df9c84e74822",
@@ -480,7 +480,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "95534e0451ad44dc8e9fd514b92db630",
@@ -488,7 +488,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "bda57710813d451c8206295d9b7afe38",
@@ -496,7 +496,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "f1490f7bb6a64240a3ab0137ff1171b6",
@@ -504,7 +504,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "42e28cbb54904cce883bcb1c2ccad90b",
@@ -512,7 +512,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "5aeb3e614b63444c9dab427cc7d72d5b",
@@ -520,7 +520,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "5e80ad260e2743d59a01a599c502d012",
@@ -528,7 +528,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "79f6d4956b0647c0921c871f991c3ba6",
@@ -536,7 +536,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "8956db6b479e4a6393dc52418d572d93",
@@ -544,7 +544,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "5faae0ff-db32-4d5d-81ca-84726f906893",
@@ -552,7 +552,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "760f647a-67b5-4c78-b4d4-a6ecd3386a43",
@@ -560,7 +560,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "16604c6f-9c5d-4d08-8ae2-079c283a123a",
@@ -568,7 +568,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "d9b1f69f-cc5d-4553-b248-ae3897516d36",
@@ -576,7 +576,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "fd5b76d5-2992-4fa2-93d6-ff49bc900c20",
@@ -584,7 +584,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "c4575d82-2173-4b76-9630-f1bef3b797c4",
@@ -592,7 +592,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "92a8bf3d-1344-4aa9-ac13-799ded8534b9",
@@ -600,7 +600,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "6b3afc21-e49f-4af2-b9b4-7445b7b624c1",
@@ -608,7 +608,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "7031b341-34f3-42d9-9d53-5d28bd0337b5",
@@ -616,7 +616,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "1de6acfb-a0ab-4eb5-9595-6c5e02e0063e",
@@ -624,7 +624,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "91a622b5-3581-4682-8aff-799396889b59",
@@ -632,7 +632,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "8a0146b0-0a3f-4690-9180-a21496ffcd4b",
@@ -640,7 +640,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "9491a320-119b-47d9-9c6c-14ca63881431",
@@ -648,7 +648,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "fca37a93-19b4-4876-8faa-5f114dfa31eb",
@@ -656,7 +656,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "f1716160-29b2-4991-861e-ecdd815b4e62",
@@ -664,7 +664,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "2a4bb8ad-411d-4c03-b9f8-9437656028fc",
@@ -672,7 +672,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "e162e1c2-8d1b-4fd2-a02b-93823a25a885",
@@ -680,7 +680,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "9f66e47b-2fcc-414f-9cc0-aea8a7d63e60",
@@ -688,7 +688,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "7cb7b2f5-39d0-4e66-acd5-625964e1ae76",
@@ -696,7 +696,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "49622c6f-aa9a-4daf-9d5e-0c7466b82d74",
@@ -704,7 +704,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "36ef1960-05ec-4cf9-9392-f28bc08a69ff",
@@ -712,7 +712,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "4593fccd-d4f5-49d5-a5eb-c3203910530e",
@@ -720,7 +720,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "5d91825c-8a0a-4c90-aba1-f58cff216561",
@@ -728,7 +728,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "99f30713-29ab-4378-941c-bb99182d927a",
@@ -736,7 +736,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "3e1cf23c-5620-4a59-93b0-e4cae81b47ae",
@@ -744,7 +744,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "4441c859-2e1b-44a0-a0af-4775c93300ee",
@@ -752,7 +752,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 		{
 			id: "caf2de01-1dd6-4ea5-a0aa-a53a6bb84ebb",
@@ -760,7 +760,7 @@ export const mockUserResourcePermissions = {
 			view: false,
 			edit: false,
 			export: false,
-			editable: true,
+			canEdit: true,
 		},
 	],
 	link: [
@@ -769,7 +769,7 @@ export const mockUserResourcePermissions = {
 			name: "demo",
 			view: false,
 			edit: false,
-			editable: true,
+			canEdit: true,
 		},
 	],
 }
@@ -783,7 +783,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "1dba00d8e64c4d92bc8a87b33ad9ce41",
@@ -791,7 +791,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "808ee107-3ff8-11ed-931c-e5a04ec6ae50",
@@ -799,7 +799,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "7468d525-3ff8-11ed-931c-e5a04ec6ae50",
@@ -807,7 +807,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "1f849a24-3ff3-11ed-8043-054a126d5939",
@@ -815,7 +815,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "117f679e-8355-4645-a692-47e2009cbc0d",
@@ -823,7 +823,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 	],
 	download_task: [
@@ -833,7 +833,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "7b9c6922fe7c4b1e853ffb46e234a7f5",
@@ -841,7 +841,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "6adaf6ecc73841fda4c44644352892ce",
@@ -849,7 +849,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 	],
 	data_fill: [
@@ -859,7 +859,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "0a6e2c9548fe4d5c84a92d5d81f1939f",
@@ -867,7 +867,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "4aa7be106b2f47569331df9c84e74822",
@@ -875,7 +875,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "95534e0451ad44dc8e9fd514b92db630",
@@ -883,7 +883,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "bda57710813d451c8206295d9b7afe38",
@@ -891,7 +891,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "f1490f7bb6a64240a3ab0137ff1171b6",
@@ -899,7 +899,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "42e28cbb54904cce883bcb1c2ccad90b",
@@ -907,7 +907,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "5aeb3e614b63444c9dab427cc7d72d5b",
@@ -915,7 +915,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "5e80ad260e2743d59a01a599c502d012",
@@ -923,7 +923,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "79f6d4956b0647c0921c871f991c3ba6",
@@ -931,7 +931,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "8956db6b479e4a6393dc52418d572d93",
@@ -939,7 +939,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "5faae0ff-db32-4d5d-81ca-84726f906893",
@@ -947,7 +947,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "760f647a-67b5-4c78-b4d4-a6ecd3386a43",
@@ -955,7 +955,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "16604c6f-9c5d-4d08-8ae2-079c283a123a",
@@ -963,7 +963,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "d9b1f69f-cc5d-4553-b248-ae3897516d36",
@@ -971,7 +971,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "fd5b76d5-2992-4fa2-93d6-ff49bc900c20",
@@ -979,7 +979,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "c4575d82-2173-4b76-9630-f1bef3b797c4",
@@ -987,7 +987,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "92a8bf3d-1344-4aa9-ac13-799ded8534b9",
@@ -995,7 +995,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "6b3afc21-e49f-4af2-b9b4-7445b7b624c1",
@@ -1003,7 +1003,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "7031b341-34f3-42d9-9d53-5d28bd0337b5",
@@ -1011,7 +1011,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "1de6acfb-a0ab-4eb5-9595-6c5e02e0063e",
@@ -1019,7 +1019,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "91a622b5-3581-4682-8aff-799396889b59",
@@ -1027,7 +1027,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "8a0146b0-0a3f-4690-9180-a21496ffcd4b",
@@ -1035,7 +1035,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "9491a320-119b-47d9-9c6c-14ca63881431",
@@ -1043,7 +1043,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "fca37a93-19b4-4876-8faa-5f114dfa31eb",
@@ -1051,7 +1051,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "f1716160-29b2-4991-861e-ecdd815b4e62",
@@ -1059,7 +1059,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "2a4bb8ad-411d-4c03-b9f8-9437656028fc",
@@ -1067,7 +1067,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "e162e1c2-8d1b-4fd2-a02b-93823a25a885",
@@ -1075,7 +1075,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "9f66e47b-2fcc-414f-9cc0-aea8a7d63e60",
@@ -1083,7 +1083,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "7cb7b2f5-39d0-4e66-acd5-625964e1ae76",
@@ -1091,7 +1091,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "49622c6f-aa9a-4daf-9d5e-0c7466b82d74",
@@ -1099,7 +1099,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "36ef1960-05ec-4cf9-9392-f28bc08a69ff",
@@ -1107,7 +1107,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "4593fccd-d4f5-49d5-a5eb-c3203910530e",
@@ -1115,7 +1115,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "5d91825c-8a0a-4c90-aba1-f58cff216561",
@@ -1123,7 +1123,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "99f30713-29ab-4378-941c-bb99182d927a",
@@ -1131,7 +1131,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "3e1cf23c-5620-4a59-93b0-e4cae81b47ae",
@@ -1139,7 +1139,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "4441c859-2e1b-44a0-a0af-4775c93300ee",
@@ -1147,7 +1147,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "caf2de01-1dd6-4ea5-a0aa-a53a6bb84ebb",
@@ -1155,7 +1155,7 @@ export const mockOrgResourcePermissions = {
 			edit: true,
 			manage: true,
 			submit: true,
-			editable: false,
+			canEdit: false,
 		},
 	],
 	dataset: [
@@ -1165,7 +1165,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "0a6e2c9548fe4d5c84a92d5d81f1939f",
@@ -1173,7 +1173,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "4aa7be106b2f47569331df9c84e74822",
@@ -1181,7 +1181,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "95534e0451ad44dc8e9fd514b92db630",
@@ -1189,7 +1189,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "bda57710813d451c8206295d9b7afe38",
@@ -1197,7 +1197,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "f1490f7bb6a64240a3ab0137ff1171b6",
@@ -1205,7 +1205,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 		{
 			id: "42e28cbb54904cce883bcb1c2ccad90b",
@@ -1213,7 +1213,7 @@ export const mockOrgResourcePermissions = {
 			view: true,
 			edit: true,
 			export: true,
-			editable: false,
+			canEdit: false,
 		},
 	],
 	link: [
@@ -1222,13 +1222,13 @@ export const mockOrgResourcePermissions = {
 			name: "demo",
 			view: true,
 			edit: true,
-			editable: false,
+			canEdit: false,
 		},
 	],
 }
 
 // 查询具体资源的组织列表权限
-const mockResourceOrgPermissions = {
+export const mockResourceOrgPermissions = {
 	orgId: 1,
 	orgName: "总公司",
 	child: [
@@ -1240,7 +1240,7 @@ const mockResourceOrgPermissions = {
 					orgId: 16,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1249,7 +1249,7 @@ const mockResourceOrgPermissions = {
 					orgId: 17,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1258,7 +1258,7 @@ const mockResourceOrgPermissions = {
 					orgId: 18,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1267,7 +1267,7 @@ const mockResourceOrgPermissions = {
 					orgId: 19,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1276,7 +1276,7 @@ const mockResourceOrgPermissions = {
 					orgId: 20,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1285,7 +1285,7 @@ const mockResourceOrgPermissions = {
 					orgId: 11,
 					orgName: "子公司d",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1294,7 +1294,7 @@ const mockResourceOrgPermissions = {
 					orgId: 12,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1303,7 +1303,7 @@ const mockResourceOrgPermissions = {
 					orgId: 13,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1312,7 +1312,7 @@ const mockResourceOrgPermissions = {
 					orgId: 14,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
@@ -1321,20 +1321,104 @@ const mockResourceOrgPermissions = {
 					orgId: 15,
 					orgName: "子公司C",
 					child: null,
-					editable: false,
+					canEdit: false,
 					edit: false,
 					view: false,
 					export: false,
 				},
 			],
-			editable: false,
+			canEdit: true,
 			edit: false,
 			view: false,
-			export: false,
+			export: true,
 		},
 	],
-	editable: false,
+	canEdit: false,
 	edit: false,
 	view: false,
 	export: false,
 }
+
+// 以用户为权限主体查询资源权限
+export const mockResourceUserPermissions = [
+	{
+		userId: 101,
+		userName: "zhangsan",
+		canEdit: false,
+		edit: false,
+		view: true,
+		export: false,
+	},
+	{
+		userId: 102,
+		userName: "lisi",
+		canEdit: true,
+		edit: false,
+		view: false,
+		export: false,
+	},
+	{
+		userId: 103,
+		userName: "wangwu",
+		canEdit: true,
+		edit: false,
+		view: false,
+		export: false,
+	},
+	{
+		userId: 104,
+		userName: "zhaoliu",
+		canEdit: false,
+		edit: true,
+		view: true,
+		export: true,
+	},
+	{
+		userId: 105,
+		userName: "qianqi",
+		canEdit: false,
+		edit: false,
+		view: true,
+		export: true,
+	},
+	{
+		userId: 106,
+		userName: "sunba",
+		canEdit: true,
+		edit: false,
+		view: true,
+		export: false,
+	},
+	{
+		userId: 107,
+		userName: "zhoujiu",
+		canEdit: false,
+		edit: true,
+		view: false,
+		export: false,
+	},
+	{
+		userId: 108,
+		userName: "wushi",
+		canEdit: true,
+		edit: true,
+		view: true,
+		export: true,
+	},
+	{
+		userId: 109,
+		userName: "chenshiyi",
+		canEdit: false,
+		edit: false,
+		view: false,
+		export: true,
+	},
+	{
+		userId: 110,
+		userName: "yangshier",
+		canEdit: true,
+		edit: true,
+		view: false,
+		export: true,
+	},
+]

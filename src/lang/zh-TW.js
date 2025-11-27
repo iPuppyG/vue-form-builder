@@ -247,7 +247,12 @@ export default {
 		resourcePermissionConfig: {
 			resourceList: "資源列表",
 			searchResource: "搜尋資源",
-			selectLeftResource: "請先選擇左側的資源", // 修正了原文的笔误 "線先" -> "先"
+			selectLeftResource: "請先選擇左側的資源",
+			searchOrg: "搜尋組織",
+			tabMap: {
+				org: "組織",
+				user: "用戶",
+			},
 		},
 	},
 	orgManagement: {

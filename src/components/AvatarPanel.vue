@@ -3,7 +3,7 @@
 		<Avatar :icon="iconClass" :color="iconColor" />
 		<div class="content">
 			<span class="label">{{ label }}</span>
-			<span class="desc">{{ desc }}</span>
+			<span v-if="desc" class="desc">{{ desc }}</span>
 		</div>
 	</div>
 </template>

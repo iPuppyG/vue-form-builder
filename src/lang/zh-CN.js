@@ -250,7 +250,12 @@ export default {
 		resourcePermissionConfig: {
 			resourceList: "资源列表",
 			searchResource: "搜索资源",
+			searchOrg: "搜索组织",
 			selectLeftResource: "请线先选择左侧的资源",
+			tabMap: {
+				org: "组织",
+				user: "用户",
+			},
 		},
 	},
 	orgManagement: {

@@ -160,23 +160,8 @@ export default {
 					return ""
 			}
 		},
-		handleEditSubmit() {
-			// TODO: 补齐方法, 只需console.log请求参数即可
-			// 请求参数格式
-			// {
-			// 	"name": "子公司d",
-			// 	"orgId": 11,
-			// 	"pid": 7
-			// }
-		},
-		handleAddSubmit() {
-			// TODO: 补齐方法, 只需console.log请求参数即可
-			// 请求参数格式
-			// {
-			// 	"name": "子公司C",
-			// 	"pid": 7
-			// }
-		},
+		handleEditSubmit() {},
+		handleAddSubmit() {},
 	},
 }
 </script>

@@ -248,7 +248,12 @@ export default {
 		resourcePermissionConfig: {
 			resourceList: "Resource List",
 			searchResource: "Search Resource",
-			selectLeftResource: "Please select a resource on the left first", // 修正了原文的笔误 "線先" -> "先"
+			selectLeftResource: "Please select a resource on the left first",
+			searchOrg: "Search Organization",
+			tabMap: {
+				org: "Organization",
+				user: "User",
+			},
 		},
 	},
 	orgManagement: {
