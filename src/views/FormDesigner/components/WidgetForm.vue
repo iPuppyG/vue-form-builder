@@ -1,231 +1,255 @@
 <template>
-	<div class="widget-form">
-		<div v-if="data.list.length == 0" class="form-empty">
-			<i class="ri-drag-drop-line drag-drop-icon"></i>
-			<div class="empty-text-container">
-				<span class="title">{{ $t("fm.description.containerEmptyTitle") }}</span>
-				<span class="desc">{{ $t("fm.description.containerEmpty") }}</span>
-			</div>
-		</div>
-		<el-form
-			class="form-container"
-			:size="data.config.size"
-			:label-position="data.config.labelPosition"
-			:label-width="data.config.labelWidth + 'px'"
-		>
-			<draggable
-				class="draggable-zone"
-				v-model="data.list"
-				v-bind="{ group: 'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget' }"
-				@end="handleMoveEnd"
-				@add="handleWidgetAdd"
-			>
-				<transition-group name="fade" tag="div" class="widget-form-list">
-					<template v-for="(element, index) in data.list">
-						<template v-if="element.type == 'grid'">
-							<el-row
-								class="widget-col"
-								v-if="element && element.key"
-								:key="element.key"
-								type="flex"
-								:class="{ active: selectWidget.key == element.key }"
-								:gutter="element.options.gutter ? element.options.gutter : 0"
-								:justify="element.options.justify"
-								:align="element.options.align"
-								@click.native="handleSelectWidget(index)"
-							>
-								<el-col v-for="(col, colIndex) in element.columns" :key="colIndex" :span="col.span ? col.span : 0">
-									<draggable
-										v-model="col.list"
-										:no-transition-on-drag="true"
-										v-bind="{
-											group: { name: 'people', put: handlePut },
-											ghostClass: 'ghost',
-											animation: 200,
-											handle: '.drag-widget',
-										}"
-										@end="handleMoveEnd"
-										@add="handleWidgetColAdd($event, element, colIndex)"
-									>
-										<transition-group name="fade" tag="div" class="widget-col-list">
-											<template v-for="(el, i) in col.list">
-												<widget-form-item
-													:key="el.key"
-													v-if="el.key"
-													:element="el"
-													:select.sync="selectWidget"
-													:index="i"
-													:data="col"
-												></widget-form-item>
-											</template>
-										</transition-group>
-									</draggable>
-								</el-col>
-								<div class="widget-view-action widget-col-action" v-if="selectWidget.key == element.key">
-									<i class="ri-delete-bin-6-line" @click.stop="handleWidgetDelete(index)"></i>
-								</div>
+  <div class="widget-form">
+    <div
+      v-if="data.list.length == 0"
+      class="form-empty"
+    >
+      <i class="ri-drag-drop-line drag-drop-icon" />
+      <div class="empty-text-container">
+        <span class="title">{{ $t("fm.description.containerEmptyTitle") }}</span>
+        <span class="desc">{{ $t("fm.description.containerEmpty") }}</span>
+      </div>
+    </div>
+    <el-form
+      class="form-container"
+      :size="data.config.size"
+      :label-position="data.config.labelPosition"
+      :label-width="data.config.labelWidth + 'px'"
+    >
+      <draggable
+        v-model="data.list"
+        class="draggable-zone"
+        v-bind="{ group: 'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget' }"
+        @end="handleMoveEnd"
+        @add="handleWidgetAdd"
+      >
+        <transition-group
+          name="fade"
+          tag="div"
+          class="widget-form-list"
+        >
+          <template v-for="(element, index) in data.list">
+            <template v-if="element.type == 'grid'">
+              <el-row
+                v-if="element && element.key"
+                :key="element.key"
+                class="widget-col"
+                type="flex"
+                :class="{ active: selectWidget.key == element.key }"
+                :gutter="element.options.gutter ? element.options.gutter : 0"
+                :justify="element.options.justify"
+                :align="element.options.align"
+                @click.native="handleSelectWidget(index)"
+              >
+                <el-col
+                  v-for="(col, colIndex) in element.columns"
+                  :key="colIndex"
+                  :span="col.span ? col.span : 0"
+                >
+                  <draggable
+                    v-model="col.list"
+                    :no-transition-on-drag="true"
+                    v-bind="{
+                      group: { name: 'people', put: handlePut },
+                      ghostClass: 'ghost',
+                      animation: 200,
+                      handle: '.drag-widget',
+                    }"
+                    @end="handleMoveEnd"
+                    @add="handleWidgetColAdd($event, element, colIndex)"
+                  >
+                    <transition-group
+                      name="fade"
+                      tag="div"
+                      class="widget-col-list"
+                    >
+                      <template v-for="(el, i) in col.list">
+                        <widget-form-item
+                          v-if="el.key"
+                          :key="el.key"
+                          :element="el"
+                          :select.sync="selectWidget"
+                          :index="i"
+                          :data="col"
+                        />
+                      </template>
+                    </transition-group>
+                  </draggable>
+                </el-col>
+                <div
+                  v-if="selectWidget.key == element.key"
+                  class="widget-view-action widget-col-action"
+                >
+                  <i
+                    class="ri-delete-bin-6-line"
+                    @click.stop="handleWidgetDelete(index)"
+                  />
+                </div>
 
-								<div class="widget-view-drag widget-col-drag" v-if="selectWidget.key == element.key">
-									<i class="ri-drag-move-2-fill drag-widget"></i>
-								</div>
-							</el-row>
-						</template>
-						<template v-else>
-							<widget-form-item
-								v-if="element && element.key"
-								:key="element.key"
-								:element="element"
-								:select.sync="selectWidget"
-								:index="index"
-								:data="data"
-							></widget-form-item>
-						</template>
-					</template>
-				</transition-group>
-			</draggable>
-		</el-form>
-	</div>
+                <div
+                  v-if="selectWidget.key == element.key"
+                  class="widget-view-drag widget-col-drag"
+                >
+                  <i class="ri-drag-move-2-fill drag-widget" />
+                </div>
+              </el-row>
+            </template>
+            <template v-else>
+              <widget-form-item
+                v-if="element && element.key"
+                :key="element.key"
+                :element="element"
+                :select.sync="selectWidget"
+                :index="index"
+                :data="data"
+              />
+            </template>
+          </template>
+        </transition-group>
+      </draggable>
+    </el-form>
+  </div>
 </template>
 
 <script>
-import Draggable from "vuedraggable"
-import WidgetFormItem from "./WidgetFormItem"
+import Draggable from 'vuedraggable'
+import WidgetFormItem from './WidgetFormItem'
 
 export default {
-	components: {
-		Draggable,
-		WidgetFormItem,
-	},
-	props: ["data", "select"],
-	data() {
-		return {
-			selectWidget: this.select,
-		}
-	},
-	mounted() {
-		document.body.ondrop = function (event) {
-			let isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1
-			if (isFirefox) {
-				event.preventDefault()
-				event.stopPropagation()
-			}
-		}
-	},
-	methods: {
-		handleMoveEnd({ newIndex, oldIndex }) {
-			console.log("index", newIndex, oldIndex)
-		},
-		handleSelectWidget(index) {
-			console.log(index, "#####")
-			this.selectWidget = this.data.list[index]
-		},
-		handleWidgetAdd(evt) {
-			const newIndex = evt.newIndex
-			// 为拖拽到容器的元素添加唯一key
-			const key = Date.parse(new Date())
-			this.$set(this.data.list, newIndex, {
-				...this.data.list[newIndex],
-				options: {
-					...this.data.list[newIndex].options,
-					remoteFunc: "func_" + key,
-				},
-				key,
-				model: this.data.list[newIndex].type + "_" + key,
-				rules: [],
-			})
+  components: {
+    Draggable,
+    WidgetFormItem
+  },
+  props: ['data', 'select'],
+  data() {
+    return {
+      selectWidget: this.select
+    }
+  },
+  watch: {
+    select(val) {
+      this.selectWidget = val
+    },
+    selectWidget: {
+      handler(val) {
+        this.$emit('update:select', val)
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    document.body.ondrop = function(event) {
+      const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+      if (isFirefox) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    }
+  },
+  methods: {
+    handleMoveEnd({ newIndex, oldIndex }) {
+      console.log('index', newIndex, oldIndex)
+    },
+    handleSelectWidget(index) {
+      console.log(index, '#####')
+      this.selectWidget = this.data.list[index]
+    },
+    handleWidgetAdd(evt) {
+      const newIndex = evt.newIndex
+      // 为拖拽到容器的元素添加唯一key
+      const key = Date.parse(new Date())
+      this.$set(this.data.list, newIndex, {
+        ...this.data.list[newIndex],
+        options: {
+          ...this.data.list[newIndex].options,
+          remoteFunc: 'func_' + key
+        },
+        key,
+        model: this.data.list[newIndex].type + '_' + key,
+        rules: []
+      })
 
-			if (
-				this.data.list[newIndex].type === "radio" ||
-				this.data.list[newIndex].type === "checkbox" ||
-				this.data.list[newIndex].type === "select"
-			) {
-				this.$set(this.data.list, newIndex, {
-					...this.data.list[newIndex],
-					options: {
-						...this.data.list[newIndex].options,
-						options: this.data.list[newIndex].options.options.map(item => ({
-							...item,
-						})),
-					},
-				})
-			}
+      if (
+        this.data.list[newIndex].type === 'radio' ||
+				this.data.list[newIndex].type === 'checkbox' ||
+				this.data.list[newIndex].type === 'select'
+      ) {
+        this.$set(this.data.list, newIndex, {
+          ...this.data.list[newIndex],
+          options: {
+            ...this.data.list[newIndex].options,
+            options: this.data.list[newIndex].options.options.map(item => ({
+              ...item
+            }))
+          }
+        })
+      }
 
-			if (this.data.list[newIndex].type === "grid") {
-				this.$set(this.data.list, newIndex, {
-					...this.data.list[newIndex],
-					columns: this.data.list[newIndex].columns.map(item => ({ ...item })),
-				})
-			}
+      if (this.data.list[newIndex].type === 'grid') {
+        this.$set(this.data.list, newIndex, {
+          ...this.data.list[newIndex],
+          columns: this.data.list[newIndex].columns.map(item => ({ ...item }))
+        })
+      }
 
-			this.selectWidget = this.data.list[newIndex]
-		},
-		handleWidgetColAdd($event, row, colIndex) {
-			const newIndex = $event.newIndex
-			const key = Date.parse(new Date())
+      this.selectWidget = this.data.list[newIndex]
+    },
+    handleWidgetColAdd($event, row, colIndex) {
+      const newIndex = $event.newIndex
+      const key = Date.parse(new Date())
 
-			this.$set(row.columns[colIndex].list, newIndex, {
-				...row.columns[colIndex].list[newIndex],
-				options: {
-					...row.columns[colIndex].list[newIndex].options,
-					remoteFunc: "func_" + key,
-				},
-				key,
-				model: row.columns[colIndex].list[newIndex].type + "_" + key,
-				rules: [],
-			})
+      this.$set(row.columns[colIndex].list, newIndex, {
+        ...row.columns[colIndex].list[newIndex],
+        options: {
+          ...row.columns[colIndex].list[newIndex].options,
+          remoteFunc: 'func_' + key
+        },
+        key,
+        model: row.columns[colIndex].list[newIndex].type + '_' + key,
+        rules: []
+      })
 
-			if (
-				row.columns[colIndex].list[newIndex].type === "radio" ||
-				row.columns[colIndex].list[newIndex].type === "checkbox" ||
-				row.columns[colIndex].list[newIndex].type === "select"
-			) {
-				this.$set(row.columns[colIndex].list, newIndex, {
-					...row.columns[colIndex].list[newIndex],
-					options: {
-						...row.columns[colIndex].list[newIndex].options,
-						options: row.columns[colIndex].list[newIndex].options.options.map(item => ({
-							...item,
-						})),
-					},
-				})
-			}
+      if (
+        row.columns[colIndex].list[newIndex].type === 'radio' ||
+				row.columns[colIndex].list[newIndex].type === 'checkbox' ||
+				row.columns[colIndex].list[newIndex].type === 'select'
+      ) {
+        this.$set(row.columns[colIndex].list, newIndex, {
+          ...row.columns[colIndex].list[newIndex],
+          options: {
+            ...row.columns[colIndex].list[newIndex].options,
+            options: row.columns[colIndex].list[newIndex].options.options.map(item => ({
+              ...item
+            }))
+          }
+        })
+      }
 
-			this.selectWidget = row.columns[colIndex].list[newIndex]
-		},
-		handleWidgetDelete(index) {
-			if (this.data.list.length - 1 === index) {
-				if (index === 0) {
-					this.selectWidget = {}
-				} else {
-					this.selectWidget = this.data.list[index - 1]
-				}
-			} else {
-				this.selectWidget = this.data.list[index + 1]
-			}
+      this.selectWidget = row.columns[colIndex].list[newIndex]
+    },
+    handleWidgetDelete(index) {
+      if (this.data.list.length - 1 === index) {
+        if (index === 0) {
+          this.selectWidget = {}
+        } else {
+          this.selectWidget = this.data.list[index - 1]
+        }
+      } else {
+        this.selectWidget = this.data.list[index + 1]
+      }
 
-			this.$nextTick(() => {
-				this.data.list.splice(index, 1)
-			})
-		},
+      this.$nextTick(() => {
+        this.data.list.splice(index, 1)
+      })
+    },
 
-		handlePut(a, b, c) {
-			if (c.className.split(" ").indexOf("widget-col") >= 0 || c.className.split(" ").indexOf("no-put") >= 0) {
-				return false
-			}
-			return true
-		},
-	},
-	watch: {
-		select(val) {
-			this.selectWidget = val
-		},
-		selectWidget: {
-			handler(val) {
-				this.$emit("update:select", val)
-			},
-			deep: true,
-		},
-	},
+    handlePut(a, b, c) {
+      if (c.className.split(' ').indexOf('widget-col') >= 0 || c.className.split(' ').indexOf('no-put') >= 0) {
+        return false
+      }
+      return true
+    }
+  }
 }
 </script>
 

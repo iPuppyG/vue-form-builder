@@ -1,102 +1,129 @@
 <template>
-	<div class="config-container" v-if="show">
-		<div class="widget-config-title">{{ $t("fm.description.configSetting") }}</div>
-		<el-form class="widget-config-form" label-position="top">
-			<!-- 基础信息 -->
-			<div class="config-group" v-if="data.type !== 'grid'">
-				<div class="group-title">{{ $t("fm.config.widget.basic") }}</div>
-				<div class="group-list">
-					<!-- 标题 -->
-					<el-form-item class="required-field" :label="$t('fm.config.widget.name')" v-if="data.type != 'grid'">
-						<el-input v-model="data.name"></el-input>
-					</el-form-item>
+  <div
+    v-if="show"
+    class="config-container"
+  >
+    <div class="widget-config-title">{{ $t("fm.description.configSetting") }}</div>
+    <el-form
+      class="widget-config-form"
+      label-position="top"
+    >
+      <!-- 基础信息 -->
+      <div
+        v-if="data.type !== 'grid'"
+        class="config-group"
+      >
+        <div class="group-title">{{ $t("fm.config.widget.basic") }}</div>
+        <div class="group-list">
+          <!-- 标题 -->
+          <el-form-item
+            v-if="data.type != 'grid'"
+            class="required-field"
+            :label="$t('fm.config.widget.name')"
+          >
+            <el-input v-model="data.name" />
+          </el-form-item>
 
-					<!-- 字段名 -->
-					<el-form-item class="required-field" :label="$t('fm.config.widget.model')" v-if="data.type != 'grid'">
-						<el-input v-model="data.model"></el-input>
-					</el-form-item>
+          <!-- 字段名 -->
+          <el-form-item
+            v-if="data.type != 'grid'"
+            class="required-field"
+            :label="$t('fm.config.widget.model')"
+          >
+            <el-input v-model="data.model" />
+          </el-form-item>
 
-					<!-- 提示词 -->
-					<el-form-item
-						:label="$t('fm.config.widget.placeholder')"
-						v-if="Object.keys(data.options).indexOf('placeholder') >= 0 && (data.type != 'time' || data.type != 'date')"
-					>
-						<el-input v-model="data.options.placeholder"></el-input>
-					</el-form-item>
+          <!-- 提示词 -->
+          <el-form-item
+            v-if="Object.keys(data.options).indexOf('placeholder') >= 0 && (data.type != 'time' || data.type != 'date')"
+            :label="$t('fm.config.widget.placeholder')"
+          >
+            <el-input v-model="data.options.placeholder" />
+          </el-form-item>
 
-					<!-- 字段描述 -->
-					<el-form-item :label="$t('fm.config.widget.description')">
-						<el-input type="textarea" :rows="3" v-model="data.options.description"></el-input>
-					</el-form-item>
+          <!-- 字段描述 -->
+          <el-form-item :label="$t('fm.config.widget.description')">
+            <el-input
+              v-model="data.options.description"
+              type="textarea"
+              :rows="3"
+            />
+          </el-form-item>
 
-					<!-- 默认值 -->
-					<el-form-item
-						:label="$t('fm.config.widget.defaultValue')"
-						v-if="
-							Object.keys(data.options).indexOf('defaultValue') >= 0 &&
-							(data.type == 'textarea' ||
-								data.type == 'input' ||
-								data.type == 'number' ||
-								data.type == 'rate' ||
-								data.type == 'color' ||
-								data.type == 'switch' ||
-								data.type == 'text')
-						"
-					>
-						<el-input
-							v-if="data.type == 'input' || data.type === 'textarea' || data.type === 'number'"
-							type="input"
-							v-model="data.options.defaultValue"
-						></el-input>
-						<el-rate
-							v-if="data.type == 'rate'"
-							style="display: inline-block; vertical-align: middle"
-							:max="data.options.max"
-							:allow-half="data.options.allowHalf"
-							v-model="data.options.defaultValue"
-						></el-rate>
-						<el-button
-							type="text"
-							v-if="data.type == 'rate'"
-							style="display: inline-block; vertical-align: middle; margin-left: 10px"
-							@click="data.options.defaultValue = 0"
-						>
-							{{ $t("fm.actions.clear") }}
-						</el-button>
-						<el-color-picker
-							v-if="data.type == 'color'"
-							v-model="data.options.defaultValue"
-							:show-alpha="data.options.showAlpha"
-						></el-color-picker>
-						<el-switch v-if="data.type == 'switch'" v-model="data.options.defaultValue"></el-switch>
-						<el-input v-if="data.type == 'text'" v-model="data.options.defaultValue"></el-input>
-					</el-form-item>
-					<el-form-item
-						:label="$t('fm.config.widget.defaultValue')"
-						v-if="data.type == 'time' && Object.keys(data.options).indexOf('isRange') >= 0"
-					>
-						<el-time-picker
-							key="1"
-							style="width: 100%"
-							v-if="!data.options.isRange"
-							v-model="data.options.defaultValue"
-							:arrowControl="data.options.arrowControl"
-							:value-format="data.options.format"
-						></el-time-picker>
-						<el-time-picker
-							key="2"
-							v-if="data.options.isRange"
-							style="width: 100%"
-							v-model="data.options.defaultValue"
-							is-range
-							:arrowControl="data.options.arrowControl"
-							:value-format="data.options.format"
-						></el-time-picker>
-					</el-form-item>
-				</div>
-			</div>
+          <!-- 默认值 -->
+          <el-form-item
+            v-if="
+              Object.keys(data.options).indexOf('defaultValue') >= 0 &&
+                (data.type == 'textarea' ||
+                  data.type == 'input' ||
+                  data.type == 'number' ||
+                  data.type == 'rate' ||
+                  data.type == 'color' ||
+                  data.type == 'switch' ||
+                  data.type == 'text')
+            "
+            :label="$t('fm.config.widget.defaultValue')"
+          >
+            <el-input
+              v-if="data.type == 'input' || data.type === 'textarea' || data.type === 'number'"
+              v-model="data.options.defaultValue"
+              type="input"
+            />
+            <el-rate
+              v-if="data.type == 'rate'"
+              v-model="data.options.defaultValue"
+              style="display: inline-block; vertical-align: middle"
+              :max="data.options.max"
+              :allow-half="data.options.allowHalf"
+            />
+            <el-button
+              v-if="data.type == 'rate'"
+              type="text"
+              style="display: inline-block; vertical-align: middle; margin-left: 10px"
+              @click="data.options.defaultValue = 0"
+            >
+              {{ $t("fm.actions.clear") }}
+            </el-button>
+            <el-color-picker
+              v-if="data.type == 'color'"
+              v-model="data.options.defaultValue"
+              :show-alpha="data.options.showAlpha"
+            />
+            <el-switch
+              v-if="data.type == 'switch'"
+              v-model="data.options.defaultValue"
+            />
+            <el-input
+              v-if="data.type == 'text'"
+              v-model="data.options.defaultValue"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="data.type == 'time' && Object.keys(data.options).indexOf('isRange') >= 0"
+            :label="$t('fm.config.widget.defaultValue')"
+          >
+            <el-time-picker
+              v-if="!data.options.isRange"
+              key="1"
+              v-model="data.options.defaultValue"
+              style="width: 100%"
+              :arrow-control="data.options.arrowControl"
+              :value-format="data.options.format"
+            />
+            <el-time-picker
+              v-if="data.options.isRange"
+              key="2"
+              v-model="data.options.defaultValue"
+              style="width: 100%"
+              is-range
+              :arrow-control="data.options.arrowControl"
+              :value-format="data.options.format"
+            />
+          </el-form-item>
+        </div>
+      </div>
 
-			<!-- <el-form-item :label="$t('fm.config.widget.layout')" v-if="Object.keys(data.options).indexOf('inline') >= 0">
+      <!-- <el-form-item :label="$t('fm.config.widget.layout')" v-if="Object.keys(data.options).indexOf('inline') >= 0">
 				<el-radio-group v-model="data.options.inline">
 					<el-radio-button :label="false">{{ $t("fm.config.widget.block") }}</el-radio-button>
 					<el-radio-button :label="true">{{ $t("fm.config.widget.inline") }}</el-radio-button>
@@ -416,318 +443,419 @@
 				</el-form-item>
 			</template> -->
 
-			<!-- 校验 -->
-			<div class="config-group" v-if="data.type !== 'grid'">
-				<div class="group-title">{{ $t("fm.config.widget.validate") }}</div>
-				<div class="group-list">
-					<template v-if="Object.keys(data.options).indexOf('required') >= 0">
-						<el-checkbox v-model="data.options.required">{{ $t("fm.config.widget.required") }}</el-checkbox>
-					</template>
-					<el-form-item
-						:label="$t('fm.config.widget.maxlength')"
-						v-if="data.type == 'textarea' || data.type == 'input'"
-					>
-						<el-input-number size="mini" v-model="data.options.maxlength" :min="1"></el-input-number>
-					</el-form-item>
-					<el-form-item
-						:label="$t('fm.config.widget.dataType')"
-						v-if="Object.keys(data.options).indexOf('dataType') >= 0"
-					>
-						<el-select
-							v-if="Object.keys(data.options).indexOf('dataType') >= 0"
-							v-model="data.options.dataType"
-							size="mini"
-							placeholder=""
-						>
-							<el-option value="email" :label="$t('fm.config.widget.email')"></el-option>
-							<el-option value="idCardNumber" :label="$t('fm.config.widget.idCardNumber')"></el-option>
-							<el-option value="phone" :label="$t('fm.config.widget.phone')"></el-option>
-						</el-select>
-					</el-form-item>
-					<!-- <el-form-item :label="$t('fm.config.widget.regex')" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
+      <!-- 校验 -->
+      <div
+        v-if="data.type !== 'grid'"
+        class="config-group"
+      >
+        <div class="group-title">{{ $t("fm.config.widget.validate") }}</div>
+        <div class="group-list">
+          <template v-if="Object.keys(data.options).indexOf('required') >= 0">
+            <el-checkbox v-model="data.options.required">{{ $t("fm.config.widget.required") }}</el-checkbox>
+          </template>
+          <el-form-item
+            v-if="data.type == 'textarea' || data.type == 'input'"
+            :label="$t('fm.config.widget.maxlength')"
+          >
+            <el-input-number
+              v-model="data.options.maxlength"
+              size="mini"
+              :min="1"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="Object.keys(data.options).indexOf('dataType') >= 0"
+            :label="$t('fm.config.widget.dataType')"
+          >
+            <el-select
+              v-if="Object.keys(data.options).indexOf('dataType') >= 0"
+              v-model="data.options.dataType"
+              size="mini"
+              placeholder=""
+            >
+              <el-option
+                value="email"
+                :label="$t('fm.config.widget.email')"
+              />
+              <el-option
+                value="idCardNumber"
+                :label="$t('fm.config.widget.idCardNumber')"
+              />
+              <el-option
+                value="phone"
+                :label="$t('fm.config.widget.phone')"
+              />
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item :label="$t('fm.config.widget.regex')" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
 						<el-input size="mini" v-model.lazy="data.options.pattern" style="width: 200px">
 							<template slot="prepend">/</template>
 							<template slot="append">/</template>
 						</el-input>
 					</el-form-item> -->
-					<el-form-item :label="$t('fm.config.widget.min')" v-if="Object.keys(data.options).indexOf('min') >= 0">
-						<el-input-number v-model="data.options.min" :min="0" :max="100" :step="1"></el-input-number>
-					</el-form-item>
-					<el-form-item :label="$t('fm.config.widget.max')" v-if="Object.keys(data.options).indexOf('max') >= 0">
-						<el-input-number v-model="data.options.max" :min="0" :max="100" :step="1"></el-input-number>
-					</el-form-item>
-				</div>
-			</div>
+          <el-form-item
+            v-if="Object.keys(data.options).indexOf('min') >= 0"
+            :label="$t('fm.config.widget.min')"
+          >
+            <el-input-number
+              v-model="data.options.min"
+              :min="0"
+              :max="100"
+              :step="1"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="Object.keys(data.options).indexOf('max') >= 0"
+            :label="$t('fm.config.widget.max')"
+          >
+            <el-input-number
+              v-model="data.options.max"
+              :min="0"
+              :max="100"
+              :step="1"
+            />
+          </el-form-item>
+        </div>
+      </div>
 
-			<!-- 样式 -->
-			<div class="config-group" v-if="data.type !== 'grid'">
-				<div class="group-title">{{ $t("fm.config.widget.style") }}</div>
-				<el-form-item :label="$t('fm.config.widget.width')" v-if="Object.keys(data.options).indexOf('width') >= 0">
-					<el-slider
-						class="slider"
-						v-model="percentWidth"
-						:format-tooltip="val => `${val}%`"
-						show-input
-						:show-input-controls="false"
-						input-size="mini"
-					></el-slider>
-				</el-form-item>
-				<el-form-item :label="$t('fm.config.widget.height')" v-if="Object.keys(data.options).indexOf('height') >= 0">
-					<el-input v-model="data.options.height"></el-input>
-				</el-form-item>
-				<el-form-item :label="$t('fm.config.widget.size')" v-if="Object.keys(data.options).indexOf('size') >= 0">
-					{{ $t("fm.config.widget.width") }}
-					<el-slider style="width: 90px" type="number" v-model.number="data.options.size.width"></el-slider>
-					{{ $t("fm.config.widget.height") }}
-					<el-input style="width: 90px" type="number" v-model.number="data.options.size.height"></el-input>
-				</el-form-item>
-			</div>
+      <!-- 样式 -->
+      <div
+        v-if="data.type !== 'grid'"
+        class="config-group"
+      >
+        <div class="group-title">{{ $t("fm.config.widget.style") }}</div>
+        <el-form-item
+          v-if="Object.keys(data.options).indexOf('width') >= 0"
+          :label="$t('fm.config.widget.width')"
+        >
+          <el-slider
+            v-model="percentWidth"
+            class="slider"
+            :format-tooltip="val => `${val}%`"
+            show-input
+            :show-input-controls="false"
+            input-size="mini"
+          />
+        </el-form-item>
+        <el-form-item
+          v-if="Object.keys(data.options).indexOf('height') >= 0"
+          :label="$t('fm.config.widget.height')"
+        >
+          <el-input v-model="data.options.height" />
+        </el-form-item>
+        <el-form-item
+          v-if="Object.keys(data.options).indexOf('size') >= 0"
+          :label="$t('fm.config.widget.size')"
+        >
+          {{ $t("fm.config.widget.width") }}
+          <el-slider
+            v-model.number="data.options.size.width"
+            style="width: 90px"
+            type="number"
+          />
+          {{ $t("fm.config.widget.height") }}
+          <el-input
+            v-model.number="data.options.size.height"
+            style="width: 90px"
+            type="number"
+          />
+        </el-form-item>
+      </div>
 
-			<!-- 布局控件配置 -->
-			<div class="config-group layout-config-group" v-if="data.type === 'grid'">
-				<el-form-item :label="$t('fm.config.widget.gutter')">
-					<el-input-number v-model.number="data.options.gutter" min="0" size="mini">
-						<slot slot="suffix">suffix</slot>
-					</el-input-number>
-				</el-form-item>
-				<el-form-item :label="$t('fm.config.widget.columnOption')">
-					<draggable
-						:list="data.columns"
-						v-bind="{ group: { name: 'options' }, ghostClass: 'ghost', handle: '.drag-item' }"
-						handle=".drag-item"
-					>
-						<div class="column-item" v-for="(item, index) in data.columns" :key="index">
-							<el-input
-								:placeholder="$t('fm.config.widget.span')"
-								size="mini"
-								style="width: 100px"
-								type="number"
-								v-model.number="item.span"
-							></el-input>
-							<i class="drag-item" style="font-size: 16px; margin: 0 5px; cursor: move">
-								<i class="ri-drag-move-2-fill"></i>
-							</i>
-							<i style="font-size: 16px">
-								<i class="ri-delete-bin-7-line" @click="handleOptionsRemove(index)"></i>
-							</i>
-						</div>
-					</draggable>
-					<el-button class="add-column" size="mini" type="text" @click="handleAddColumn">
-						{{ $t("fm.actions.addColumn") }}
-					</el-button>
-				</el-form-item>
-				<el-form-item :label="$t('fm.config.widget.justify')">
-					<el-select v-model="data.options.justify">
-						<el-option value="start" :label="$t('fm.config.widget.justifyStart')"></el-option>
-						<el-option value="end" :label="$t('fm.config.widget.justifyEnd')"></el-option>
-						<el-option value="center" :label="$t('fm.config.widget.justifyCenter')"></el-option>
-						<el-option value="space-around" :label="$t('fm.config.widget.justifySpaceAround')"></el-option>
-						<el-option value="space-between" :label="$t('fm.config.widget.justifySpaceBetween')"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item :label="$t('fm.config.widget.align')">
-					<el-select v-model="data.options.align">
-						<el-option value="top" :label="$t('fm.config.widget.alignTop')"></el-option>
-						<el-option value="middle" :label="$t('fm.config.widget.alignMiddle')"></el-option>
-						<el-option value="bottom" :label="$t('fm.config.widget.alignBottom')"></el-option>
-					</el-select>
-				</el-form-item>
-			</div>
-		</el-form>
-	</div>
-	<div v-else class="widget-config-empty">
-		<i class="icon ri-settings-3-line"></i>
-		<span class="desc">{{ $t("fm.description.configSettingEmptyDesc") }}</span>
-	</div>
+      <!-- 布局控件配置 -->
+      <div
+        v-if="data.type === 'grid'"
+        class="config-group layout-config-group"
+      >
+        <el-form-item :label="$t('fm.config.widget.gutter')">
+          <el-input-number
+            v-model.number="data.options.gutter"
+            min="0"
+            size="mini"
+          >
+            <slot slot="suffix">suffix</slot>
+          </el-input-number>
+        </el-form-item>
+        <el-form-item :label="$t('fm.config.widget.columnOption')">
+          <draggable
+            :list="data.columns"
+            v-bind="{ group: { name: 'options' }, ghostClass: 'ghost', handle: '.drag-item' }"
+            handle=".drag-item"
+          >
+            <div
+              v-for="(item, index) in data.columns"
+              :key="index"
+              class="column-item"
+            >
+              <el-input
+                v-model.number="item.span"
+                :placeholder="$t('fm.config.widget.span')"
+                size="mini"
+                style="width: 100px"
+                type="number"
+              />
+              <i
+                class="drag-item"
+                style="font-size: 16px; margin: 0 5px; cursor: move"
+              >
+                <i class="ri-drag-move-2-fill" />
+              </i>
+              <i style="font-size: 16px">
+                <i
+                  class="ri-delete-bin-7-line"
+                  @click="handleOptionsRemove(index)"
+                />
+              </i>
+            </div>
+          </draggable>
+          <el-button
+            class="add-column"
+            size="mini"
+            type="text"
+            @click="handleAddColumn"
+          >
+            {{ $t("fm.actions.addColumn") }}
+          </el-button>
+        </el-form-item>
+        <el-form-item :label="$t('fm.config.widget.justify')">
+          <el-select v-model="data.options.justify">
+            <el-option
+              value="start"
+              :label="$t('fm.config.widget.justifyStart')"
+            />
+            <el-option
+              value="end"
+              :label="$t('fm.config.widget.justifyEnd')"
+            />
+            <el-option
+              value="center"
+              :label="$t('fm.config.widget.justifyCenter')"
+            />
+            <el-option
+              value="space-around"
+              :label="$t('fm.config.widget.justifySpaceAround')"
+            />
+            <el-option
+              value="space-between"
+              :label="$t('fm.config.widget.justifySpaceBetween')"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('fm.config.widget.align')">
+          <el-select v-model="data.options.align">
+            <el-option
+              value="top"
+              :label="$t('fm.config.widget.alignTop')"
+            />
+            <el-option
+              value="middle"
+              :label="$t('fm.config.widget.alignMiddle')"
+            />
+            <el-option
+              value="bottom"
+              :label="$t('fm.config.widget.alignBottom')"
+            />
+          </el-select>
+        </el-form-item>
+      </div>
+    </el-form>
+  </div>
+  <div
+    v-else
+    class="widget-config-empty"
+  >
+    <i class="icon ri-settings-3-line" />
+    <span class="desc">{{ $t("fm.description.configSettingEmptyDesc") }}</span>
+  </div>
 </template>
 
 <script>
-import Draggable from "vuedraggable"
+import Draggable from 'vuedraggable'
 
 export default {
-	components: {
-		Draggable,
-	},
-	props: {
-		data: {
-			type: Object,
-		},
-	},
-	data() {
-		return {
-			percentWidth: 100,
-			validator: {
-				type: null,
-				required: null,
-				pattern: null,
-				range: null,
-				length: null,
-			},
-		}
-	},
-	computed: {
-		show() {
-			if (this.data && Object.keys(this.data).length > 0) {
-				return true
-			}
-			return false
-		},
-	},
-	methods: {
-		handleOptionsRemove(index) {
-			if (this.data.type === "grid") {
-				this.data.columns.splice(index, 1)
-			} else {
-				this.data.options.options.splice(index, 1)
-			}
-		},
-		handleAddOption() {
-			if (this.data.options.showLabel) {
-				this.data.options.options.push({
-					value: this.$t("fm.config.widget.newOption"),
-					label: this.$t("fm.config.widget.newOption"),
-				})
-			} else {
-				this.data.options.options.push({
-					value: this.$t("fm.config.widget.newOption"),
-				})
-			}
-		},
-		handleAddColumn() {
-			this.data.columns.push({
-				span: "",
-				list: [],
-			})
-		},
-		generateRule() {
-			this.data.rules = []
-			Object.keys(this.validator).forEach(key => {
-				if (this.validator[key]) {
-					this.data.rules.push(this.validator[key])
-				}
-			})
-		},
-		handleSelectMultiple(value) {
-			if (value) {
-				if (this.data.options.defaultValue) {
-					this.data.options.defaultValue = [this.data.options.defaultValue]
-				} else {
-					this.data.options.defaultValue = []
-				}
-			} else {
-				if (this.data.options.defaultValue.length > 0) {
-					this.data.options.defaultValue = this.data.options.defaultValue[0]
-				} else {
-					this.data.options.defaultValue = ""
-				}
-			}
-		},
+  components: {
+    Draggable
+  },
+  props: {
+    data: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      percentWidth: 100,
+      validator: {
+        type: null,
+        required: null,
+        pattern: null,
+        range: null,
+        length: null
+      }
+    }
+  },
+  computed: {
+    show() {
+      if (this.data && Object.keys(this.data).length > 0) {
+        return true
+      }
+      return false
+    }
+  },
+  watch: {
+    'data.options.isRange': function(val) {
+      if (typeof val !== 'undefined') {
+        if (val) {
+          this.data.options.defaultValue = null
+        } else {
+          if (Object.keys(this.data.options).indexOf('defaultValue') >= 0) this.data.options.defaultValue = ''
+        }
+      }
+    },
+    'data.options.required': function(val) {
+      this.validateRequired(val)
+    },
+    'data.options.dataType': function(val) {
+      this.validateDataType(val)
+    },
+    'data.options.pattern': function(val) {
+      this.valiatePattern(val)
+    },
+    'data.name': function(val) {
+      if (this.data.options) {
+        this.validateRequired(this.data.options.required)
+        this.validateDataType(this.data.options.dataType)
+        this.valiatePattern(this.data.options.pattern)
+      }
+    },
+    percentWidth: function(newVal) {
+      if (this.data && this.data.options) {
+        this.data.options.width = `${newVal}%`
+      }
+    }
+  },
+  methods: {
+    handleOptionsRemove(index) {
+      if (this.data.type === 'grid') {
+        this.data.columns.splice(index, 1)
+      } else {
+        this.data.options.options.splice(index, 1)
+      }
+    },
+    handleAddOption() {
+      if (this.data.options.showLabel) {
+        this.data.options.options.push({
+          value: this.$t('fm.config.widget.newOption'),
+          label: this.$t('fm.config.widget.newOption')
+        })
+      } else {
+        this.data.options.options.push({
+          value: this.$t('fm.config.widget.newOption')
+        })
+      }
+    },
+    handleAddColumn() {
+      this.data.columns.push({
+        span: '',
+        list: []
+      })
+    },
+    generateRule() {
+      this.data.rules = []
+      Object.keys(this.validator).forEach(key => {
+        if (this.validator[key]) {
+          this.data.rules.push(this.validator[key])
+        }
+      })
+    },
+    handleSelectMultiple(value) {
+      if (value) {
+        if (this.data.options.defaultValue) {
+          this.data.options.defaultValue = [this.data.options.defaultValue]
+        } else {
+          this.data.options.defaultValue = []
+        }
+      } else {
+        if (this.data.options.defaultValue.length > 0) {
+          this.data.options.defaultValue = this.data.options.defaultValue[0]
+        } else {
+          this.data.options.defaultValue = ''
+        }
+      }
+    },
 
-		validateRequired(val) {
-			if (val) {
-				this.validator.required = {
-					required: true,
-					message: `${this.data.name}${this.$t("fm.config.widget.validatorRequired")}`,
-				}
-			} else {
-				this.validator.required = null
-			}
+    validateRequired(val) {
+      if (val) {
+        this.validator.required = {
+          required: true,
+          message: `${this.data.name}${this.$t('fm.config.widget.validatorRequired')}`
+        }
+      } else {
+        this.validator.required = null
+      }
 
-			this.$nextTick(() => {
-				this.generateRule()
-			})
-		},
+      this.$nextTick(() => {
+        this.generateRule()
+      })
+    },
 
-		validateDataType(val) {
-			if (!this.show) {
-				return false
-			}
+    validateDataType(val) {
+      if (!this.show) {
+        return false
+      }
 
-			if (val) {
-				let pattern = null
-				let message = this.data.name + this.$t("fm.config.widget.validatorType")
+      if (val) {
+        let pattern = null
+        let message = this.data.name + this.$t('fm.config.widget.validatorType')
 
-				// 根据数据类型设置相应的正则表达式
-				if (val === "idCardNumber") {
-					// 身份证号正则表达式（18位）
-					pattern = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-					message = this.data.name + "身份证号格式不正确"
-				} else if (val === "phone") {
-					// 手机号正则表达式（11位，以1开头）
-					pattern = /^1[3-9]\d{9}$/
-					message = this.data.name + "手机号格式不正确"
-				} else if (val === "email") {
-					// 邮箱正则表达式
-					pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-					message = this.data.name + "邮箱格式不正确"
-				}
+        // 根据数据类型设置相应的正则表达式
+        if (val === 'idCardNumber') {
+          // 身份证号正则表达式（18位）
+          pattern = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+          message = this.data.name + '身份证号格式不正确'
+        } else if (val === 'phone') {
+          // 手机号正则表达式（11位，以1开头）
+          pattern = /^1[3-9]\d{9}$/
+          message = this.data.name + '手机号格式不正确'
+        } else if (val === 'email') {
+          // 邮箱正则表达式
+          pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+          message = this.data.name + '邮箱格式不正确'
+        }
 
-				if (pattern) {
-					this.validator.type = {
-						pattern: pattern,
-						message: message,
-					}
-				} else {
-					this.validator.type = {
-						type: val,
-						message: message,
-					}
-				}
-			} else {
-				this.validator.type = null
-			}
+        if (pattern) {
+          this.validator.type = {
+            pattern: pattern,
+            message: message
+          }
+        } else {
+          this.validator.type = {
+            type: val,
+            message: message
+          }
+        }
+      } else {
+        this.validator.type = null
+      }
 
-			this.generateRule()
-		},
-		valiatePattern(val) {
-			if (!this.show) {
-				return false
-			}
+      this.generateRule()
+    },
+    valiatePattern(val) {
+      if (!this.show) {
+        return false
+      }
 
-			if (val) {
-				this.validator.pattern = {
-					pattern: val,
-					message: this.data.name + this.$t("fm.config.widget.validatorPattern"),
-				}
-			} else {
-				this.validator.pattern = null
-			}
+      if (val) {
+        this.validator.pattern = {
+          pattern: val,
+          message: this.data.name + this.$t('fm.config.widget.validatorPattern')
+        }
+      } else {
+        this.validator.pattern = null
+      }
 
-			this.generateRule()
-		},
-	},
-	watch: {
-		"data.options.isRange": function (val) {
-			if (typeof val !== "undefined") {
-				if (val) {
-					this.data.options.defaultValue = null
-				} else {
-					if (Object.keys(this.data.options).indexOf("defaultValue") >= 0) this.data.options.defaultValue = ""
-				}
-			}
-		},
-		"data.options.required": function (val) {
-			this.validateRequired(val)
-		},
-		"data.options.dataType": function (val) {
-			this.validateDataType(val)
-		},
-		"data.options.pattern": function (val) {
-			this.valiatePattern(val)
-		},
-		"data.name": function (val) {
-			if (this.data.options) {
-				this.validateRequired(this.data.options.required)
-				this.validateDataType(this.data.options.dataType)
-				this.valiatePattern(this.data.options.pattern)
-			}
-		},
-		percentWidth: function (newVal) {
-			if (this.data && this.data.options) {
-				this.data.options.width = `${newVal}%`
-			}
-		},
-	},
+      this.generateRule()
+    }
+  }
 }
 </script>
 
